@@ -37,6 +37,19 @@ float *Color::asArrayPtr() {
   return arr;
 }
 
+/* ------------ Uniform ------------ */
+
+Uniform::Uniform(const String &name, uint32 shaderID) {
+  id = glGetUniformLocation(shaderID, name.c_str());
+  // TODO: add opengl error check
+
+  this->name = name;
+}
+
+const String &Uniform::getName() const { return name; }
+
+uint32 Uniform::getID() const { return id; }
+
 /* ------------ Renderer ------------ */
 
 void Renderer::init() {

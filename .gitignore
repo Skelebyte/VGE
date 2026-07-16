@@ -1,6 +1,8 @@
 obj/
 bin/
 
-slam.make
+vge.make
 
 demo.zip
+
+*.log

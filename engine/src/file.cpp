@@ -1,4 +1,6 @@
 #include "../file.hpp"
+#include "../memory.hpp"
+#include <filesystem>
 
 using namespace vge;
 
@@ -20,10 +22,12 @@ String File::read(const String &path) {
   std::streamsize size = (std::streamsize)file.tellg();
   file.seekg(0, std::ios::beg);
 
-  char *buffer = new char[size + 1];
+  // char *buffer = new char[size + 1];
+  char *buffer = (char *)Memory::MALLOC(size + 1);
   if (!file.read(buffer, size)) {
     // THROW_ERROR(ERROR.Derived("", "Failed to read file " + path + "."));
-    delete[] buffer;
+    // delete[] buffer;
+    Memory::free(buffer);
     return "";
   }
 
@@ -32,7 +36,8 @@ String File::read(const String &path) {
   file.close();
 
   String data = buffer;
-  delete[] buffer;
+  // delete[] buffer;
+  Memory::free(buffer);
 
   return data;
 }
@@ -51,3 +56,11 @@ void File::write(const String &path, const String &content, bool overwrite) {
 }
 
 bool File::exists(const String &path) { return std::filesystem::exists(path); }
+
+size_t File::fileSize(const String &path) {
+  return std::filesystem::file_size(path);
+}
+
+String File::getExtension(const String &path) {
+  return ((std::filesystem::path)path).extension();
+}

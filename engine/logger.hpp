@@ -8,8 +8,10 @@
 namespace vge {
 
 struct Logger : Singleton<Logger> {
+  static void init();
   static void log(const String &msg, const String &file = __FILE__,
-                  const String &function = "__FUNCTION__");
+                  const String &function = "__FUNCTION__",
+                  bool overwriteLog = false);
 
 protected:
   bool print;

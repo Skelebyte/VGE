@@ -14,6 +14,8 @@ struct File {
   static void write(const String &path, const String &content,
                     bool overwrite = false);
   static bool exists(const String &path);
+  static size_t fileSize(const String &path);
+  static String getExtension(const String &path);
 };
 
 } // namespace vge

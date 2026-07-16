@@ -1,3 +1,4 @@
+#include "engine/asset.hpp"
 #include "engine/common.hpp"
 #include "engine/engine.hpp"
 #include "engine/graphics.hpp"
@@ -11,9 +12,12 @@
 using namespace vge;
 
 int main() {
-  Engine::init();
-  Window::init("hi mum", 600, 400);
-  Renderer::init();
+  Engine::fullInit("hi mum", 600, 400);
+
+  // Texture tex = Asset::load(
+  //     "assets/textures/image.png");
+  // TODO: return to asset loading... i want to have some system to do it but
+  // idk what or how exactly
 
   while (Window::process()) {
     Engine::beginFrame();
@@ -21,9 +25,7 @@ int main() {
     Window::swapBuffer();
   }
 
-  Renderer::shutdown();
-  Window::close();
-  Engine::shutdown();
+  Engine::fullShutdown();
 
   return 0;
 }

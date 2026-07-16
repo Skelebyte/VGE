@@ -1,4 +1,6 @@
 #include "../engine.hpp"
+#include "../graphics.hpp"
+#include "../window.hpp"
 #include <SDL3/SDL_error.h>
 #include <SDL3/SDL_init.h>
 #include <SDL3/SDL_timer.h>
@@ -9,6 +11,8 @@
 using namespace vge;
 
 void Engine::init() {
+  Logger::init();
+
   if (isInit()) {
     Logger::LOG("Engine has already been initialized!");
 
@@ -31,6 +35,13 @@ void Engine::init() {
   get().initialized = true;
 }
 
+void Engine::fullInit(String title, uint32 width, uint32 height,
+                      bool allowResize, bool fullscreen) {
+  init();
+  Window::init(title, width, height, allowResize, fullscreen);
+  Renderer::init();
+}
+
 void Engine::shutdown() {
   if (isInit() == false) {
     Logger::LOG("You must call `Engine::init()` first!");
@@ -38,6 +49,12 @@ void Engine::shutdown() {
   }
 
   get().initialized = false;
+}
+
+void Engine::fullShutdown() {
+  Renderer::shutdown();
+  Window::close();
+  Engine::shutdown();
 }
 
 void Engine::beginFrame() {

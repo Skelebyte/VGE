@@ -3,6 +3,7 @@
 
 #include "common.hpp"
 #include "engine.hpp"
+#include "matrix4.hpp"
 #include "window.hpp"
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_video.h>
@@ -29,6 +30,23 @@ struct Color {
    * @return float*
    */
   float *asArrayPtr();
+};
+
+struct Uniform {
+  Uniform(const String &name, uint32 shaderID);
+  const String &getName() const;
+  uint32 getID() const;
+
+  void setValue(const Matrix4 &value);
+  void setValue(const Vector3 &value);
+  void setValue(const Color &value);
+  void setValue(float value);
+  void setValue(int32 value);
+  void setValue(bool value);
+
+protected:
+  String name;
+  uint32 id;
 };
 
 struct Renderer : Singleton<Renderer> {

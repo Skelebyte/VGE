@@ -1,3 +1,4 @@
+#define STB_IMAGE_IMPLEMENTATION
 #include "../asset.hpp"
 
 using namespace vge;
@@ -6,18 +7,20 @@ Asset::Asset(const String &path) { this->path = path; }
 
 const String &Asset::getPath() const { return path; }
 
-Texture::Texture(const String &path) : Asset(path) {
+/* ------------ Texture ------------ */
+
+Texture::Texture(const String &path, const TextureFilter &filter)
+    : Asset(path) {
   if (path.empty() == true) {
-    uchar *data = Texture::CustomTexture(4, 4, 255, 255, 255, 200, 200, 200);
-    isValid = true;
-    LoadFromData(data, 3, 4, 4);
+    uchar *data = Texture::customTexture(4, 4, 255, 255, 255, 200, 200, 200);
+    valid = true;
+    loadFromData(data, 3, 4, 4);
     return;
   }
 
   if (File::exists(path) == false) {
-    // THROW_ERROR(WARNING.Derived(
-    //     "", "File " + path + " does not exist! Loading missing texture."));
-
+    Logger::LOG("File \"" + path +
+                "\" does not exist! Loading fallback texture.");
     textureFallback();
     return;
   }
@@ -30,17 +33,17 @@ Texture::Texture(const String &path) : Asset(path) {
 
   data = stbi_load(path.c_str(), &width, &height, &channels, 0);
   if (!data) {
-    // THROW_ERROR(WARNING.Derived("", "Failed to load texture " + path +
-    //                                     ". Loading missing texture."));
+    Logger::LOG("Failed to load texture \"" + path +
+                "\". Loading fallback texture");
     textureFallback();
     return;
   }
-  isValid = true;
-  LoadFromData(data, channels, width, height, filter);
+  valid = true;
+  loadFromData(data, channels, width, height, filter);
 }
 
 void Texture::textureFallback() {
-  uchar *data = Texture::CustomTexture(4, 4, 255, 0, 255, 0, 0, 0);
-  isValid = false;
-  LoadFromData(data, 3, 4, 4);
+  uchar *data = Texture::customTexture(4, 4, 255, 0, 255, 0, 0, 0);
+  valid = false;
+  loadFromData(data, 3, 4, 4);
 }

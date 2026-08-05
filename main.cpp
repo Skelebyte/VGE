@@ -12,7 +12,7 @@
 using namespace vge;
 
 int main() {
-  Engine::fullInit("hi mum", 600, 400);
+  Engine::fullInit("hi mum");
 
   // Texture tex = Asset::load(
   //     "assets/textures/image.png");

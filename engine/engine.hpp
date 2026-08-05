@@ -18,8 +18,8 @@ struct Engine : Singleton<Engine> {
    * @param allowResize
    * @param fullscreen
    */
-  static void fullInit(String title = "VGE", uint32 width = 600,
-                       uint32 height = 400, bool allowResize = true,
+  static void fullInit(String title = "VGE", uint32 width = 960,
+                       uint32 height = 640, bool allowResize = true,
                        bool fullscreen = false);
   static void shutdown();
   /**

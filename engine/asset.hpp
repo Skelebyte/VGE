@@ -19,7 +19,7 @@ private:
 
 enum TextureFilter { LINEAR = 0, NEAREST = 1 };
 
-struct Texture : Asset {
+struct Texture : Asset, ID {
   Texture(const String &path,
           const TextureFilter &filter = TextureFilter::NEAREST);
   static uchar *customTexture(uint32 width, uint32 height, uint32 r1, uint32 g1,
@@ -30,12 +30,15 @@ struct Texture : Asset {
 
 protected:
   void textureFallback();
-  void loadFromData(uchar *data, uint32 channels, uint32 w, uint32 height,
+  void loadFromData(uchar *data, uint32 channels, uint32 width, uint32 height,
                     const TextureFilter &filter = TextureFilter::NEAREST);
 
 private:
-  uint32 id;
   bool valid;
+};
+
+struct Model : Asset {
+  Model(const String &path);
 };
 
 } // namespace vge

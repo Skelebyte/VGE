@@ -27,7 +27,7 @@ Color Color::Magenta() { return Color(1.0f, 0.0f, 1.0f); }
 Color Color::Grey() { return Color(0.5f, 0.5f, 0.5f); }
 
 float *Color::asArrayPtr() {
-  float *arr = (float *)malloc(sizeof(float) * 4);
+  float *arr = (float *)Memory::MALLOC(sizeof(float) * 4);
 
   arr[0] = r;
   arr[1] = g;

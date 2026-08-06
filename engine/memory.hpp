@@ -7,6 +7,7 @@
 namespace vge {
 
 struct Memory : Singleton<Memory> {
+  //! Use the macro! Example: `Memory::MALLOC(sizeof(float) * 4);`
   static void *malloc(size_t amount);
   static void free(void *target);
 

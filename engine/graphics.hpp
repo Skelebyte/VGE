@@ -4,6 +4,7 @@
 #include "common.hpp"
 #include "engine.hpp"
 #include "matrix4.hpp"
+#include "memory.hpp"
 #include "window.hpp"
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_video.h>
@@ -48,6 +49,10 @@ protected:
   String name;
   uint32 id;
 };
+
+struct VAO : ID {};
+struct VBO : ID {};
+struct EBO : ID {};
 
 struct Renderer : Singleton<Renderer> {
   static void init();

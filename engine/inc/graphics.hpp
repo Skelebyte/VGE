@@ -33,10 +33,9 @@ struct Color {
   float *asArrayPtr();
 };
 
-struct Uniform {
+struct Uniform : public ID {
   Uniform(const String &name, uint32 shaderID);
   const String &getName() const;
-  uint32 getID() const;
 
   void setValue(const Matrix4 &value);
   void setValue(const Vector3 &value);
@@ -47,12 +46,33 @@ struct Uniform {
 
 protected:
   String name;
-  uint32 id;
 };
 
-struct VAO : ID {};
-struct VBO : ID {};
-struct EBO : ID {};
+struct VBO : public ID {
+  VBO(float *verts, size_t size);
+  ~VBO();
+
+  void bind();
+  void unbind();
+};
+
+struct VAO : public ID {
+  VAO();
+  ~VAO();
+
+  void bind();
+  void unbind();
+  void linkAttrib(VBO &vbo, uint32 layout, uint32 components, uint32 type,
+                  size_t stride, void *offset);
+};
+
+struct EBO : public ID {
+  EBO(uint32 *indices, size_t size);
+  ~EBO();
+
+  void bind();
+  void unbind();
+};
 
 struct Renderer : Singleton<Renderer> {
   static void init();

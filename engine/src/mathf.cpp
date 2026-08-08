@@ -1,4 +1,4 @@
-#include "../mathf.hpp"
+#include "../inc/mathf.hpp"
 
 using namespace vge;
 

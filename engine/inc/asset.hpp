@@ -1,8 +1,8 @@
 #ifndef VGE_ASSET_HPP
 #define VGE_ASSET_HPP
 
+#include "../ext/stb/stb_image.h"
 #include "common.hpp"
-#include "ext/stb/stb_image.h"
 #include "file.hpp"
 #include "memory.hpp"
 
@@ -19,9 +19,10 @@ private:
 
 enum TextureFilter { LINEAR = 0, NEAREST = 1 };
 
-struct Texture : Asset, ID {
+struct Texture : public Asset, public ID {
   Texture(const String &path,
           const TextureFilter &filter = TextureFilter::NEAREST);
+  ~Texture();
   static uchar *customTexture(uint32 width, uint32 height, uint32 r1, uint32 g1,
                               uint32 b1, uint32 r2, uint32 g2, uint32 b2);
   void bind();
@@ -37,8 +38,8 @@ private:
   bool valid;
 };
 
-struct Model : Asset {
-  Model(const String &path);
+struct Mesh : Asset {
+  Mesh(const String &path);
 };
 
 } // namespace vge

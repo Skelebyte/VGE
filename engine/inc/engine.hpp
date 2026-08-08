@@ -8,7 +8,6 @@
 namespace vge {
 
 struct Engine : Singleton<Engine> {
-  static void init();
   /**
    * @brief Initializes the engine, window, and renderer.
    *
@@ -18,15 +17,16 @@ struct Engine : Singleton<Engine> {
    * @param allowResize
    * @param fullscreen
    */
-  static void fullInit(String title = "VGE", uint32 width = 960,
-                       uint32 height = 640, bool allowResize = true,
-                       bool fullscreen = false);
-  static void shutdown();
+  static void init(String title = "VGE", uint32 width = 960,
+                   uint32 height = 640, bool allowResize = true,
+                   bool fullscreen = false);
+  // static void shutdown();
   /**
    * @brief Shuts down the engine, window, and renderer.
    *
    */
-  static void fullShutdown();
+  static void shutdown();
+  static bool process();
   static void beginFrame();
   static void endFrame();
   static void setTargetFps(uint32 target);

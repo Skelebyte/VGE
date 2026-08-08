@@ -1,5 +1,5 @@
 #define STB_IMAGE_IMPLEMENTATION
-#include "../asset.hpp"
+#include "../inc/asset.hpp"
 
 using namespace vge;
 
@@ -31,6 +31,7 @@ Texture::Texture(const String &path, const TextureFilter &filter)
 
   uchar *data;
 
+  // TODO: log how much memory is being allocated here (if possible)
   data = stbi_load(path.c_str(), &width, &height, &channels, 0);
   if (!data) {
     Logger::LOG("Failed to load texture \"" + path +
@@ -41,6 +42,8 @@ Texture::Texture(const String &path, const TextureFilter &filter)
   valid = true;
   loadFromData(data, channels, width, height, filter);
 }
+
+Texture::~Texture() { glDeleteTextures(1, getID_Ptr()); }
 
 uchar *Texture::customTexture(uint32 width, uint32 height, uint32 r1, uint32 g1,
                               uint32 b1, uint32 r2, uint32 g2, uint32 b2) {

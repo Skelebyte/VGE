@@ -1,5 +1,5 @@
-#include "../file.hpp"
-#include "../memory.hpp"
+#include "../inc/file.hpp"
+#include "../inc/memory.hpp"
 #include <filesystem>
 
 using namespace vge;
@@ -64,3 +64,5 @@ size_t File::fileSize(const String &path) {
 String File::getExtension(const String &path) {
   return ((std::filesystem::path)path).extension();
 }
+
+size_t File::mbToBytes(uint32 mb) { return mb * 1048576; }

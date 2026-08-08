@@ -1,5 +1,5 @@
-#include "../time.hpp"
-#include "../logger.hpp"
+#include "../inc/time.hpp"
+#include "../inc/logger.hpp"
 
 using namespace vge;
 

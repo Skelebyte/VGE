@@ -72,6 +72,7 @@ endif
 GENERATED :=
 OBJECTS :=
 
+GENERATED += $(OBJDIR)/asset.o
 GENERATED += $(OBJDIR)/common.o
 GENERATED += $(OBJDIR)/engine.o
 GENERATED += $(OBJDIR)/file.o
@@ -93,6 +94,7 @@ GENERATED += $(OBJDIR)/ufbx.o
 GENERATED += $(OBJDIR)/vector2.o
 GENERATED += $(OBJDIR)/vector3.o
 GENERATED += $(OBJDIR)/window.o
+OBJECTS += $(OBJDIR)/asset.o
 OBJECTS += $(OBJDIR)/common.o
 OBJECTS += $(OBJDIR)/engine.o
 OBJECTS += $(OBJDIR)/file.o
@@ -201,6 +203,9 @@ $(OBJDIR)/imgui_widgets.o: engine/ext/imgui/imgui_widgets.cpp
 $(OBJDIR)/ufbx.o: engine/ext/ufbx/ufbx.c
 	@echo "$(notdir $<)"
 	$(SILENT) $(CC) $(ALL_CFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/asset.o: engine/src/asset.cpp
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/common.o: engine/src/common.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"

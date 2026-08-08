@@ -16,6 +16,8 @@ struct File {
   static bool exists(const String &path);
   static size_t fileSize(const String &path);
   static String getExtension(const String &path);
+
+  static size_t mbToBytes(uint32 mb);
 };
 
 } // namespace vge

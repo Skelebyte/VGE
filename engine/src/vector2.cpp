@@ -1,5 +1,5 @@
-#include "../vector2.hpp"
-#include "../mathf.hpp"
+#include "../inc/vector2.hpp"
+#include "../inc/mathf.hpp"
 
 using namespace vge;
 

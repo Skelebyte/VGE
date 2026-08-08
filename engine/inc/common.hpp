@@ -5,7 +5,7 @@
 #include <iostream>
 #include <string>
 
-#include "ext/glad/gl.h"
+#include "../ext/glad/gl.h"
 
 namespace vge {
 

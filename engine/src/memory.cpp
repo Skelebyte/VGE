@@ -1,4 +1,4 @@
-#include "../memory.hpp"
+#include "../inc/memory.hpp"
 #include <cstdlib>
 
 using namespace vge;

@@ -1,5 +1,5 @@
-#include "../matrix4.hpp"
-#include "../mathf.hpp"
+#include "../inc/matrix4.hpp"
+#include "../inc/mathf.hpp"
 
 using namespace vge;
 

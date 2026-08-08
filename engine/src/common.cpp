@@ -1,4 +1,4 @@
 #define GLAD_GL_IMPLEMENTATION
-#include "../common.hpp"
+#include "../inc/common.hpp"
 
 using namespace vge;

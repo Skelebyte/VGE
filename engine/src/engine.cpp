@@ -1,6 +1,6 @@
-#include "../engine.hpp"
-#include "../graphics.hpp"
-#include "../window.hpp"
+#include "../inc/engine.hpp"
+#include "../inc/graphics.hpp"
+#include "../inc/window.hpp"
 #include <SDL3/SDL_error.h>
 #include <SDL3/SDL_init.h>
 #include <SDL3/SDL_timer.h>
@@ -10,7 +10,8 @@
 
 using namespace vge;
 
-void Engine::init() {
+void Engine::init(String title, uint32 width, uint32 height, bool allowResize,
+                  bool fullscreen) {
   Logger::init();
 
   if (isInit()) {
@@ -33,11 +34,6 @@ void Engine::init() {
   setTargetFps(60);
 
   get().initialized = true;
-}
-
-void Engine::fullInit(String title, uint32 width, uint32 height,
-                      bool allowResize, bool fullscreen) {
-  init();
   Window::init(title, width, height, allowResize, fullscreen);
   Renderer::init();
 }
@@ -48,13 +44,17 @@ void Engine::shutdown() {
     return;
   }
 
+  Renderer::shutdown();
+  Window::close();
+
   get().initialized = false;
 }
 
-void Engine::fullShutdown() {
-  Renderer::shutdown();
-  Window::close();
-  Engine::shutdown();
+bool Engine::process() {
+  if (isInit() == false) {
+    Logger::LOG("You must call `Engine::init()` first!");
+    return false;
+  }
 }
 
 void Engine::beginFrame() {

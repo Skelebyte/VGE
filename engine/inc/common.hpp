@@ -12,30 +12,33 @@ namespace vge {
 using uchar = unsigned char;
 using uint8 = uint8_t;
 using uint32 = uint32_t;
+using uint64 = uint64_t;
 using int32 = int32_t;
+using int64 = int64_t;
 using String = std::string;
-// this is not great... should stick to SCREAMING_SNAKE_CASE for macros
-#define toString(value) std::to_string(value)
+
+//! this is not great... should stick to SCREAMING_SNAKE_CASE for macros
+#define ToString(value) std::to_string(value)
 
 template <typename T> struct Singleton {
   // Singleton(const Singleton &) = delete;
 
-  static T &get() {
+  static T &Get() {
     static T instance;
     return instance;
   }
-  static bool isInit() { return get().initialized; }
+  static bool IsInit() { return Get().initialized; }
 
 protected:
   bool initialized = false;
 };
 
 struct ID {
-  uint32 getID() { return id; }
+  uint32 GetID() { return id; }
 
 protected:
-  uint32 *getID_Ptr() { return &id; }
-  void setID(uint32 newID) { id = newID; }
+  uint32 *GetID_Ptr() { return &id; }
+  void SetID(uint32 newID) { id = newID; }
 
 private:
   uint32 id;

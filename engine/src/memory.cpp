@@ -3,18 +3,27 @@
 
 using namespace vge;
 
-void *Memory::malloc(size_t amount) {
-  get().last = amount;
+void *Memory::internal_Malloc(size_t amount, const String &file,
+                              const String &func, uint32 line) {
+  Get().last = amount;
+
+  if (Get().logMallocSizes) {
+    Logger::internal_Log("Attempting to allocate " + ToString(amount) +
+                             " bytes of memory.",
+                         file, func, line);
+  }
+
   return std::malloc(amount);
 }
 
-void Memory::free(void *target) {
+void Memory::internal_Free(void *target, const String &file, const String &func,
+                           uint32 line) {
   if (target == nullptr) {
-    // TODO: throw error
+    Logger::internal_Log("Can't Free a nullptr!", file, func, line);
     return;
   }
 
   std::free(target);
 }
 
-size_t Memory::lastAllocationSize() { return get().last; }
+size_t Memory::LastAllocationSize() { return Get().last; }

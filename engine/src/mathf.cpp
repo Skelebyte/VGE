@@ -2,7 +2,7 @@
 
 using namespace vge;
 
-float Mathf::toRadians(float degrees) {
+float Mathf::ToRadians(float degrees) {
   float result = degrees * M_PI / 180;
 
   if (result != result) {
@@ -13,7 +13,7 @@ float Mathf::toRadians(float degrees) {
   return result;
 }
 
-float Mathf::toDegrees(float radians) {
+float Mathf::ToDegress(float radians) {
   float result = radians / M_PI * 180;
 
   if (result != result) {
@@ -24,6 +24,6 @@ float Mathf::toDegrees(float radians) {
   return result;
 }
 
-float Mathf::lerp(float a, float b, float t) { return a + t * (b - a); }
+float Mathf::Lerp(float a, float b, float t) { return a + t * (b - a); }
 
-bool Mathf::isZeroApprox(float value) { return std::abs(value) < 0.00001f; }
+bool Mathf::IsZeroApprox(float value) { return std::abs(value) < 0.00001f; }

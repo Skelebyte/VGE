@@ -13,15 +13,15 @@ Vector2::Vector2(float x, float y) {
   this->y = y;
 }
 
-float Vector2::dot(const Vector2 &a, const Vector2 &b) {
+float Vector2::Dot(const Vector2 &a, const Vector2 &b) {
   return a.x * b.x + a.y * b.y;
 }
 
-float Vector2::length() const { return sqrt(x * x + y * y); }
+float Vector2::Length() const { return sqrt(x * x + y * y); }
 
-Vector2 Vector2::normalized() const {
+Vector2 Vector2::Normalized() const {
   Vector2 norm = *this;
-  float len = this->length();
+  float len = this->Length();
 
   norm.x /= len;
   norm.y /= len;

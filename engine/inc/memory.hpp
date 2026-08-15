@@ -6,20 +6,22 @@
 
 namespace vge {
 
-struct Memory : Singleton<Memory> {
-  //! Use the macro! Example: `Memory::MALLOC(sizeof(float) * 4);`
-  static void *malloc(size_t amount);
-  static void free(void *target);
+#define Malloc(size) internal_Malloc(size, __FILE__, __FUNCTION__, __LINE__)
+#define Free(target) internal_Free(target, __FILE__, __FUNCTION__, __LINE__)
 
-  static size_t lastAllocationSize();
+struct Memory : Singleton<Memory> {
+  static void *internal_Malloc(size_t amount, const String &file,
+                               const String &func, uint32 line);
+  static void internal_Free(void *target, const String &file,
+                            const String &func, uint32 line);
+
+  static size_t LastAllocationSize();
+
+  bool logMallocSizes = true;
 
 private:
   size_t last;
 };
-
-#define MALLOC(amount)                                                         \
-  malloc(amount);                                                              \
-  Logger::LOG("Allocating " + toString(amount) + " bytes of memory.")
 
 } // namespace vge
 

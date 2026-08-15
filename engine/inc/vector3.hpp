@@ -12,11 +12,11 @@ struct Vector3 {
   Vector3(float xyz = 0.0f);
   Vector3(float x, float y, float z);
 
-  static Vector3 cross(const Vector3 &a, const Vector3 &b);
-  static float dot(const Vector3 &a, const Vector3 &b);
+  static Vector3 Cross(const Vector3 &a, const Vector3 &b);
+  static float Dot(const Vector3 &a, const Vector3 &b);
 
-  float length() const;
-  Vector3 normalized() const;
+  float Length() const;
+  Vector3 Normalized() const;
 
   Vector3 operator+(const Vector3 &other) const;
   Vector3 operator-(const Vector3 &other) const;

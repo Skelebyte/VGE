@@ -1,43 +1,50 @@
 #include "../inc/matrix4.hpp"
 #include "../inc/mathf.hpp"
+#include <cstring>
 
 using namespace vge;
 
-Matrix4::Matrix4() {
-  for (int i = 0; i < 16; i++) {
-    data[i] = 0;
+Matrix4::Matrix4(bool identity) {
+  data = (float *)Memory::Malloc(sizeof(float) * 16);
+
+  if (identity) {
+    this->Identity();
+  } else {
+    for (int i = 0; i < 16; i++) {
+      data[i] = 0;
+    }
   }
 }
 
-Matrix4 Matrix4::identity() {
-  Matrix4 mat = Matrix4();
+Matrix4::~Matrix4() { Memory::Free(data); }
 
-  mat.data[0] = 1;
-  mat.data[5] = 1;
-  mat.data[10] = 1;
-  mat.data[15] = 1;
+void Matrix4::Identity() {
+  for (int i = 0; i < 16; i++) {
+    data[i] = 0;
+  }
 
-  return mat;
+  data[0] = 1;
+  data[5] = 1;
+  data[10] = 1;
+  data[15] = 1;
 }
 
-Matrix4 Matrix4::transformation(const Vector3 &position,
+Matrix4 Matrix4::Transformation(const Vector3 &position,
                                 const Vector3 &rotation, const Vector3 &scale) {
-  Matrix4 pos = identity();
-  Matrix4 rot = identity();
-  Matrix4 sca = identity();
+  Matrix4 pos = Matrix4(true), rot = Matrix4(true), sca = Matrix4(true);
 
-  pos.setTranslation(position);
-  rot.setRotation(rotation);
-  sca.setScale(scale);
+  pos.SetTranslation(position);
+  rot.SetRotation(rotation);
+  sca.SetScale(scale);
 
   return pos * rot * sca;
 }
 
-Matrix4 Matrix4::perspective(float fovDeg, float aspect, float near,
+Matrix4 Matrix4::Perspective(float fovDeg, float aspect, float near,
                              float far) {
-  Matrix4 mat = identity();
+  Matrix4 mat = Matrix4(true);
 
-  float rad = Mathf::toRadians(fovDeg);
+  float rad = Mathf::ToRadians(fovDeg);
 
   mat.data[0] = 1 / (aspect * tan(rad / 2));
   mat.data[5] = 1 / tan(rad / 2);
@@ -49,18 +56,18 @@ Matrix4 Matrix4::perspective(float fovDeg, float aspect, float near,
   return mat;
 }
 
-void Matrix4::setTranslation(const Vector3 &point) {
+void Matrix4::SetTranslation(const Vector3 &point) {
   this->data[12] = point.x;
   this->data[13] = point.y;
   this->data[14] = point.z;
 }
 
-void Matrix4::setRotation(const Vector3 &angles) {
-  Matrix4 xRot = identity(), yRot = identity(), zRot = identity();
+void Matrix4::SetRotation(const Vector3 &angles) {
+  Matrix4 xRot = Matrix4(true), yRot = Matrix4(true), zRot = Matrix4(true);
 
   Vector3 anglesRad =
-      Vector3(Mathf::toRadians(angles.x), Mathf::toRadians(angles.y),
-              Mathf::toRadians(angles.z));
+      Vector3(Mathf::ToRadians(angles.x), Mathf::ToRadians(angles.y),
+              Mathf::ToRadians(angles.z));
 
   xRot.data[5] = cos(anglesRad.x);
   xRot.data[6] = -sin(anglesRad.x);
@@ -78,32 +85,32 @@ void Matrix4::setRotation(const Vector3 &angles) {
   *this = xRot * yRot * zRot;
 }
 
-void Matrix4::setScale(const Vector3 &scale) {
+void Matrix4::SetScale(const Vector3 &scale) {
   this->data[0] = scale.x;
   this->data[5] = scale.y;
   this->data[10] = scale.z;
 }
 
-void Matrix4::lookAt(const Vector3 &target, const Vector3 &position,
+void Matrix4::LookAt(const Vector3 &target, const Vector3 &position,
                      const Vector3 &forward) {
-  *this = identity();
-  Vector3 forward_ = (position - target).normalized();
+  this->Identity();
+  Vector3 forward_ = (position - target).Normalized();
   Vector3 right =
-      Vector3::cross(Vector3(0.0f, 1.0f, 0.0f), forward_).normalized();
-  Vector3 up = Vector3::cross(forward_, right);
+      Vector3::Cross(Vector3(0.0f, 1.0f, 0.0f), forward_).Normalized();
+  Vector3 up = Vector3::Cross(forward_, right);
 
   this->data[0] = right.x;
   this->data[4] = right.y;
   this->data[8] = right.z;
-  this->data[12] = -Vector3::dot(right, position);
+  this->data[12] = -Vector3::Dot(right, position);
   this->data[1] = up.x;
   this->data[5] = up.y;
   this->data[9] = up.z;
-  this->data[13] = -Vector3::dot(up, position);
+  this->data[13] = -Vector3::Dot(up, position);
   this->data[2] = forward_.x;
   this->data[6] = forward_.y;
   this->data[10] = forward_.z;
-  this->data[14] = -Vector3::dot(forward_, position);
+  this->data[14] = -Vector3::Dot(forward_, position);
 }
 
 Matrix4 Matrix4::operator*(const Matrix4 &other) {

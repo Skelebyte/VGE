@@ -4,8 +4,8 @@
 
 using namespace vge;
 
-String File::read(const String &path) {
-  if (File::exists(path) == false) {
+String File::Read(const String &path) {
+  if (File::Exists(path) == false) {
     // THROW_ERROR(ERROR.Derived("", "File " + path + " does not exist!"));
     return "";
   }
@@ -23,11 +23,11 @@ String File::read(const String &path) {
   file.seekg(0, std::ios::beg);
 
   // char *buffer = new char[size + 1];
-  char *buffer = (char *)Memory::MALLOC(size + 1);
+  char *buffer = (char *)Memory::Malloc(size + 1);
   if (!file.read(buffer, size)) {
     // THROW_ERROR(ERROR.Derived("", "Failed to read file " + path + "."));
     // delete[] buffer;
-    Memory::free(buffer);
+    Memory::Free(buffer);
     return "";
   }
 
@@ -37,12 +37,12 @@ String File::read(const String &path) {
 
   String data = buffer;
   // delete[] buffer;
-  Memory::free(buffer);
+  Memory::Free(buffer);
 
   return data;
 }
 
-void File::write(const String &path, const String &content, bool overwrite) {
+void File::Write(const String &path, const String &content, bool overwrite) {
   std::ofstream file;
 
   if (overwrite) {
@@ -55,14 +55,16 @@ void File::write(const String &path, const String &content, bool overwrite) {
   file.close();
 }
 
-bool File::exists(const String &path) { return std::filesystem::exists(path); }
+bool File::Exists(const String &path) { return std::filesystem::exists(path); }
 
-size_t File::fileSize(const String &path) {
+size_t File::FileSize(const String &path) {
   return std::filesystem::file_size(path);
 }
 
-String File::getExtension(const String &path) {
+String File::GetExtension(const String &path) {
   return ((std::filesystem::path)path).extension();
 }
 
-size_t File::mbToBytes(uint32 mb) { return mb * 1048576; }
+size_t File::MbToBytes(uint32 mb) { return mb * 1024 * 1024; }
+
+double File::BytesToMb(size_t bytes) { return (double)bytes / 1024 / 1024; }

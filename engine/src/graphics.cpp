@@ -26,8 +26,8 @@ Color Color::Blue() { return Color(0.0f, 0.0f, 1.0f); }
 Color Color::Magenta() { return Color(1.0f, 0.0f, 1.0f); }
 Color Color::Grey() { return Color(0.5f, 0.5f, 0.5f); }
 
-float *Color::asArrayPtr() {
-  float *arr = (float *)Memory::MALLOC(sizeof(float) * 4);
+float *Color::AsPtr() {
+  float *arr = (float *)Memory::Malloc(sizeof(float) * 4);
 
   arr[0] = r;
   arr[1] = g;
@@ -40,23 +40,174 @@ float *Color::asArrayPtr() {
 /* ------------ Uniform ------------ */
 
 Uniform::Uniform(const String &name, uint32 shaderID) {
-  setID(glGetUniformLocation(shaderID, name.c_str()));
+  SetID(glGetUniformLocation(shaderID, name.c_str()));
   // TODO: add opengl error check
 
   this->name = name;
 }
 
-const String &Uniform::getName() const { return name; }
+const String &Uniform::GetName() const { return name; }
+
+void Uniform::SetValue(const Matrix4 &value) {
+  glUniformMatrix4fv(GetID(), 1, GL_FALSE, value.data);
+  Logger::CHECK_OPENGL(
+      "Failed to set Matrix4 value on uniform \"" + GetName() + "\".", 1);
+}
+
+/* ------------ Shader ------------ */
+
+Shader::Shader(const String &name, const String &fragPath,
+               const String &vertPath) {
+  if (File::Exists(fragPath) == false) {
+    Logger::LOG_FATAL("Fragment shader file \"" + fragPath +
+                      "\" does not exist.");
+  }
+  if (File::Exists(vertPath) == false) {
+    Logger::LOG_FATAL("Vertex shader file \"" + vertPath +
+                      "\" does not exist.");
+  }
+
+  SetName(name);
+
+  String fragContent = File::Read(fragPath);
+  if (fragContent.empty()) {
+    Logger::LOG_FATAL("Failed to read fragment shader \"" + fragPath + "\".");
+  }
+
+  String vertContent = File::Read(vertPath);
+  if (vertContent.empty()) {
+    Logger::LOG_FATAL("Failed to read vertex shader \"" + vertPath + "\".");
+  }
+
+  const char *cstrFrag = fragContent.c_str();
+  const char *cstrVert = vertContent.c_str();
+
+  uint32 frag = glCreateShader(GL_FRAGMENT_SHADER);
+  Logger::CHECK_OPENGL("Failed to create GL_FRAGMENT_SHADER.", 1);
+
+  glShaderSource(frag, 1, &cstrFrag, nullptr);
+
+  glCompileShader(frag);
+  Logger::CHECK_OPENGL("Failed to compile fragment shader", 1);
+
+  IsCompileOk(frag, "Fragment");
+
+  uint32 vert = glCreateShader(GL_VERTEX_SHADER);
+  Logger::CHECK_OPENGL("Failed to create GL_VERTEX_SHADER.", 1);
+
+  glShaderSource(vert, 1, &cstrVert, nullptr);
+
+  glCompileShader(vert);
+  Logger::CHECK_OPENGL("Failed to compile vertex shader.", 1);
+
+  IsCompileOk(vert, "Vertex");
+
+  SetID(glCreateProgram());
+
+  glAttachShader(GetID(), frag);
+  Logger::CHECK_OPENGL("Failed to attach fragment shader.", 1);
+
+  glAttachShader(GetID(), vert);
+  Logger::CHECK_OPENGL("Failed to attach vertex shader.", 1);
+
+  glLinkProgram(GetID());
+  Logger::CHECK_OPENGL("Failed to link shader program", 1);
+
+  IsLinkOk();
+
+  int32 isProgramValid = glIsProgram(GetID());
+  Logger::LOG("Is shader \"" + name + "\" valid? " +
+              (isProgramValid ? "YES." : "NO."));
+
+  glDeleteShader(frag);
+  glDeleteShader(vert);
+}
+
+Shader::~Shader() {
+  glDeleteProgram(GetID());
+  SetID(0);
+}
+
+void Shader::AddUniform(const String &name) {
+  for (int32 i = 0; i < uniforms.Size(); i++) {
+    if (uniforms[i]->GetName() == name) {
+      Logger::LOG("Uniform with the name \"" + name +
+                  "\" already exists in this shader!");
+      return;
+    }
+  }
+
+  uniforms.Add(Uniform(name, GetID()));
+}
+
+Uniform *Shader::GetUniform(const String &name) {
+  for (int32 i = 0; i < uniforms.Size(); i++) {
+    if (uniforms[i]->GetName() == name) {
+      return uniforms[i];
+    }
+  }
+
+  Logger::LOG("Failed to find uniform \"" + name + "\" attached to shader \"" +
+              GetName() + "\".");
+
+  return nullptr;
+}
+
+void Shader::Bind() {
+  glUseProgram(GetID());
+  Logger::CHECK_OPENGL("glUseProgram failed!", 1);
+}
+
+void Shader::SetName(const String &name) { this->name = name; }
+
+String &Shader::GetName() { return name; }
+
+bool Shader::IsCompileOk(uint32 shader, const String &type) {
+  int32 success;
+
+  glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
+  if (!success) {
+    char *log = (char *)Memory::Malloc(sizeof(char) * 1024);
+    glGetShaderInfoLog(shader, 1024, nullptr, log);
+    Logger::CHECK_OPENGL(type + " shader compile is not ok! OpenGL log: " + log,
+                         0);
+    Memory::Free(log);
+    return true;
+  }
+
+  return false;
+}
+
+bool Shader::IsLinkOk() {
+  int32 success;
+
+  glGetProgramiv(GetID(), GL_LINK_STATUS, &success);
+
+  if (!success) {
+    int32 logLen;
+    glGetProgramiv(GetID(), GL_INFO_LOG_LENGTH, &logLen);
+    char *log = (char *)Memory::Malloc(sizeof(char) * logLen);
+
+    Logger::CHECK_OPENGL("Program link is not ok! OpenGL log: " + (String)log,
+                         0);
+
+    Memory::Free(log);
+
+    return true;
+  }
+
+  return false;
+}
 
 /* ------------ VBO ------------ */
 
 // TODO: add error checking
 VBO::VBO(float *verts, size_t size) {
-  glGenBuffers(1, getID_Ptr());
+  glGenBuffers(1, GetID_Ptr());
   // THROW_ERROR_GL(FATAL.Derived("GL_GEN_BUFFERS_FAIL",
   //                              "Generating the VBO buffer failed!"));
 
-  glBindBuffer(GL_ARRAY_BUFFER, getID());
+  glBindBuffer(GL_ARRAY_BUFFER, GetID());
   // THROW_ERROR_GL(FATAL.Derived("GL_BIND_BUFFER_FAIL",
   //                              "Binding VBO failed (Constructor)!"));
 
@@ -65,59 +216,59 @@ VBO::VBO(float *verts, size_t size) {
   //                              "Assigning data to the VBO failed!"));
 }
 
-VBO::~VBO() { glDeleteBuffers(1, getID_Ptr()); }
+VBO::~VBO() { glDeleteBuffers(1, GetID_Ptr()); }
 
 // TODO: add error checking
-void VBO::bind() {
-  glBindBuffer(GL_ARRAY_BUFFER, getID());
+void VBO::Bind() {
+  glBindBuffer(GL_ARRAY_BUFFER, GetID());
   // THROW_ERROR_GL(FATAL.Derived("GL_BIND_BUFFER_FAIL", "Binding VBO
   // failed!"));
 }
 
-void VBO::unbind() { glBindBuffer(GL_ARRAY_BUFFER, 0); }
+void VBO::Unbind() { glBindBuffer(GL_ARRAY_BUFFER, 0); }
 
 /* ------------ VAO ------------ */
 
 // TODO: add error checking
 VAO::VAO() {
-  glGenVertexArrays(1, getID_Ptr());
+  glGenVertexArrays(1, GetID_Ptr());
   // THROW_ERROR_GL(FATAL.Derived("GL_GEN_VERTEX_ARRAYS_FAIL",
   //                              "Generating the VAO buffer failed!"));
 }
 
-VAO::~VAO() { glDeleteVertexArrays(1, getID_Ptr()); }
+VAO::~VAO() { glDeleteVertexArrays(1, GetID_Ptr()); }
 
 // TODO: add error checking
-void VAO::bind() {
-  glBindVertexArray(getID());
+void VAO::Bind() {
+  glBindVertexArray(GetID());
   // THROW_ERROR_GL(FATAL.Derived("GL_BIND_VERTEX_ARRAY_FAIL",
   //                              "Binding the VAO buffer failed!"));
 }
 
-void VAO::unbind() { glBindVertexArray(0); }
+void VAO::Unbind() { glBindVertexArray(0); }
 
 // TODO: add error checking
-void VAO::linkAttrib(VBO &vbo, uint32 layout, uint32 components, uint32 type,
+void VAO::LinkAttrib(VBO &vbo, uint32 layout, uint32 components, uint32 type,
                      size_t stride, void *offset) {
-  vbo.bind();
+  vbo.Bind();
   glVertexAttribPointer(layout, components, type, GL_FALSE, stride, offset);
   // THROW_ERROR_GL(FATAL.Derived("GL_VERTEX_ATTRIB_POINTER_FAIL"));
 
   glEnableVertexAttribArray(layout);
   // THROW_ERROR_GL(FATAL.Derived("GL_ENABLE_VERTEX_ATTRIB_ARRAY_FAIL"));
 
-  vbo.unbind();
+  vbo.Unbind();
 }
 
 /* ------------ EBO ------------ */
 
 // TODO: add error checking
 EBO::EBO(uint32 *indices, size_t size) {
-  glGenBuffers(1, getID_Ptr());
+  glGenBuffers(1, GetID_Ptr());
   // THROW_ERROR_GL(FATAL.Derived("GL_GEN_BUFFERS_FAIL",
   //                              "Generating the EBO buffer failed!"));
 
-  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, getID());
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, GetID());
   // THROW_ERROR_GL(
   //     FATAL.Derived("GL_BIND_BUFFER_FAIL", "Binding the EBO buffer
   //     failed!"));
@@ -127,31 +278,31 @@ EBO::EBO(uint32 *indices, size_t size) {
   //                              "Assigning data to the EBO buffer failed!"));
 }
 
-EBO::~EBO() { glDeleteBuffers(1, getID_Ptr()); }
+EBO::~EBO() { glDeleteBuffers(1, GetID_Ptr()); }
 
-void EBO::bind() { glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, getID()); }
+void EBO::Bind() { glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, GetID()); }
 
-void EBO::unbind() { glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0); }
+void EBO::Unbind() { glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0); }
 
 /* ------------ Renderer ------------ */
 
-void Renderer::init() {
-  if (Engine::isInit() == false) {
+void Renderer::Init() {
+  if (Engine::IsInit() == false) {
     Logger::LOG("You must call `Engine::init()` first!");
     return;
   }
-  if (isInit()) {
+  if (IsInit()) {
     return;
   }
 
-  get().gl = SDL_GL_CreateContext(Window::getWindow());
-  if (get().gl == nullptr) {
+  Get().gl = SDL_GL_CreateContext(Window::GetWindow());
+  if (Get().gl == nullptr) {
     Logger::LOG("Failed to create OpenGL context! SDL error: " +
-                toString(*SDL_GetError()));
+                ToString(*SDL_GetError()));
     return;
   }
 
-  SDL_GL_MakeCurrent(Window::getWindow(), get().gl);
+  SDL_GL_MakeCurrent(Window::GetWindow(), Get().gl);
 
   if (gladLoadGL((GLADloadfunc)SDL_GL_GetProcAddress) == 0) {
     Logger::LOG("Failed to initialize glad! Remind me to come back here to add "
@@ -167,14 +318,14 @@ void Renderer::init() {
 
   glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
-  get().initialized = true;
+  Get().initialized = true;
 }
 
-void Renderer::shutdown() {
-  if (isInit() == false)
+void Renderer::Shutdown() {
+  if (IsInit() == false)
     return;
 
-  SDL_GL_DestroyContext(get().gl);
+  SDL_GL_DestroyContext(Get().gl);
 
-  get().initialized = false;
+  Get().initialized = false;
 }

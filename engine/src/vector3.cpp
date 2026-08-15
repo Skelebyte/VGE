@@ -15,20 +15,20 @@ Vector3::Vector3(float x, float y, float z) {
   this->z = z;
 }
 
-Vector3 Vector3::cross(const Vector3 &a, const Vector3 &b) {
+Vector3 Vector3::Cross(const Vector3 &a, const Vector3 &b) {
   return Vector3(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z,
                  a.x * b.y - a.y * b.x);
 }
 
-float Vector3::dot(const Vector3 &a, const Vector3 &b) {
+float Vector3::Dot(const Vector3 &a, const Vector3 &b) {
   return a.x * b.x + a.y * b.y + a.z * b.z;
 }
 
-float Vector3::length() const { return sqrt(x * x + y * y + z * z); }
+float Vector3::Length() const { return sqrt(x * x + y * y + z * z); }
 
-Vector3 Vector3::normalized() const {
+Vector3 Vector3::Normalized() const {
   Vector3 norm = *this;
-  float len = this->length();
+  float len = this->Length();
 
   norm.x /= len;
   norm.y /= len;

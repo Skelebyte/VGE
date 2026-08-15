@@ -9,9 +9,8 @@
 namespace vge {
 struct Asset {
   Asset(const String &path);
-  static Asset load(const String &path);
 
-  const String &getPath() const;
+  const String &GetPath() const;
 
 private:
   String path;
@@ -23,15 +22,15 @@ struct Texture : public Asset, public ID {
   Texture(const String &path,
           const TextureFilter &filter = TextureFilter::NEAREST);
   ~Texture();
-  static uchar *customTexture(uint32 width, uint32 height, uint32 r1, uint32 g1,
+  static uchar *CustomTexture(uint32 width, uint32 height, uint32 r1, uint32 g1,
                               uint32 b1, uint32 r2, uint32 g2, uint32 b2);
-  void bind();
-  void unbind();
-  bool isValid() const;
+  void Bind();
+  void Unbind();
+  bool IsValid() const;
 
 protected:
-  void textureFallback();
-  void loadFromData(uchar *data, uint32 channels, uint32 width, uint32 height,
+  void TextureFallback();
+  void LoadFromData(uchar *data, uint32 channels, uint32 width, uint32 height,
                     const TextureFilter &filter = TextureFilter::NEAREST);
 
 private:

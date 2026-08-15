@@ -12,10 +12,10 @@ struct Vector2 {
   Vector2(float xy = 0.0f);
   Vector2(float x, float y);
 
-  static float dot(const Vector2 &a, const Vector2 &b);
+  static float Dot(const Vector2 &a, const Vector2 &b);
 
-  float length() const;
-  Vector2 normalized() const;
+  float Length() const;
+  Vector2 Normalized() const;
 
   Vector2 operator+(const Vector2 &other) const;
   Vector2 operator-(const Vector2 &other) const;

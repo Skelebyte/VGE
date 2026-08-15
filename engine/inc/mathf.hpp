@@ -6,10 +6,10 @@
 namespace vge {
 
 struct Mathf {
-  static float toRadians(float degrees);
-  static float toDegrees(float radians);
-  static float lerp(float a, float b, float t);
-  static bool isZeroApprox(float value);
+  static float ToRadians(float degrees);
+  static float ToDegress(float radians);
+  static float Lerp(float a, float b, float t);
+  static bool IsZeroApprox(float value);
 };
 
 } // namespace vge

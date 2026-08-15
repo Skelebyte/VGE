@@ -8,14 +8,15 @@
 
 namespace vge {
 struct Window : Singleton<Window> {
-  static void init(String title = "VGE", uint32 width = 960,
+  static void Init(String title = "VGE", uint32 width = 960,
                    uint32 height = 640, bool allowResize = true,
                    bool fullscreen = false);
-  static void close();
-  static bool process();
-  static Vector2 getDimensions();
-  static void swapBuffer();
-  static SDL_Window *getWindow();
+  static void Close();
+  static bool Process();
+  static Vector2 GetDimensions();
+  static void SwapBuffer();
+  static SDL_Window *GetWindow();
+  static void SetTitle(const String &title);
 
 protected:
   SDL_Window *window;

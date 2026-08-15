@@ -10,14 +10,15 @@
 namespace vge {
 
 struct File {
-  static String read(const String &path);
-  static void write(const String &path, const String &content,
+  static String Read(const String &path);
+  static void Write(const String &path, const String &content,
                     bool overwrite = false);
-  static bool exists(const String &path);
-  static size_t fileSize(const String &path);
-  static String getExtension(const String &path);
+  static bool Exists(const String &path);
+  static size_t FileSize(const String &path);
+  static String GetExtension(const String &path);
 
-  static size_t mbToBytes(uint32 mb);
+  static size_t MbToBytes(uint32 mb);
+  static double BytesToMb(size_t bytes);
 };
 
 } // namespace vge

@@ -5,16 +5,17 @@
 #include <SDL3/SDL_init.h>
 #include <SDL3/SDL_timer.h>
 #include <SDL3/SDL_video.h>
+#include <chrono>
 #include <cstddef>
 #include <string>
 
 using namespace vge;
 
-void Engine::init(String title, uint32 width, uint32 height, bool allowResize,
+void Engine::Init(String title, uint32 width, uint32 height, bool allowResize,
                   bool fullscreen) {
-  Logger::init();
+  Logger::Init();
 
-  if (isInit()) {
+  if (IsInit()) {
     Logger::LOG("Engine has already been initialized!");
 
     return;
@@ -29,70 +30,83 @@ void Engine::init(String title, uint32 width, uint32 height, bool allowResize,
   SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
   SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
-  Time::init(SDL_GetTicks());
+  Time::Init(SDL_GetTicks());
 
-  setTargetFps(60);
+  SetTargetFps(60);
 
-  get().initialized = true;
-  Window::init(title, width, height, allowResize, fullscreen);
-  Renderer::init();
+  Get().initialized = true;
+  Window::Init(title, width, height, allowResize, fullscreen);
+  Renderer::Init();
+
+  Get().engineStartTime = std::chrono::system_clock::now().time_since_epoch() /
+                          std::chrono::milliseconds(1);
 }
 
-void Engine::shutdown() {
-  if (isInit() == false) {
+void Engine::Shutdown() {
+  if (IsInit() == false) {
     Logger::LOG("You must call `Engine::init()` first!");
     return;
   }
 
-  Renderer::shutdown();
-  Window::close();
+  Renderer::Shutdown();
+  Window::Close();
 
-  get().initialized = false;
+  Logger::LOG("Engine shutting down. Uptime: " + ToString(GetUptime() / 1000) +
+              "s.");
+
+  Get().initialized = false;
 }
 
-bool Engine::process() {
-  if (isInit() == false) {
+bool Engine::Process() {
+  if (IsInit() == false) {
     Logger::LOG("You must call `Engine::init()` first!");
     return false;
   }
+  return true;
 }
 
-void Engine::beginFrame() {
-  get().isProcessFrame = false;
-  Time::newFrame(SDL_GetTicks());
+void Engine::BeginFrame() {
+  Get().isProcessFrame = false;
+  Time::NewFrame(SDL_GetTicks());
 
-  get().processTime += Time::deltaTime();
-  get().frameTime += Time::deltaTime();
+  Get().processTime += Time::DeltaTime();
+  Get().frameTime += Time::DeltaTime();
 
-  while (get().processTime >= get().targetFps) {
-    get().processTime -= get().targetFps;
-    get().isProcessFrame = true;
+  while (Get().processTime >= Get().targetFps) {
+    Get().processTime -= Get().targetFps;
+    Get().isProcessFrame = true;
 
-    if (get().frameTime >= 1.0f) {
-      get().frameTime = 0.0f;
-      get().fps = get().frames;
-      get().frames = 0;
+    if (Get().frameTime >= 1.0f) {
+      Get().frameTime = 0.0f;
+      Get().fps = Get().frames;
+      Get().frames = 0;
     }
   }
 
-  if (get().isProcessFrame) {
-    get().frames++;
+  if (Get().isProcessFrame) {
+    Get().frames++;
   }
 }
 
-void Engine::endFrame() {
-  if (!isInit()) {
+void Engine::EndFrame() {
+  if (!IsInit()) {
 
     return;
   }
 }
 
-void Engine::setTargetFps(uint32 target) {
+void Engine::SetTargetFps(uint32 target) {
   if (target > 999) {
-    get().targetFps = 1.0f / 999.0f;
+    Get().targetFps = 1.0f / 999.0f;
   } else {
-    get().targetFps = 1.0f / (float)target;
+    Get().targetFps = 1.0f / (float)target;
   }
 }
 
-uint32 Engine::getFps() { return get().fps; }
+uint32 Engine::GetFps() { return Get().fps; }
+
+uint64 Engine::GetUptime() {
+  return (std::chrono::system_clock::now().time_since_epoch() /
+          std::chrono::milliseconds(1)) -
+         Get().engineStartTime;
+}

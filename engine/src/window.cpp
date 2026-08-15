@@ -4,13 +4,13 @@
 
 using namespace vge;
 
-void Window::init(String title, uint32 width, uint32 height, bool allowResize,
+void Window::Init(String title, uint32 width, uint32 height, bool allowResize,
                   bool fullscreen) {
-  if (Engine::isInit() == false) {
+  if (Engine::IsInit() == false) {
     Logger::LOG("You must call `Engine::init()` first!");
     return;
   }
-  if (isInit() || get().window != nullptr) {
+  if (IsInit() || Get().window != nullptr) {
     return;
   }
 
@@ -22,47 +22,47 @@ void Window::init(String title, uint32 width, uint32 height, bool allowResize,
     flags |= SDL_WINDOW_FULLSCREEN;
   }
 
-  get().window = SDL_CreateWindow(title.c_str(), width, height, flags);
-  if (get().window == nullptr) {
+  Get().window = SDL_CreateWindow(title.c_str(), width, height, flags);
+  if (Get().window == nullptr) {
     Logger::LOG("Failed to create window! SDL error: " +
-                toString(*SDL_GetError()));
+                ToString(*SDL_GetError()));
   }
 
-  SDL_ShowWindow(get().window);
+  SDL_ShowWindow(Get().window);
 
-  get().running = true;
-  get().initialized = true;
+  Get().running = true;
+  Get().initialized = true;
 }
 
-void Window::close() {
-  if (Engine::isInit() == false) {
+void Window::Close() {
+  if (Engine::IsInit() == false) {
     Logger::LOG("You must call `Engine::init()` first!");
     return;
   }
-  if (isInit() == false) {
+  if (IsInit() == false) {
     Logger::LOG("You must call `Window::init()` first!");
     return;
   }
-  if (get().window == nullptr) {
+  if (Get().window == nullptr) {
     return;
   }
 
-  SDL_DestroyWindow(get().window);
+  SDL_DestroyWindow(Get().window);
 
-  get().running = false;
-  get().initialized = false;
+  Get().running = false;
+  Get().initialized = false;
 }
 
-bool Window::process() {
-  if (Engine::isInit() == false) {
+bool Window::Process() {
+  if (Engine::IsInit() == false) {
     Logger::LOG("You must call `Engine::init()` first!");
     return false;
   }
-  if (isInit() == false) {
+  if (IsInit() == false) {
     Logger::LOG("You must call `Window::init()` first!");
     return false;
   }
-  if (get().window == nullptr) {
+  if (Get().window == nullptr) {
     Logger::LOG("Window is null!");
     return false;
   }
@@ -70,57 +70,57 @@ bool Window::process() {
   SDL_Event sdlEvent;
   while (SDL_PollEvent(&sdlEvent)) {
     if (sdlEvent.type == SDL_EVENT_QUIT) {
-      get().running = false;
+      Get().running = false;
       Logger::LOG("Window should close");
     }
   }
 
-  Vector2 dimensions = getDimensions();
+  Vector2 dimensions = GetDimensions();
 
   float windowAspect = (float)dimensions.x / dimensions.y;
   float gameAspect = (float)1920 / 1080;
 
-  get().pillarboxed = false;
+  Get().pillarboxed = false;
 
   if (windowAspect > gameAspect) {
-    get().viewportSize.x = (int32)(dimensions.y * gameAspect);
-    get().viewportSize.y = dimensions.y;
+    Get().viewportSize.x = (int32)(dimensions.y * gameAspect);
+    Get().viewportSize.y = dimensions.y;
 
-    get().viewportPosition.x = (dimensions.x - get().viewportSize.x) / 2;
-    get().viewportPosition.y = 0;
-    get().pillarboxed = true;
+    Get().viewportPosition.x = (dimensions.x - Get().viewportSize.x) / 2;
+    Get().viewportPosition.y = 0;
+    Get().pillarboxed = true;
   } else {
-    get().viewportSize.x = dimensions.x;
-    get().viewportSize.y = (int32)(dimensions.x / gameAspect);
+    Get().viewportSize.x = dimensions.x;
+    Get().viewportSize.y = (int32)(dimensions.x / gameAspect);
 
-    get().viewportPosition.x = 0;
-    get().viewportPosition.y = (dimensions.y - get().viewportSize.y) / 2;
-    get().pillarboxed = false;
+    Get().viewportPosition.x = 0;
+    Get().viewportPosition.y = (dimensions.y - Get().viewportSize.y) / 2;
+    Get().pillarboxed = false;
   }
 
   glDisable(GL_SCISSOR_TEST);
   glClearColor(0, 0, 0, 1);
   glClear(GL_COLOR_BUFFER_BIT);
 
-  glViewport(get().viewportPosition.x, get().viewportPosition.y,
-             get().viewportSize.x, get().viewportSize.y);
+  glViewport(Get().viewportPosition.x, Get().viewportPosition.y,
+             Get().viewportSize.x, Get().viewportSize.y);
   glEnable(GL_SCISSOR_TEST);
-  glScissor(get().viewportPosition.x, get().viewportPosition.y,
-            get().viewportSize.x, get().viewportSize.y);
+  glScissor(Get().viewportPosition.x, Get().viewportPosition.y,
+            Get().viewportSize.x, Get().viewportSize.y);
 
   glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-  return get().running;
+  return Get().running;
 }
 
-Vector2 Window::getDimensions() {
-  if (isInit() == false) {
+Vector2 Window::GetDimensions() {
+  if (IsInit() == false) {
     Logger::LOG("You must call `Window::init()` first!");
     return Vector2();
   }
-  if (get().window == nullptr) {
+  if (Get().window == nullptr) {
     return Vector2();
   }
 
@@ -128,11 +128,11 @@ Vector2 Window::getDimensions() {
   int32 y;
   Vector2 dimensions;
 
-  if (SDL_GetWindowSize(get().window, &x, &y) == false) {
+  if (SDL_GetWindowSize(Get().window, &x, &y) == false) {
     dimensions.x = 0;
     dimensions.y = 0;
     Logger::LOG("Failed to get window dimensions! SDL error: " +
-                toString(*SDL_GetError()));
+                ToString(*SDL_GetError()));
   } else {
     dimensions.x = x;
     dimensions.y = y;
@@ -141,16 +141,28 @@ Vector2 Window::getDimensions() {
   return dimensions;
 }
 
-void Window::swapBuffer() {
-  if (isInit() == false) {
+void Window::SwapBuffer() {
+  if (IsInit() == false) {
     Logger::LOG("You must call `Window::init()` first!");
     return;
   }
-  if (get().window == nullptr) {
+  if (Get().window == nullptr) {
     return;
   }
 
-  SDL_GL_SwapWindow(get().window);
+  SDL_GL_SwapWindow(Get().window);
 }
 
-SDL_Window *Window::getWindow() { return get().window; }
+SDL_Window *Window::GetWindow() { return Get().window; }
+
+void Window::SetTitle(const String &title) {
+  if (IsInit() == false) {
+    Logger::LOG("You must call Window::init() first!");
+    return;
+  }
+  if (Get().window == nullptr) {
+    return;
+  }
+
+  SDL_SetWindowTitle(Get().window, title.c_str());
+}

@@ -17,20 +17,20 @@ struct Engine : Singleton<Engine> {
    * @param allowResize
    * @param fullscreen
    */
-  static void init(String title = "VGE", uint32 width = 960,
+  static void Init(String title = "VGE", uint32 width = 960,
                    uint32 height = 640, bool allowResize = true,
                    bool fullscreen = false);
-  // static void shutdown();
   /**
    * @brief Shuts down the engine, window, and renderer.
    *
    */
-  static void shutdown();
-  static bool process();
-  static void beginFrame();
-  static void endFrame();
-  static void setTargetFps(uint32 target);
-  static uint32 getFps();
+  static void Shutdown();
+  static bool Process();
+  static void BeginFrame();
+  static void EndFrame();
+  static void SetTargetFps(uint32 target);
+  static uint32 GetFps();
+  static uint64 GetUptime();
 
 protected:
   bool isProcessFrame = false;
@@ -39,6 +39,7 @@ protected:
   float targetFps;
   uint32 fps;
   uint32 frames;
+  uint64 engineStartTime;
 };
 
 } // namespace vge

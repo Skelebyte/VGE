@@ -1,22 +1,35 @@
+#include "engine/inc/common.hpp"
+#include "engine/inc/graphics.hpp"
+#include "engine/inc/list.hpp"
+#include "engine/inc/logger.hpp"
 #include "engine/vge.hpp"
 #include <iostream>
 
 using namespace vge;
 
 int main() {
-  Engine::init("hi mum");
+  Engine::Init("hi mum");
+  Engine::SetTargetFps(-1);
+
+  /*
+   * why the scope brackets?
+   * its for destructors of Texture and any future
+   * structs
+   */
 
   {
-    Texture tex = Texture("assets/textures/image.png");
+    while (Window::Process()) {
+      Engine::BeginFrame();
 
-    while (Window::process()) {
-      Engine::beginFrame();
+      Window::SetTitle("FPS: " + ToString(Engine::GetFps()));
 
-      Window::swapBuffer();
+      // Renderer::UpdateCamera(Vector3(0), Vector3(0));
+
+      Window::SwapBuffer();
     }
   }
 
-  Engine::shutdown();
+  Engine::Shutdown();
 
   return 0;
 }

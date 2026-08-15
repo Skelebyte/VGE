@@ -5,23 +5,23 @@ using namespace vge;
 
 Asset::Asset(const String &path) { this->path = path; }
 
-const String &Asset::getPath() const { return path; }
+const String &Asset::GetPath() const { return path; }
 
 /* ------------ Texture ------------ */
 
 Texture::Texture(const String &path, const TextureFilter &filter)
     : Asset(path) {
   if (path.empty() == true) {
-    uchar *data = Texture::customTexture(4, 4, 255, 255, 255, 200, 200, 200);
+    uchar *data = Texture::CustomTexture(4, 4, 255, 255, 255, 200, 200, 200);
     valid = true;
-    loadFromData(data, 3, 4, 4);
+    LoadFromData(data, 3, 4, 4);
     return;
   }
 
-  if (File::exists(path) == false) {
+  if (File::Exists(path) == false) {
     Logger::LOG("File \"" + path +
                 "\" does not exist! Loading fallback texture.");
-    textureFallback();
+    TextureFallback();
     return;
   }
 
@@ -36,18 +36,18 @@ Texture::Texture(const String &path, const TextureFilter &filter)
   if (!data) {
     Logger::LOG("Failed to load texture \"" + path +
                 "\". Loading fallback texture");
-    textureFallback();
+    TextureFallback();
     return;
   }
   valid = true;
-  loadFromData(data, channels, width, height, filter);
+  LoadFromData(data, channels, width, height, filter);
 }
 
-Texture::~Texture() { glDeleteTextures(1, getID_Ptr()); }
+Texture::~Texture() { glDeleteTextures(1, GetID_Ptr()); }
 
-uchar *Texture::customTexture(uint32 width, uint32 height, uint32 r1, uint32 g1,
+uchar *Texture::CustomTexture(uint32 width, uint32 height, uint32 r1, uint32 g1,
                               uint32 b1, uint32 r2, uint32 g2, uint32 b2) {
-  uchar *data = (uchar *)Memory::MALLOC(width * height * 3);
+  uchar *data = (uchar *)Memory::Malloc(width * height * 3);
   for (int32 y = 0; y < height; y++) {
     for (int32 x = 0; x < width; x++) {
       float t = (float)x / width;
@@ -69,30 +69,30 @@ uchar *Texture::customTexture(uint32 width, uint32 height, uint32 r1, uint32 g1,
   return data;
 }
 
-void Texture::bind() { glBindTexture(GL_TEXTURE_2D, getID()); }
+void Texture::Bind() { glBindTexture(GL_TEXTURE_2D, GetID()); }
 
-void Texture::unbind() { glBindTexture(GL_TEXTURE_2D, 0); }
+void Texture::Unbind() { glBindTexture(GL_TEXTURE_2D, 0); }
 
-bool Texture::isValid() const { return valid; }
+bool Texture::IsValid() const { return valid; }
 
-void Texture::textureFallback() {
-  uchar *data = Texture::customTexture(4, 4, 255, 0, 255, 0, 0, 0);
+void Texture::TextureFallback() {
+  uchar *data = Texture::CustomTexture(4, 4, 255, 0, 255, 0, 0, 0);
   valid = false;
-  loadFromData(data, 3, 4, 4);
+  LoadFromData(data, 3, 4, 4);
 }
 
 // TODO: add error checking
-void Texture::loadFromData(uchar *data, uint32 channels, uint32 width,
+void Texture::LoadFromData(uchar *data, uint32 channels, uint32 width,
                            uint32 height, const TextureFilter &filter) {
   if (!data) {
     // THROW_ERROR(ERROR.Derived("", "The `data` parameter is not valid!"));
     return;
   }
 
-  glGenTextures(1, getID_Ptr());
+  glGenTextures(1, GetID_Ptr());
   // THROW_ERROR_GL(FATAL.Derived("", "Failed to generate texture."));
 
-  glBindTexture(GL_TEXTURE_2D, getID());
+  glBindTexture(GL_TEXTURE_2D, GetID());
   // THROW_ERROR_GL(FATAL.Derived("", "Failed to bind texture."));
 
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -126,5 +126,5 @@ void Texture::loadFromData(uchar *data, uint32 channels, uint32 width,
   glGenerateMipmap(GL_TEXTURE_2D);
   // THROW_ERROR_GL(FATAL.Derived("", "Failed to generate mipmap."));
 
-  Memory::free(data);
+  Memory::Free(data);
 }

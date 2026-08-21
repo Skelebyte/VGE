@@ -128,3 +128,75 @@ void Texture::LoadFromData(uchar *data, uint32 channels, uint32 width,
 
   Memory::Free(data);
 }
+
+/* ------------ Vertex ------------ */
+
+Vertex::Vertex() {
+  position = Vector3();
+  uv = Vector2();
+  normal = Vector3();
+}
+
+Vertex::Vertex(Vector3 pos, Vector2 uv, Vector3 norm) {
+  position = pos;
+  this->uv = uv;
+  normal = norm;
+}
+
+/* ------------ Mesh ------------ */
+
+Mesh Mesh::GeneratePlane(uint32 divisions, const Vector2 &dimensions) {
+  Vector2 planeDimensions;
+
+  if (divisions == 0)
+    divisions = 1;
+
+  if (dimensions == Vector2(0.0f)) {
+    planeDimensions = Vector2(1.0f);
+  } else {
+    planeDimensions = dimensions;
+  }
+
+  Mesh mesh;
+
+  float triangleSideX = planeDimensions.x / divisions;
+  float triangleSideY = planeDimensions.y / divisions;
+
+  for (uint32 row = 0; row <= divisions;
+       row++) { // possibly may need to use divisions + 1
+    for (uint32 col = 0; col <= divisions;
+         col++) { // possibly may need to use divisions + 1
+
+      if (row < divisions && col < divisions) {
+        uint32 index = row * (divisions + 1) + col;
+
+        // top triangle
+        mesh.indices.Add(index);
+        mesh.indices.Add(index + 1);
+        mesh.indices.Add(index + (divisions + 1));
+
+        // bottom triangle
+        mesh.indices.Add(index + 1);
+        mesh.indices.Add(index + (divisions + 1) + 1);
+        mesh.indices.Add(index + (divisions + 1));
+      }
+
+      Vector3 pos = Vector3((col * triangleSideX) - dimensions.x / 2, 0.0f,
+                            (row * -triangleSideY) + dimensions.y / 2);
+      Vector2 uv = Vector2((float)col / divisions, (float)row / divisions);
+      Vector3 normal = Vector3(0, 1, 0);
+      mesh.vertices.Add(Vertex(pos, uv, normal));
+
+      mesh.data.Add(pos.x);
+      mesh.data.Add(pos.y);
+      mesh.data.Add(pos.z);
+      mesh.data.Add(uv.x);
+      mesh.data.Add(uv.y);
+      mesh.data.Add(normal.x);
+      mesh.data.Add(normal.y);
+      mesh.data.Add(normal.z);
+    }
+  }
+
+  return mesh;
+}

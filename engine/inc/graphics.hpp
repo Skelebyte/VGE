@@ -13,11 +13,15 @@
 
 namespace vge {
 
-struct Color {
-  float r, g, b, a;
+union Color {
+  struct {
+    float r, g, b, a;
+  };
+  float data[4];
 
   Color(float rgb = 1.0f, float alpha = 1.0f);
   Color(float red, float green, float blue, float alpha = 1.0f);
+  ~Color();
 
   static Color White();
   static Color Black();
@@ -26,13 +30,6 @@ struct Color {
   static Color Blue();
   static Color Magenta();
   static Color Grey();
-
-  /**
-   * @brief Get RGBA as a pointer. Needs to be freed manually.
-   *
-   * @return float*
-   */
-  float *AsPtr();
 };
 
 struct Uniform : public ID {
@@ -41,6 +38,7 @@ struct Uniform : public ID {
 
   void SetValue(const Matrix4 &value);
   void SetValue(const Vector3 &value);
+  void SetValue(const Vector2 &value);
   void SetValue(const Color &value);
   void SetValue(float value);
   void SetValue(int32 value);

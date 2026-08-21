@@ -18,6 +18,8 @@ Color::Color(float red, float green, float blue, float alpha) {
   a = alpha;
 }
 
+Color::~Color() {}
+
 Color Color::White() { return Color(1.0f); }
 Color Color::Black() { return Color(0.0f); }
 Color Color::Red() { return Color(1.0f, 0.0f, 0.0f); }
@@ -25,17 +27,6 @@ Color Color::Green() { return Color(0.0f, 1.0f, 0.0f); }
 Color Color::Blue() { return Color(0.0f, 0.0f, 1.0f); }
 Color Color::Magenta() { return Color(1.0f, 0.0f, 1.0f); }
 Color Color::Grey() { return Color(0.5f, 0.5f, 0.5f); }
-
-float *Color::AsPtr() {
-  float *arr = (float *)Memory::Malloc(sizeof(float) * 4);
-
-  arr[0] = r;
-  arr[1] = g;
-  arr[2] = b;
-  arr[3] = a;
-
-  return arr;
-}
 
 /* ------------ Uniform ------------ */
 
@@ -51,7 +42,43 @@ const String &Uniform::GetName() const { return name; }
 void Uniform::SetValue(const Matrix4 &value) {
   glUniformMatrix4fv(GetID(), 1, GL_FALSE, value.data);
   Logger::CHECK_OPENGL(
-      "Failed to set Matrix4 value on uniform \"" + GetName() + "\".", 1);
+      "Failed to set Matrix4 value on uniform \"" + GetName() + "\".", 2);
+}
+
+void Uniform::SetValue(const Vector3 &value) {
+  glUniform3fv(GetID(), 1, value.data);
+  Logger::CHECK_OPENGL(
+      "Failed to set Vector3 value on uniform \"" + GetName() + "\".", 2);
+}
+
+void Uniform::SetValue(const Vector2 &value) {
+  glUniform2fv(GetID(), 1, value.data);
+  Logger::CHECK_OPENGL(
+      "Failed to set Vector2 value on uniform \"" + GetName() + "\".", 2);
+}
+
+void Uniform::SetValue(const Color &value) {
+  glUniform3fv(GetID(), 1, value.data);
+  Logger::CHECK_OPENGL(
+      "Failed to set Color value on uniform \"" + GetName() + "\".", 2);
+}
+
+void Uniform::SetValue(float value) {
+  glUniform1f(GetID(), value);
+  Logger::CHECK_OPENGL(
+      "Failed to set float value on uniform \"" + GetName() + "\".", 2);
+}
+
+void Uniform::SetValue(int32 value) {
+  glUniform1i(GetID(), value);
+  Logger::CHECK_OPENGL(
+      "Failed to set int32 value on uniform \"" + GetName() + "\".", 2);
+}
+
+void Uniform::SetValue(bool value) {
+  glUniform1i(GetID(), value);
+  Logger::CHECK_OPENGL(
+      "Failed to set bool value on uniform \"" + GetName() + "\".", 2);
 }
 
 /* ------------ Shader ------------ */

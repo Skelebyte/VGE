@@ -1,7 +1,3 @@
-#include "engine/inc/common.hpp"
-#include "engine/inc/graphics.hpp"
-#include "engine/inc/list.hpp"
-#include "engine/inc/logger.hpp"
 #include "engine/vge.hpp"
 #include <iostream>
 
@@ -18,14 +14,23 @@ int main() {
    */
 
   {
+    Color col = Color(0.5f, 0.7f, 0.3f);
+    col.r = 1.0f;
+
+    for (int32 i = 0; i < 4; i++) {
+      std::cout << "cout: " << col.data[i] << std::endl;
+    }
+    std::cout << "cout stop" << std::endl;
+
     while (Window::Process()) {
       Engine::BeginFrame();
-
       Window::SetTitle("FPS: " + ToString(Engine::GetFps()));
 
       // Renderer::UpdateCamera(Vector3(0), Vector3(0));
 
       Window::SwapBuffer();
+
+      Window::Close();
     }
   }
 

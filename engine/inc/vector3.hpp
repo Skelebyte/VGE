@@ -3,14 +3,19 @@
 
 #include "common.hpp"
 #include "logger.hpp"
+#include "memory.hpp"
 
 namespace vge {
 
-struct Vector3 {
-  float x, y, z;
+union Vector3 {
+  struct {
+    float x, y, z;
+  };
+  float data[3];
 
   Vector3(float xyz = 0.0f);
   Vector3(float x, float y, float z);
+  ~Vector3();
 
   static Vector3 Cross(const Vector3 &a, const Vector3 &b);
   static float Dot(const Vector3 &a, const Vector3 &b);

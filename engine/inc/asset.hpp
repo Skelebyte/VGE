@@ -4,10 +4,14 @@
 #include "../ext/stb/stb_image.h"
 #include "common.hpp"
 #include "file.hpp"
+#include "list.hpp"
 #include "memory.hpp"
+#include "vector2.hpp"
+#include "vector3.hpp"
 
 namespace vge {
 struct Asset {
+  Asset() = default;
   Asset(const String &path);
 
   const String &GetPath() const;
@@ -37,8 +41,27 @@ private:
   bool valid;
 };
 
+struct Vertex {
+  Vertex();
+  Vertex(Vector3 pos, Vector2 uv, Vector3 norm);
+  ~Vertex() = default;
+
+  Vector3 position;
+  Vector2 uv;
+  Vector3 normal;
+};
+
 struct Mesh : Asset {
-  Mesh(const String &path);
+  Mesh() = default;
+  Mesh(const String &path, bool blenderFix = true);
+  ~Mesh() = default;
+
+  static Mesh GeneratePlane(uint32 divisions, const Vector2 &dimensions);
+
+  List<Vertex> vertices;
+  List<uint32> indices;
+
+  List<float> data;
 };
 
 } // namespace vge

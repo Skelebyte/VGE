@@ -13,6 +13,8 @@ Vector2::Vector2(float x, float y) {
   this->y = y;
 }
 
+Vector2::~Vector2() {}
+
 float Vector2::Dot(const Vector2 &a, const Vector2 &b) {
   return a.x * b.x + a.y * b.y;
 }

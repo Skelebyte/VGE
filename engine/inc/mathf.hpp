@@ -10,6 +10,8 @@ struct Mathf {
   static float ToDegress(float radians);
   static float Lerp(float a, float b, float t);
   static bool IsZeroApprox(float value);
+  static float Min(float a, float b);
+  static float Max(float a, float b);
 };
 
 } // namespace vge

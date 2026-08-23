@@ -23,11 +23,13 @@ String File::Read(const String &path) {
   file.seekg(0, std::ios::beg);
 
   // char *buffer = new char[size + 1];
-  char *buffer = (char *)Memory::Malloc(size + 1);
-  if (!file.read(buffer, size)) {
+  Pointer<char> buffer = Pointer<char>();
+  buffer.Malloc(size + 1);
+  if (!file.read(buffer.GetData(), size)) {
     // THROW_ERROR(ERROR.Derived("", "Failed to read file " + path + "."));
     // delete[] buffer;
-    Memory::Free(buffer);
+    //? buffer.Free(); // im not sure about commenting this out, im pretty sure
+    //? the Pointer destructor will handle it though.
     return "";
   }
 
@@ -35,9 +37,8 @@ String File::Read(const String &path) {
 
   file.close();
 
-  String data = buffer;
+  String data = buffer.GetData();
   // delete[] buffer;
-  Memory::Free(buffer);
 
   return data;
 }

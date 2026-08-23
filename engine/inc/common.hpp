@@ -9,6 +9,8 @@
 
 namespace vge {
 
+#define VGE_CALL_INFO __FILE__, __FUNCTION__, __LINE__
+
 using uchar = unsigned char;
 using uint8 = uint8_t;
 using uint32 = uint32_t;

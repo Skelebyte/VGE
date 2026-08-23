@@ -1,3 +1,7 @@
+#include "engine/inc/asset.hpp"
+#include "engine/inc/common.hpp"
+#include "engine/inc/graphics.hpp"
+#include "engine/inc/vector2.hpp"
 #include "engine/vge.hpp"
 #include <iostream>
 
@@ -14,13 +18,14 @@ int main() {
    */
 
   {
-    Color col = Color(0.5f, 0.7f, 0.3f);
-    col.r = 1.0f;
+    Shader defaultShader = Shader("default", "assets/shaders/default.frag",
+                                  "assets/shaders/default.vert");
+    defaultShader.AddUniform("diffuseTexture");
+    defaultShader.AddUniform("color");
 
-    for (int32 i = 0; i < 4; i++) {
-      std::cout << "cout: " << col.data[i] << std::endl;
-    }
-    std::cout << "cout stop" << std::endl;
+    Mesh mesh = Mesh::GeneratePlane();
+
+    Texture texture = Texture(4, 4, Color::White(), Color::Green());
 
     while (Window::Process()) {
       Engine::BeginFrame();
@@ -29,8 +34,6 @@ int main() {
       // Renderer::UpdateCamera(Vector3(0), Vector3(0));
 
       Window::SwapBuffer();
-
-      Window::Close();
     }
   }
 

@@ -5,7 +5,8 @@
 using namespace vge;
 
 Matrix4::Matrix4(bool identity) {
-  data = (float *)Memory::Malloc(sizeof(float) * 16);
+  data = Pointer<float>();
+  data.Malloc(16);
 
   if (identity) {
     this->Identity();
@@ -16,7 +17,7 @@ Matrix4::Matrix4(bool identity) {
   }
 }
 
-Matrix4::~Matrix4() { Memory::Free(data); }
+Matrix4::~Matrix4() { data.Free(); }
 
 void Matrix4::Identity() {
   for (int i = 0; i < 16; i++) {

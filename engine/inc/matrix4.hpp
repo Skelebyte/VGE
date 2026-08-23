@@ -13,7 +13,7 @@ struct Matrix4 {
   ~Matrix4();
 
   // float data[16] = {0};
-  float *data;
+  Pointer<float> data;
 
   void Identity();
   static Matrix4 Transformation(const Vector3 &position,

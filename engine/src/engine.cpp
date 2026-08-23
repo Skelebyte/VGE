@@ -49,7 +49,7 @@ void Engine::Shutdown() {
   }
 
   Renderer::Shutdown();
-  Window::Close();
+  Window::Shutdown();
 
   Logger::LOG("Engine shutting down. Uptime: " + ToString(GetUptime() / 1000) +
               "s.");

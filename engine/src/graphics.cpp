@@ -40,7 +40,7 @@ Uniform::Uniform(const String &name, uint32 shaderID) {
 const String &Uniform::GetName() const { return name; }
 
 void Uniform::SetValue(const Matrix4 &value) {
-  glUniformMatrix4fv(GetID(), 1, GL_FALSE, value.data);
+  glUniformMatrix4fv(GetID(), 1, GL_FALSE, value.data.GetData());
   Logger::CHECK_OPENGL(
       "Failed to set Matrix4 value on uniform \"" + GetName() + "\".", 2);
 }
@@ -194,11 +194,15 @@ bool Shader::IsCompileOk(uint32 shader, const String &type) {
 
   glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
   if (!success) {
-    char *log = (char *)Memory::Malloc(sizeof(char) * 1024);
-    glGetShaderInfoLog(shader, 1024, nullptr, log);
-    Logger::CHECK_OPENGL(type + " shader compile is not ok! OpenGL log: " + log,
-                         0);
-    Memory::Free(log);
+    Pointer<char> log = Pointer<char>();
+    log.Malloc(1024);
+    if (!log) {
+      Logger::LOG("log is not valid!");
+    }
+
+    glGetShaderInfoLog(shader, 1024, nullptr, log.GetData());
+    Logger::CHECK_OPENGL(
+        type + " shader compile is not ok! OpenGL log: " + log.GetData(), 0);
     return true;
   }
 
@@ -211,14 +215,13 @@ bool Shader::IsLinkOk() {
   glGetProgramiv(GetID(), GL_LINK_STATUS, &success);
 
   if (!success) {
-    int32 logLen;
-    glGetProgramiv(GetID(), GL_INFO_LOG_LENGTH, &logLen);
-    char *log = (char *)Memory::Malloc(sizeof(char) * logLen);
 
-    Logger::CHECK_OPENGL("Program link is not ok! OpenGL log: " + (String)log,
-                         0);
+    Pointer<char> log = Pointer<char>();
+    log.Malloc(1024);
+    glGetProgramInfoLog(GetID(), 1024, nullptr, log.GetData());
 
-    Memory::Free(log);
+    Logger::CHECK_OPENGL(
+        "Program link is not ok! OpenGL log: " + (String)log.GetData(), 0);
 
     return true;
   }

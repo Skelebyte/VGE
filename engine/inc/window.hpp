@@ -11,7 +11,9 @@ struct Window : Singleton<Window> {
   static void Init(String title = "VGE", uint32 width = 960,
                    uint32 height = 640, bool allowResize = true,
                    bool fullscreen = false);
-  static void Close();
+  //! `Window::Shutdown` is for internal use only! Use `Window::Stop` instead!
+  static void Shutdown();
+  static void Stop();
   static bool Process();
   static Vector2 GetDimensions();
   static void SwapBuffer();

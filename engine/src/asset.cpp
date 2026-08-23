@@ -9,12 +9,27 @@ const String &Asset::GetPath() const { return path; }
 
 /* ------------ Texture ------------ */
 
+Texture::Texture(uint32 width, uint32 height, const Color &a, const Color &b,
+                 TextureFilter filter)
+    : Asset("CHECKERED") {
+
+  Pointer<uchar> data = Pointer<uchar>();
+  Texture::CheckeredTextureData(data, width, height, a, b);
+
+  valid = true;
+  LoadFromData(data, 4, width, height, filter);
+}
+
 Texture::Texture(const String &path, const TextureFilter &filter)
     : Asset(path) {
   if (path.empty() == true) {
-    uchar *data = Texture::CustomTexture(4, 4, 255, 255, 255, 200, 200, 200);
+
+    Pointer<uchar> data = Pointer<uchar>();
+
+    Texture::CheckeredTextureData(data, 4, 4, Color::White(), Color::Grey());
     valid = true;
     LoadFromData(data, 3, 4, 4);
+
     return;
   }
 
@@ -29,10 +44,13 @@ Texture::Texture(const String &path, const TextureFilter &filter)
 
   int32 width, height, channels;
 
-  uchar *data;
+  // uchar *data;
+
+  Pointer<uchar> data = Pointer<uchar>();
 
   // TODO: log how much memory is being allocated here (if possible)
-  data = stbi_load(path.c_str(), &width, &height, &channels, 0);
+  data.SetData(stbi_load(path.c_str(), &width, &height, &channels, 0));
+
   if (!data) {
     Logger::LOG("Failed to load texture \"" + path +
                 "\". Loading fallback texture");
@@ -45,28 +63,29 @@ Texture::Texture(const String &path, const TextureFilter &filter)
 
 Texture::~Texture() { glDeleteTextures(1, GetID_Ptr()); }
 
-uchar *Texture::CustomTexture(uint32 width, uint32 height, uint32 r1, uint32 g1,
-                              uint32 b1, uint32 r2, uint32 g2, uint32 b2) {
-  uchar *data = (uchar *)Memory::Malloc(width * height * 3);
+void Texture::CheckeredTextureData(Pointer<uchar> &data, uint32 width,
+                                   uint32 height, const Color &a,
+                                   const Color &b) {
+  data.Malloc(width * height * 4);
   for (int32 y = 0; y < height; y++) {
     for (int32 x = 0; x < width; x++) {
       float t = (float)x / width;
       float s = (float)y / height;
 
-      int32 index = (y * width + x) * 3;
+      int32 index = (y * width + x) * 4;
       if (((int32)(s * height) + (int32)(t * width)) % 2 == 0) {
-        data[index] = r1;
-        data[index + 1] = g1;
-        data[index + 2] = b1;
+        data[index] = a.r;
+        data[index + 1] = a.g;
+        data[index + 2] = a.b;
+        data[index + 3] = a.a;
       } else {
-        data[index] = r2;
-        data[index + 1] = g2;
-        data[index + 2] = b2;
+        data[index] = b.r;
+        data[index + 1] = b.g;
+        data[index + 2] = b.b;
+        data[index + 3] = b.a;
       }
     }
   }
-
-  return data;
 }
 
 void Texture::Bind() { glBindTexture(GL_TEXTURE_2D, GetID()); }
@@ -76,16 +95,17 @@ void Texture::Unbind() { glBindTexture(GL_TEXTURE_2D, 0); }
 bool Texture::IsValid() const { return valid; }
 
 void Texture::TextureFallback() {
-  uchar *data = Texture::CustomTexture(4, 4, 255, 0, 255, 0, 0, 0);
+  Pointer<uchar> data = Pointer<uchar>();
+  Texture::CheckeredTextureData(data, 4, 4, Color::Magenta(), Color::Black());
   valid = false;
   LoadFromData(data, 3, 4, 4);
 }
 
-// TODO: add error checking
-void Texture::LoadFromData(uchar *data, uint32 channels, uint32 width,
+// TODO: add opengl error checking
+void Texture::LoadFromData(Pointer<uchar> &data, uint32 channels, uint32 width,
                            uint32 height, const TextureFilter &filter) {
   if (!data) {
-    // THROW_ERROR(ERROR.Derived("", "The `data` parameter is not valid!"));
+    Logger::LOG("data parameter is not valid!");
     return;
   }
 
@@ -120,13 +140,13 @@ void Texture::LoadFromData(uchar *data, uint32 channels, uint32 width,
   uint32 format = channels == 4 ? GL_RGBA : GL_RGB;
 
   glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format,
-               GL_UNSIGNED_BYTE, data);
+               GL_UNSIGNED_BYTE, data.GetData());
   // THROW_ERROR_GL(FATAL.Derived("", "Failed to set texture data."));
 
   glGenerateMipmap(GL_TEXTURE_2D);
   // THROW_ERROR_GL(FATAL.Derived("", "Failed to generate mipmap."));
 
-  Memory::Free(data);
+  // Memory::Free(data); //! dont free in this function idiot
 }
 
 /* ------------ Vertex ------------ */
@@ -145,11 +165,12 @@ Vertex::Vertex(Vector3 pos, Vector2 uv, Vector3 norm) {
 
 /* ------------ Mesh ------------ */
 
-Mesh Mesh::GeneratePlane(uint32 divisions, const Vector2 &dimensions) {
+Mesh Mesh::GeneratePlane(const Vector2 &dimensions, int32 divisions) {
   Vector2 planeDimensions;
+  int32 planeDivisions = Mathf::Max(1, divisions);
 
   if (divisions == 0)
-    divisions = 1;
+    planeDivisions = 1;
 
   if (dimensions == Vector2(0.0f)) {
     planeDimensions = Vector2(1.0f);

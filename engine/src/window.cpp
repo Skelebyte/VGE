@@ -34,7 +34,7 @@ void Window::Init(String title, uint32 width, uint32 height, bool allowResize,
   Get().initialized = true;
 }
 
-void Window::Close() {
+void Window::Shutdown() {
   if (Engine::IsInit() == false) {
     Logger::LOG("You must call `Engine::init()` first!");
     return;
@@ -48,14 +48,30 @@ void Window::Close() {
   }
 
   SDL_DestroyWindow(Get().window);
+  Get().window = nullptr;
 
-  Get().running = false;
+  Stop();
   Get().initialized = false;
+}
+
+void Window::Stop() {
+  if (Engine::IsInit() == false) {
+    Logger::LOG("You must call `Engine::init()` first!");
+    return;
+  }
+  if (IsInit() == false) {
+    Logger::LOG("You must call `Window::init()` first!");
+    return;
+  }
+  Get().running = false;
 }
 
 bool Window::Process() {
   if (Engine::IsInit() == false) {
     Logger::LOG("You must call `Engine::init()` first!");
+    return false;
+  }
+  if (Get().running == false) {
     return false;
   }
   if (IsInit() == false) {
@@ -70,7 +86,7 @@ bool Window::Process() {
   SDL_Event sdlEvent;
   while (SDL_PollEvent(&sdlEvent)) {
     if (sdlEvent.type == SDL_EVENT_QUIT) {
-      Get().running = false;
+      Stop();
       Logger::LOG("Window should close");
     }
   }

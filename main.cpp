@@ -1,6 +1,7 @@
 #include "engine/inc/asset.hpp"
 #include "engine/inc/common.hpp"
 #include "engine/inc/graphics.hpp"
+#include "engine/inc/memory.hpp"
 #include "engine/inc/vector2.hpp"
 #include "engine/vge.hpp"
 #include <iostream>
@@ -31,7 +32,7 @@ int main() {
       Engine::BeginFrame();
       Window::SetTitle("FPS: " + ToString(Engine::GetFps()));
 
-      // Renderer::UpdateCamera(Vector3(0), Vector3(0));
+      Renderer::UpdateCamera(Vector3(0), Vector3(0));
 
       Window::SwapBuffer();
     }

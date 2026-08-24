@@ -30,7 +30,7 @@ struct Engine : Singleton<Engine> {
   static void EndFrame();
   static void SetTargetFps(uint32 target);
   static uint32 GetFps();
-  static uint64 GetUptime();
+  static uint64 GetUptimeMs();
 
 protected:
   bool isProcessFrame = false;

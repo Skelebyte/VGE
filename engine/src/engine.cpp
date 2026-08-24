@@ -51,8 +51,20 @@ void Engine::Shutdown() {
   Renderer::Shutdown();
   Window::Shutdown();
 
-  Logger::LOG("Engine shutting down. Uptime: " + ToString(GetUptime() / 1000) +
-              "s.");
+  uint64 uptime = GetUptimeMs() / 1000;
+  String format = "s";
+  if (uptime >= 60) {
+    uptime /= 60;
+    format = "m";
+
+    if (uptime >= 60) {
+      uptime /= 60;
+      format = "hr";
+    }
+  }
+
+  Logger::LOG("Engine shutting down. Uptime: " + ToString(uptime) + format +
+              ".");
 
   Get().initialized = false;
 }
@@ -105,7 +117,7 @@ void Engine::SetTargetFps(uint32 target) {
 
 uint32 Engine::GetFps() { return Get().fps; }
 
-uint64 Engine::GetUptime() {
+uint64 Engine::GetUptimeMs() {
   return (std::chrono::system_clock::now().time_since_epoch() /
           std::chrono::milliseconds(1)) -
          Get().engineStartTime;

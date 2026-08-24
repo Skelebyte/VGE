@@ -359,3 +359,6 @@ void Renderer::Shutdown() {
 
   Get().initialized = false;
 }
+
+void Renderer::UpdateCamera(const Vector3 &pos, const Vector3 &rot,
+                            float fovDeg) {}

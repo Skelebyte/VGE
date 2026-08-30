@@ -4,8 +4,10 @@
 #include "common.hpp"
 #include "engine.hpp"
 #include "list.hpp"
-#include "matrix4.hpp"
+#include "matrix4x4.hpp"
 #include "memory.hpp"
+#include "object3d.hpp"
+#include "vector2.hpp"
 #include "vector3.hpp"
 #include "window.hpp"
 #include <SDL3/SDL.h>
@@ -36,7 +38,7 @@ struct Uniform : public ID {
   Uniform(const String &name, uint32 shaderID);
   const String &GetName() const;
 
-  void SetValue(const Matrix4 &value);
+  void SetValue(const Matrix4x4 &value);
   void SetValue(const Vector3 &value);
   void SetValue(const Vector2 &value);
   void SetValue(const Color &value);
@@ -93,9 +95,7 @@ struct EBO : public ID {
 struct Renderer : Singleton<Renderer> {
   static void Init();
   static void Shutdown();
-  static void UpdateCamera(const Vector3 &pos, const Vector3 &rot,
-                           float fovDeg = 75.0f);
-  // static void ToggleWireframe();
+  static void ToggleWireframe();
 
 private:
   SDL_GLContext gl;

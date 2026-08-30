@@ -23,7 +23,7 @@ String File::Read(const String &path) {
   file.seekg(0, std::ios::beg);
 
   // char *buffer = new char[size + 1];
-  Pointer<char> buffer = Pointer<char>();
+  Pointer<char> buffer;
   buffer.Malloc(size + 1);
   if (!file.read(buffer.GetData(), size)) {
     // THROW_ERROR(ERROR.Derived("", "Failed to read file " + path + "."));

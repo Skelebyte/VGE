@@ -39,10 +39,10 @@ Uniform::Uniform(const String &name, uint32 shaderID) {
 
 const String &Uniform::GetName() const { return name; }
 
-void Uniform::SetValue(const Matrix4 &value) {
+void Uniform::SetValue(const Matrix4x4 &value) {
   glUniformMatrix4fv(GetID(), 1, GL_FALSE, value.data.GetData());
   Logger::CHECK_OPENGL(
-      "Failed to set Matrix4 value on uniform \"" + GetName() + "\".", 2);
+      "Failed to set Matrix4x4 value on uniform \"" + GetName() + "\".", 2);
 }
 
 void Uniform::SetValue(const Vector3 &value) {
@@ -157,7 +157,7 @@ Shader::~Shader() {
 
 void Shader::AddUniform(const String &name) {
   for (int32 i = 0; i < uniforms.Size(); i++) {
-    if (uniforms[i]->GetName() == name) {
+    if (uniforms[i].GetName() == name) {
       Logger::LOG("Uniform with the name \"" + name +
                   "\" already exists in this shader!");
       return;
@@ -169,8 +169,8 @@ void Shader::AddUniform(const String &name) {
 
 Uniform *Shader::GetUniform(const String &name) {
   for (int32 i = 0; i < uniforms.Size(); i++) {
-    if (uniforms[i]->GetName() == name) {
-      return uniforms[i];
+    if (uniforms[i].GetName() == name) {
+      return &uniforms[i];
     }
   }
 
@@ -194,7 +194,7 @@ bool Shader::IsCompileOk(uint32 shader, const String &type) {
 
   glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
   if (!success) {
-    Pointer<char> log = Pointer<char>();
+    Pointer<char> log;
     log.Malloc(1024);
     if (!log) {
       Logger::LOG("log is not valid!");
@@ -216,7 +216,7 @@ bool Shader::IsLinkOk() {
 
   if (!success) {
 
-    Pointer<char> log = Pointer<char>();
+    Pointer<char> log;
     log.Malloc(1024);
     glGetProgramInfoLog(GetID(), 1024, nullptr, log.GetData());
 
@@ -360,5 +360,12 @@ void Renderer::Shutdown() {
   Get().initialized = false;
 }
 
-void Renderer::UpdateCamera(const Vector3 &pos, const Vector3 &rot,
-                            float fovDeg) {}
+void Renderer::ToggleWireframe() {
+  Get().wireframe = !Get().wireframe;
+
+  if (Get().wireframe) {
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+  } else {
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+  }
+}

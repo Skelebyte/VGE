@@ -1,11 +1,11 @@
-#include "../inc/matrix4.hpp"
+#include "../inc/matrix4x4.hpp"
 #include "../inc/mathf.hpp"
 #include <cstring>
 
 using namespace vge;
 
-Matrix4::Matrix4(bool identity) {
-  data = Pointer<float>();
+Matrix4x4::Matrix4x4(bool identity) {
+  // data = Pointer<float>();
   data.Malloc(16);
 
   if (identity) {
@@ -17,9 +17,9 @@ Matrix4::Matrix4(bool identity) {
   }
 }
 
-Matrix4::~Matrix4() { data.Free(); }
+// Matrix4x4::~Matrix4x4() { data.Free(); }
 
-void Matrix4::Identity() {
+void Matrix4x4::Identity() {
   for (int i = 0; i < 16; i++) {
     data[i] = 0;
   }
@@ -30,9 +30,10 @@ void Matrix4::Identity() {
   data[15] = 1;
 }
 
-Matrix4 Matrix4::Transformation(const Vector3 &position,
-                                const Vector3 &rotation, const Vector3 &scale) {
-  Matrix4 pos = Matrix4(true), rot = Matrix4(true), sca = Matrix4(true);
+Matrix4x4 Matrix4x4::Transformation(const Vector3 &position,
+                                    const Vector3 &rotation,
+                                    const Vector3 &scale) {
+  Matrix4x4 pos = Matrix4x4(true), rot = Matrix4x4(true), sca = Matrix4x4(true);
 
   pos.SetTranslation(position);
   rot.SetRotation(rotation);
@@ -41,9 +42,9 @@ Matrix4 Matrix4::Transformation(const Vector3 &position,
   return pos * rot * sca;
 }
 
-Matrix4 Matrix4::Perspective(float fovDeg, float aspect, float near,
-                             float far) {
-  Matrix4 mat = Matrix4(true);
+Matrix4x4 Matrix4x4::Perspective(float fovDeg, float aspect, float near,
+                                 float far) {
+  Matrix4x4 mat = Matrix4x4(true);
 
   float rad = Mathf::ToRadians(fovDeg);
 
@@ -57,14 +58,15 @@ Matrix4 Matrix4::Perspective(float fovDeg, float aspect, float near,
   return mat;
 }
 
-void Matrix4::SetTranslation(const Vector3 &point) {
+void Matrix4x4::SetTranslation(const Vector3 &point) {
   this->data[12] = point.x;
   this->data[13] = point.y;
   this->data[14] = point.z;
 }
 
-void Matrix4::SetRotation(const Vector3 &angles) {
-  Matrix4 xRot = Matrix4(true), yRot = Matrix4(true), zRot = Matrix4(true);
+void Matrix4x4::SetRotation(const Vector3 &angles) {
+  Matrix4x4 xRot = Matrix4x4(true), yRot = Matrix4x4(true),
+            zRot = Matrix4x4(true);
 
   Vector3 anglesRad =
       Vector3(Mathf::ToRadians(angles.x), Mathf::ToRadians(angles.y),
@@ -86,14 +88,14 @@ void Matrix4::SetRotation(const Vector3 &angles) {
   *this = xRot * yRot * zRot;
 }
 
-void Matrix4::SetScale(const Vector3 &scale) {
+void Matrix4x4::SetScale(const Vector3 &scale) {
   this->data[0] = scale.x;
   this->data[5] = scale.y;
   this->data[10] = scale.z;
 }
 
-void Matrix4::LookAt(const Vector3 &target, const Vector3 &position,
-                     const Vector3 &forward) {
+void Matrix4x4::LookAt(const Vector3 &target, const Vector3 &position,
+                       const Vector3 &forward) {
   this->Identity();
   Vector3 forward_ = (position - target).Normalized();
   Vector3 right =
@@ -114,8 +116,8 @@ void Matrix4::LookAt(const Vector3 &target, const Vector3 &position,
   this->data[14] = -Vector3::Dot(forward_, position);
 }
 
-Matrix4 Matrix4::operator*(const Matrix4 &other) {
-  Matrix4 out = Matrix4();
+Matrix4x4 Matrix4x4::operator*(const Matrix4x4 &other) {
+  Matrix4x4 out = Matrix4x4();
 
   for (int col = 0; col < 4; col++) {
     for (int row = 0; row < 4; row++) {
@@ -129,7 +131,7 @@ Matrix4 Matrix4::operator*(const Matrix4 &other) {
   return out;
 }
 
-void Matrix4::operator=(const Matrix4 &other) {
+void Matrix4x4::operator=(const Matrix4x4 &other) {
   for (int i = 0; i < 16; i++) {
     this->data[i] = other.data[i];
   }

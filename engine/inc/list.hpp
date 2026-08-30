@@ -22,22 +22,22 @@ template <typename T> struct List {
     }
   }
 
-  void Remove(uint32 index) {
+  void internal_Remove(uint32 index, VGE_CALL_PARAMS) {
     if (index > Size()) {
-      // err::ErrorSystem::THROW_ERROR(err::ERROR.Derived(
-      //     "INDEX_OUT_OF_BOUNDS", "Index " + std::to_string(index) +
-      //                                " is out of bounds. Size of list: " +
-      //                                std::to_string(Size()) + "."));
+      Logger::internal_LogFatal(
+          "Index " + ToString(index) +
+              " is out of bounds (list size: " + ToString(Size()) + ").",
+          VGE_CALL_PARAMS_USAGE);
       return;
     }
 
     data.erase(data.begin() + index);
   }
 
-  void RemoveElement(T element) {
+  void internal_RemoveElement(T element, VGE_CALL_PARAMS) {
     for (uint32 i = 0; i < Size(); i++) {
       if (data[i] == element) {
-        Remove(i);
+        internal_Remove(i);
         break;
       }
     }
@@ -49,15 +49,14 @@ template <typename T> struct List {
 
   std::vector<T> *AsVector() { return &data; }
 
-  T *operator[](uint32 index) {
+  T &operator[](uint32 index) {
     if (index >= Size()) {
-      Logger::LOG("Index " + ToString(index) +
-                  " is out of bounds (list size: " + ToString(Size()) + ").");
-
-      return nullptr;
+      Logger::LOG_FATAL("Index " + ToString(index) +
+                        " is out of bounds (list size: " + ToString(Size()) +
+                        ").");
     }
 
-    return &data[index];
+    return data[index];
   }
 
 private:

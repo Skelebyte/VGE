@@ -43,8 +43,14 @@ private:
   size_t last;
 };
 
+enum MemoryState { UNALLOCATED = 0, ALLOCATED = 1, FREED = 2 };
+
 template <typename T> struct Pointer {
-  Pointer() { typeSize = sizeof(T); }
+  Pointer() {
+    typeSize = sizeof(T);
+    state = MemoryState::UNALLOCATED;
+    data = nullptr;
+  }
   ~Pointer() { internal_Free(VGE_CALL_INFO); }
 
   bool internal_Malloc(size_t size, const String &file, const String &func,
@@ -53,18 +59,27 @@ template <typename T> struct Pointer {
       Logger::internal_Log("You need to call Free first!", file, func, line);
       return false;
     }
+    if (size == 0) {
+      Logger::internal_LogFatal("Cant allocate 0 bytes of memory!", file, func,
+                                line);
+      return false;
+    }
 
     allocationSize = typeSize * size;
 
-    Logger::internal_Log("Attempting to allocate " + ToString(allocationSize) +
-                             " bytes of memory.",
-                         file, func, line);
+    if (Memory::Get().logMallocSizes) {
+      Logger::internal_Log("Attempting to allocate " +
+                               ToString(allocationSize) + " bytes of memory.",
+                           file, func, line);
+    }
 
     data = (T *)std::malloc(allocationSize);
     if (!data) {
-      Logger::internal_Log("Failed to allocate " + ToString(allocationSize) +
-                               " bytes of memory!",
-                           file, func, line);
+      if (Memory::Get().logMallocSizes) {
+        Logger::internal_Log("Failed to allocate " + ToString(allocationSize) +
+                                 " bytes of memory!",
+                             file, func, line);
+      }
       return false;
     }
 
@@ -76,12 +91,36 @@ template <typename T> struct Pointer {
 
     Memory::IncreaseUsedMemory(allocationSize);
 
+    mallocData = LogData(func, file, "", "", "", line);
+
+    state = MemoryState::ALLOCATED;
+
     return true;
   }
 
   void internal_Free(const String &file, const String &func, uint32 line) {
+    switch (state) {
+    case UNALLOCATED:
+      Logger::internal_Log("You need to call Malloc first! State: UNALLOCATED",
+                           file, func, line);
+      return;
+      break;
+    case ALLOCATED:
+      break;
+    case FREED:
+      Logger::internal_Log("You need to call Malloc first! State: FREED", file,
+                           func, line);
+      return;
+      break;
+    default:
+      Logger::internal_Log("You need to call Malloc first! State: UNKNOWN",
+                           file, func, line);
+      return;
+      break;
+    }
+
     if (!data) {
-      Logger::internal_Log("You need to call Malloc first!", file, func, line);
+      Logger::internal_Log("Data is not valid!", file, func, line);
       return;
     }
 
@@ -89,13 +128,17 @@ template <typename T> struct Pointer {
       data[i].~T();
     }
 
-    Logger::internal_Log("Freeing " + ToString(allocationSize) +
-                             " bytes of memory.",
-                         file, func, line);
+    if (Memory::Get().logFreeSizes) {
+      Logger::internal_Log("Freeing " + ToString(allocationSize) +
+                               " bytes of memory.",
+                           file, func, line);
+    }
     std::free(data);
     data = nullptr;
 
     Memory::DecreaseUsedMemory(allocationSize);
+
+    state = MemoryState::FREED;
 
     allocationSize = 0;
     count = 0;
@@ -142,6 +185,8 @@ protected:
   size_t allocationSize = 0;
   size_t typeSize = 0;
   T *data = nullptr;
+  MemoryState state;
+  LogData mallocData;
 };
 
 } // namespace vge

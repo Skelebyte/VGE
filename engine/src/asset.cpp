@@ -13,7 +13,7 @@ Texture::Texture(uint32 width, uint32 height, const Color &a, const Color &b,
                  TextureFilter filter)
     : Asset("CHECKERED") {
 
-  Pointer<uchar> data = Pointer<uchar>();
+  Pointer<uchar> data;
   Texture::CheckeredTextureData(data, width, height, a, b);
 
   valid = true;
@@ -24,7 +24,7 @@ Texture::Texture(const String &path, const TextureFilter &filter)
     : Asset(path) {
   if (path.empty() == true) {
 
-    Pointer<uchar> data = Pointer<uchar>();
+    Pointer<uchar> data;
 
     Texture::CheckeredTextureData(data, 4, 4, Color::White(), Color::Grey());
     valid = true;
@@ -46,7 +46,7 @@ Texture::Texture(const String &path, const TextureFilter &filter)
 
   // uchar *data;
 
-  Pointer<uchar> data = Pointer<uchar>();
+  Pointer<uchar> data;
 
   // TODO: log how much memory is being allocated here (if possible)
   data.SetData(stbi_load(path.c_str(), &width, &height, &channels, 0));
@@ -95,7 +95,7 @@ void Texture::Unbind() { glBindTexture(GL_TEXTURE_2D, 0); }
 bool Texture::IsValid() const { return valid; }
 
 void Texture::TextureFallback() {
-  Pointer<uchar> data = Pointer<uchar>();
+  Pointer<uchar> data;
   Texture::CheckeredTextureData(data, 4, 4, Color::Magenta(), Color::Black());
   valid = false;
   LoadFromData(data, 3, 4, 4);

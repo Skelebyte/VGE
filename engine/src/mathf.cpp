@@ -1,4 +1,5 @@
 #include "../inc/mathf.hpp"
+#include <cstdlib>
 
 using namespace vge;
 
@@ -13,7 +14,7 @@ float Mathf::ToRadians(float degrees) {
   return result;
 }
 
-float Mathf::ToDegress(float radians) {
+float Mathf::ToDegrees(float radians) {
   float result = radians / M_PI * 180;
 
   if (result != result) {
@@ -26,7 +27,7 @@ float Mathf::ToDegress(float radians) {
 
 float Mathf::Lerp(float a, float b, float t) { return a + t * (b - a); }
 
-bool Mathf::IsZeroApprox(float value) { return std::abs(value) < 0.00001f; }
+bool Mathf::IsZeroApprox(float value) { return Mathf::Abs(value) < 0.00001f; }
 
 float Mathf::Min(float a, float b) {
   if (a <= b) {
@@ -41,5 +42,15 @@ float Mathf::Max(float a, float b) {
     return a;
   } else {
     return b;
+  }
+}
+
+float Mathf::Abs(float a) {
+  std::cout << "abs: " << a << std::endl;
+
+  if (a < 0) {
+    return a - (a * 2);
+  } else {
+    return a;
   }
 }

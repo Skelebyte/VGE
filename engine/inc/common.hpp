@@ -4,12 +4,13 @@
 #include <cstdint>
 #include <iostream>
 #include <string>
+#include <vector>
 
 #include "../ext/glad/gl.h"
 
 namespace vge {
 
-#define VGE_CALL_INFO __FILE__, __FUNCTION__, __LINE__
+// template <typename T> using Vector = std::vector<T>;
 
 using uchar = unsigned char;
 using uint8 = uint8_t;
@@ -18,6 +19,11 @@ using uint64 = uint64_t;
 using int32 = int32_t;
 using int64 = int64_t;
 using String = std::string;
+
+#define VGE_CALL_INFO __FILE__, __FUNCTION__, __LINE__
+#define VGE_CALL_PARAMS                                                        \
+  const String &file, const String &func, const uint32 line
+#define VGE_CALL_PARAMS_USAGE file, func, line
 
 //! this is not great... should stick to SCREAMING_SNAKE_CASE for macros
 #define ToString(value) std::to_string(value)

@@ -1,5 +1,6 @@
 #include "../inc/logger.hpp"
 #include "../inc/memory.hpp"
+#include "../inc/window.hpp"
 #include <cstdlib>
 
 using namespace vge;
@@ -41,14 +42,12 @@ void Logger::Init() {
 
 void Logger::internal_Log(const String &msg, const String &file,
                           const String &function, uint32 lineNumber,
-                          bool overwriteLog) {
+                          bool overwriteLog, bool fatal) {
 
   String logString = Time::GetDateString() + ", " + Time::GetTimeString() +
                      " [ from: " + file + ":" + ToString(lineNumber) + ", " +
-                     function +
-                     "() ]"
-                     " | " +
-                     msg;
+                     function + "() ] " + (fatal ? " FATAL ERROR " : "") +
+                     " | " + msg;
 
   File::Write(".log", logString, overwriteLog);
 
@@ -60,9 +59,13 @@ void Logger::internal_Log(const String &msg, const String &file,
 
 void Logger::internal_LogFatal(const String &msg, const String &file,
                                const String &function, uint32 lineNumber) {
-  internal_Log(msg, file, function, lineNumber);
+  internal_Log(msg, file, function, lineNumber, false, true);
 
   // TODO: popup window
+  Window::CreatePopUp("Fatal Error",
+                      msg + "\n\nfrom: " + file + ":" + ToString(lineNumber) +
+                          ", " + function + "()",
+                      true);
 
   exit(EXIT_FAILURE);
 }

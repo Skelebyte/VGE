@@ -34,7 +34,7 @@ struct Logger : Singleton<Logger> {
   static void internal_Log(const String &msg, const String &file = __FILE__,
                            const String &function = "__FUNCTION__",
                            const uint32 lineNumber = 0,
-                           bool overwriteLog = false);
+                           bool overwriteLog = false, bool fatal = false);
   static void internal_LogFatal(const String &msg,
                                 const String &file = __FILE__,
                                 const String &function = "__FUNCTION__",

@@ -1,5 +1,6 @@
 #include "../inc/window.hpp"
 #include <SDL3/SDL_error.h>
+#include <SDL3/SDL_messagebox.h>
 #include <SDL3/SDL_video.h>
 
 using namespace vge;
@@ -181,4 +182,20 @@ void Window::SetTitle(const String &title) {
   }
 
   SDL_SetWindowTitle(Get().window, title.c_str());
+}
+
+void Window::CreatePopUp(const String &title, const String &content,
+                         bool errorWindow) {
+  if (Engine::IsInit() == false) {
+    Logger::LOG("You must call `Engine::init()` first!");
+    return;
+  }
+  // if (IsInit() == false) {
+  //   Logger::LOG("You must call Window::init() first!");
+  //   return;
+  // }
+
+  SDL_ShowSimpleMessageBox(
+      (errorWindow ? SDL_MESSAGEBOX_ERROR : SDL_MESSAGEBOX_INFORMATION),
+      title.c_str(), content.c_str(), NULL);
 }

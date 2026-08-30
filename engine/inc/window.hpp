@@ -19,6 +19,8 @@ struct Window : Singleton<Window> {
   static void SwapBuffer();
   static SDL_Window *GetWindow();
   static void SetTitle(const String &title);
+  static void CreatePopUp(const String &title, const String &content,
+                          bool errorWindow = false);
 
 protected:
   SDL_Window *window;

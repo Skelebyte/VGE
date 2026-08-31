@@ -1,0 +1,61 @@
+\doxysection{vge::Pointer\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Struct Template Reference}
+\hypertarget{structvge_1_1Pointer}{}\label{structvge_1_1Pointer}\index{vge::Pointer$<$ T $>$@{vge::Pointer$<$ T $>$}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structvge_1_1Pointer_a0c9f71954c0dab0a4f9c96e5255f6dca}\label{structvge_1_1Pointer_a0c9f71954c0dab0a4f9c96e5255f6dca} 
+bool {\bfseries internal\+\_\+\+Malloc} (size\+\_\+t size, const String \&file, const String \&func, uint32 line)
+\item 
+\Hypertarget{structvge_1_1Pointer_afc5d2ec6b6fa5a4b5399e5d53f1f79e8}\label{structvge_1_1Pointer_afc5d2ec6b6fa5a4b5399e5d53f1f79e8} 
+void {\bfseries internal\+\_\+\+Free} (const String \&file, const String \&func, uint32 line)
+\item 
+\Hypertarget{structvge_1_1Pointer_a48177bc27d7db3578b2ce362cde4e791}\label{structvge_1_1Pointer_a48177bc27d7db3578b2ce362cde4e791} 
+T \texorpdfstring{$\ast$}{*} {\bfseries Get\+Data} ()
+\item 
+\Hypertarget{structvge_1_1Pointer_a25eb33d8402657b2dc9a2b44231b2938}\label{structvge_1_1Pointer_a25eb33d8402657b2dc9a2b44231b2938} 
+T \texorpdfstring{$\ast$}{*} {\bfseries Get\+Data} () const
+\item 
+\Hypertarget{structvge_1_1Pointer_a489e6e7ae685eb23f5b787977e1f53e6}\label{structvge_1_1Pointer_a489e6e7ae685eb23f5b787977e1f53e6} 
+void {\bfseries Set\+Data} (T \texorpdfstring{$\ast$}{*}new\+Data)
+\item 
+\Hypertarget{structvge_1_1Pointer_a2cf292d637971d0ba468c375dc54eae6}\label{structvge_1_1Pointer_a2cf292d637971d0ba468c375dc54eae6} 
+size\+\_\+t {\bfseries Get\+Allocated\+Size} () const
+\item 
+\Hypertarget{structvge_1_1Pointer_aed2da09be079d5c336095c87da5e7db8}\label{structvge_1_1Pointer_aed2da09be079d5c336095c87da5e7db8} 
+size\+\_\+t {\bfseries Get\+Amount\+Allocated} () const
+\item 
+\Hypertarget{structvge_1_1Pointer_a58307d11b49ec8360c83925867f05b9c}\label{structvge_1_1Pointer_a58307d11b49ec8360c83925867f05b9c} 
+T \& {\bfseries operator\+[$\,$]} (int i)
+\item 
+\Hypertarget{structvge_1_1Pointer_a23a0eef96a3cad18edbed99b3f41362f}\label{structvge_1_1Pointer_a23a0eef96a3cad18edbed99b3f41362f} 
+T \& {\bfseries operator\+[$\,$]} (int i) const
+\item 
+\Hypertarget{structvge_1_1Pointer_a52bb5c09ae85d887d03235b9bdc460fa}\label{structvge_1_1Pointer_a52bb5c09ae85d887d03235b9bdc460fa} 
+bool {\bfseries operator!} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structvge_1_1Pointer_a4de9fd6e02560ae3eb815926dcb68e16}\label{structvge_1_1Pointer_a4de9fd6e02560ae3eb815926dcb68e16} 
+size\+\_\+t {\bfseries count}
+\item 
+\Hypertarget{structvge_1_1Pointer_af4b07b18e4f077d9fce68e22906337e0}\label{structvge_1_1Pointer_af4b07b18e4f077d9fce68e22906337e0} 
+size\+\_\+t {\bfseries allocation\+Size} = 0
+\item 
+\Hypertarget{structvge_1_1Pointer_a52fff914de6247c81e24db35d4fc97d4}\label{structvge_1_1Pointer_a52fff914de6247c81e24db35d4fc97d4} 
+size\+\_\+t {\bfseries type\+Size} = 0
+\item 
+\Hypertarget{structvge_1_1Pointer_a5fdf57201da2eefe2fda804b3d5b54df}\label{structvge_1_1Pointer_a5fdf57201da2eefe2fda804b3d5b54df} 
+T \texorpdfstring{$\ast$}{*} {\bfseries data} = nullptr
+\item 
+\Hypertarget{structvge_1_1Pointer_a7f8bd9aae6a5502939c3974165261b97}\label{structvge_1_1Pointer_a7f8bd9aae6a5502939c3974165261b97} 
+Memory\+State {\bfseries state}
+\item 
+\Hypertarget{structvge_1_1Pointer_a301e127fc7475fa36334596dfcf52cec}\label{structvge_1_1Pointer_a301e127fc7475fa36334596dfcf52cec} 
+\doxymbox{\hyperlink{structvge_1_1LogData}{Log\+Data}} {\bfseries malloc\+Data}
+\end{DoxyCompactItemize}
+
+
+The documentation for this struct was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+engine/\+inc/memory.\+hpp\end{DoxyCompactItemize}

@@ -1,0 +1,44 @@
+\doxysection{vector3.\+hpp}
+\hypertarget{vector3_8hpp_source}{}\label{vector3_8hpp_source}\index{engine/inc/vector3.hpp@{engine/inc/vector3.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ VGE\_VECTOR3\_HPP}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ VGE\_VECTOR3\_HPP}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}common.hpp"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}logger.hpp"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}memory.hpp"{}}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{keyword}{namespace\ }vge\ \{}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{keyword}{union\ }Vector3\ \{}
+\DoxyCodeLine{00011\ \ \ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keywordtype}{float}\ x,\ y,\ z;}
+\DoxyCodeLine{00013\ \ \ \};}
+\DoxyCodeLine{00014\ \ \ \textcolor{keywordtype}{float}\ data[3];}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \ \ Vector3(\textcolor{keywordtype}{float}\ xyz\ =\ 0.0f);}
+\DoxyCodeLine{00017\ \ \ Vector3(\textcolor{keywordtype}{float}\ x,\ \textcolor{keywordtype}{float}\ y,\ \textcolor{keywordtype}{float}\ z);}
+\DoxyCodeLine{00018\ \ \ \string~Vector3();}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \ \ \textcolor{keyword}{static}\ Vector3\ Cross(\textcolor{keyword}{const}\ Vector3\ \&a,\ \textcolor{keyword}{const}\ Vector3\ \&b);}
+\DoxyCodeLine{00021\ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ Dot(\textcolor{keyword}{const}\ Vector3\ \&a,\ \textcolor{keyword}{const}\ Vector3\ \&b);}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \ \ \textcolor{keywordtype}{float}\ Length()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00024\ \ \ Vector3\ Normalized()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ Vector3\ operator+(\textcolor{keyword}{const}\ Vector3\ \&other)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00027\ \ \ Vector3\ operator-\/(\textcolor{keyword}{const}\ Vector3\ \&other)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00028\ \ \ Vector3\ operator*(\textcolor{keyword}{const}\ Vector3\ \&other)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00029\ \ \ Vector3\ operator*(\textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ \&other)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00030\ \ \ \textcolor{keywordtype}{void}\ operator=(\textcolor{keyword}{const}\ Vector3\ \&other);}
+\DoxyCodeLine{00031\ \ \ \textcolor{keywordtype}{void}\ operator+=(\textcolor{keyword}{const}\ Vector3\ \&other);}
+\DoxyCodeLine{00032\ \ \ \textcolor{keywordtype}{void}\ operator-\/=(\textcolor{keyword}{const}\ Vector3\ \&other);}
+\DoxyCodeLine{00033\ \ \ \textcolor{keywordtype}{bool}\ operator==(\textcolor{keyword}{const}\ Vector3\ \&other)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00034\ \};}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \}\ \textcolor{comment}{//\ namespace\ vge}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

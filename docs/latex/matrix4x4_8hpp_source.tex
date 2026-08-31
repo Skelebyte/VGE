@@ -1,0 +1,42 @@
+\doxysection{matrix4x4.\+hpp}
+\hypertarget{matrix4x4_8hpp_source}{}\label{matrix4x4_8hpp_source}\index{engine/inc/matrix4x4.hpp@{engine/inc/matrix4x4.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ VGE\_MATRIX4\_HPP}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ VGE\_MATRIX4\_HPP}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}common.hpp"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}logger.hpp"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}memory.hpp"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}vector3.hpp"{}}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }vge\ \{}
+\DoxyCodeLine{00010\ \textcolor{keyword}{struct\ }Matrix4x4\ \{}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \ \ Matrix4x4(\textcolor{keywordtype}{bool}\ identity\ =\ \textcolor{keyword}{false});}
+\DoxyCodeLine{00013\ \ \ \string~Matrix4x4()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \ \ \textcolor{keywordtype}{void}\ Identity();}
+\DoxyCodeLine{00016\ \ \ \textcolor{keyword}{static}\ Matrix4x4\ Transformation(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{unionvge_1_1Vector3}{Vector3}}\ \&position,}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{unionvge_1_1Vector3}{Vector3}}\ \&rotation,}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{unionvge_1_1Vector3}{Vector3}}\ \&scale);}
+\DoxyCodeLine{00019\ \ \ \textcolor{keyword}{static}\ Matrix4x4\ Perspective(\textcolor{keywordtype}{float}\ fovDeg,\ \textcolor{keywordtype}{float}\ aspect,\ \textcolor{keywordtype}{float}\ near,}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ far);}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \ \ \textcolor{keywordtype}{void}\ SetTranslation(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{unionvge_1_1Vector3}{Vector3}}\ \&point);}
+\DoxyCodeLine{00023\ \ \ \textcolor{keywordtype}{void}\ SetRotation(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{unionvge_1_1Vector3}{Vector3}}\ \&angles);}
+\DoxyCodeLine{00024\ \ \ \textcolor{keywordtype}{void}\ SetScale(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{unionvge_1_1Vector3}{Vector3}}\ \&scale);}
+\DoxyCodeLine{00025\ \ \ \textcolor{keywordtype}{void}\ LookAt(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{unionvge_1_1Vector3}{Vector3}}\ \&target,\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{unionvge_1_1Vector3}{Vector3}}\ \&position,}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{unionvge_1_1Vector3}{Vector3}}\ \&forward);}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ Matrix4x4\ operator*(\textcolor{keyword}{const}\ Matrix4x4\ \&other);}
+\DoxyCodeLine{00029\ \ \ \textcolor{keywordtype}{void}\ operator=(\textcolor{keyword}{const}\ Matrix4x4\ \&other);}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \ \ \textcolor{comment}{//\ float\ data[16]\ =\ \{0\};}}
+\DoxyCodeLine{00032\ \ \ \doxymbox{\hyperlink{structvge_1_1Pointer}{Pointer<float>}}\ data;}
+\DoxyCodeLine{00033\ \};}
+\DoxyCodeLine{00034\ \}\ \textcolor{comment}{//\ namespace\ vge}}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

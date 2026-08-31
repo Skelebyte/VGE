@@ -1,0 +1,113 @@
+\doxysection{graphics.\+hpp}
+\hypertarget{graphics_8hpp_source}{}\label{graphics_8hpp_source}\index{engine/inc/graphics.hpp@{engine/inc/graphics.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ VGE\_GRAPHICS\_HPP}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ VGE\_GRAPHICS\_HPP}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}common.hpp"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}engine.hpp"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}list.hpp"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}matrix4x4.hpp"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}memory.hpp"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}object3d.hpp"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}vector2.hpp"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}vector3.hpp"{}}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}window.hpp"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <SDL3/SDL.h>}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ <SDL3/SDL\_video.h>}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{keyword}{namespace\ }vge\ \{}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{keyword}{union\ }Color\ \{}
+\DoxyCodeLine{00019\ \ \ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{float}\ r,\ g,\ b,\ a;}
+\DoxyCodeLine{00021\ \ \ \};}
+\DoxyCodeLine{00022\ \ \ \textcolor{keywordtype}{float}\ data[4];}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \ \ Color(\textcolor{keywordtype}{float}\ rgb\ =\ 1.0f,\ \textcolor{keywordtype}{float}\ alpha\ =\ 1.0f);}
+\DoxyCodeLine{00025\ \ \ Color(\textcolor{keywordtype}{float}\ red,\ \textcolor{keywordtype}{float}\ green,\ \textcolor{keywordtype}{float}\ blue,\ \textcolor{keywordtype}{float}\ alpha\ =\ 1.0f);}
+\DoxyCodeLine{00026\ \ \ \string~Color();}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \textcolor{keyword}{static}\ Color\ White();}
+\DoxyCodeLine{00029\ \ \ \textcolor{keyword}{static}\ Color\ Black();}
+\DoxyCodeLine{00030\ \ \ \textcolor{keyword}{static}\ Color\ Red();}
+\DoxyCodeLine{00031\ \ \ \textcolor{keyword}{static}\ Color\ Green();}
+\DoxyCodeLine{00032\ \ \ \textcolor{keyword}{static}\ Color\ Blue();}
+\DoxyCodeLine{00033\ \ \ \textcolor{keyword}{static}\ Color\ Magenta();}
+\DoxyCodeLine{00034\ \ \ \textcolor{keyword}{static}\ Color\ Grey();}
+\DoxyCodeLine{00035\ \};}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \textcolor{keyword}{struct\ }Uniform\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{structvge_1_1ID}{ID}}\ \{}
+\DoxyCodeLine{00038\ \ \ Uniform(\textcolor{keyword}{const}\ String\ \&name,\ uint32\ shaderID);}
+\DoxyCodeLine{00039\ \ \ \textcolor{keyword}{const}\ String\ \&GetName()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \ \ \textcolor{keywordtype}{void}\ SetValue(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{structvge_1_1Matrix4x4}{Matrix4x4}}\ \&value);}
+\DoxyCodeLine{00042\ \ \ \textcolor{keywordtype}{void}\ SetValue(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{unionvge_1_1Vector3}{Vector3}}\ \&value);}
+\DoxyCodeLine{00043\ \ \ \textcolor{keywordtype}{void}\ SetValue(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{unionvge_1_1Vector2}{Vector2}}\ \&value);}
+\DoxyCodeLine{00044\ \ \ \textcolor{keywordtype}{void}\ SetValue(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{unionvge_1_1Color}{Color}}\ \&value);}
+\DoxyCodeLine{00045\ \ \ \textcolor{keywordtype}{void}\ SetValue(\textcolor{keywordtype}{float}\ value);}
+\DoxyCodeLine{00046\ \ \ \textcolor{keywordtype}{void}\ SetValue(int32\ value);}
+\DoxyCodeLine{00047\ \ \ \textcolor{keywordtype}{void}\ SetValue(\textcolor{keywordtype}{bool}\ value);}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00050\ \ \ String\ name;}
+\DoxyCodeLine{00051\ \};}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \textcolor{keyword}{struct\ }Shader\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{structvge_1_1ID}{ID}}\ \{}
+\DoxyCodeLine{00054\ \ \ Shader(\textcolor{keyword}{const}\ String\ \&name,\ \textcolor{keyword}{const}\ String\ \&fragPath,\ \textcolor{keyword}{const}\ String\ \&vertPath);}
+\DoxyCodeLine{00055\ \ \ \string~Shader();}
+\DoxyCodeLine{00056\ \ \ \textcolor{keywordtype}{void}\ AddUniform(\textcolor{keyword}{const}\ String\ \&name);}
+\DoxyCodeLine{00057\ \ \ \doxymbox{\hyperlink{structvge_1_1Uniform}{Uniform}}\ *GetUniform(\textcolor{keyword}{const}\ String\ \&name);}
+\DoxyCodeLine{00058\ \ \ \textcolor{keywordtype}{void}\ Bind();}
+\DoxyCodeLine{00059\ \ \ \textcolor{keywordtype}{void}\ SetName(\textcolor{keyword}{const}\ String\ \&name);}
+\DoxyCodeLine{00060\ \ \ String\ \&GetName();}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00063\ \ \ String\ name;}
+\DoxyCodeLine{00064\ \ \ \doxymbox{\hyperlink{structvge_1_1List}{List<Uniform>}}\ uniforms;}
+\DoxyCodeLine{00065\ \ \ \textcolor{keywordtype}{bool}\ IsCompileOk(uint32\ shader,\ \textcolor{keyword}{const}\ String\ \&type);}
+\DoxyCodeLine{00066\ \ \ \textcolor{keywordtype}{bool}\ IsLinkOk();}
+\DoxyCodeLine{00067\ \};}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \textcolor{keyword}{struct\ }VBO\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{structvge_1_1ID}{ID}}\ \{}
+\DoxyCodeLine{00070\ \ \ VBO(\textcolor{keywordtype}{float}\ *verts,\ \textcolor{keywordtype}{size\_t}\ size);}
+\DoxyCodeLine{00071\ \ \ \string~VBO();}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \ \ \textcolor{keywordtype}{void}\ Bind();}
+\DoxyCodeLine{00074\ \ \ \textcolor{keywordtype}{void}\ Unbind();}
+\DoxyCodeLine{00075\ \};}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \textcolor{keyword}{struct\ }VAO\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{structvge_1_1ID}{ID}}\ \{}
+\DoxyCodeLine{00078\ \ \ VAO();}
+\DoxyCodeLine{00079\ \ \ \string~VAO();}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \ \ \textcolor{keywordtype}{void}\ Bind();}
+\DoxyCodeLine{00082\ \ \ \textcolor{keywordtype}{void}\ Unbind();}
+\DoxyCodeLine{00083\ \ \ \textcolor{keywordtype}{void}\ LinkAttrib(\doxymbox{\hyperlink{structvge_1_1VBO}{VBO}}\ \&vbo,\ uint32\ layout,\ uint32\ components,\ uint32\ type,}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ stride,\ \textcolor{keywordtype}{void}\ *offset);}
+\DoxyCodeLine{00085\ \};}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00087\ \textcolor{keyword}{struct\ }EBO\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{structvge_1_1ID}{ID}}\ \{}
+\DoxyCodeLine{00088\ \ \ EBO(uint32\ *indices,\ \textcolor{keywordtype}{size\_t}\ size);}
+\DoxyCodeLine{00089\ \ \ \string~EBO();}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \ \ \textcolor{keywordtype}{void}\ Bind();}
+\DoxyCodeLine{00092\ \ \ \textcolor{keywordtype}{void}\ Unbind();}
+\DoxyCodeLine{00093\ \};}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00095\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{structvge_1_1Renderer}{Renderer}}\ :\ \doxymbox{\hyperlink{structvge_1_1Singleton}{Singleton}}<Renderer>\ \{}
+\DoxyCodeLine{00096\ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ Init();}
+\DoxyCodeLine{00097\ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ Shutdown();}
+\DoxyCodeLine{00098\ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ ToggleWireframe();}
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00100\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00101\ \ \ SDL\_GLContext\ gl;}
+\DoxyCodeLine{00102\ \ \ \textcolor{keywordtype}{bool}\ wireframe;}
+\DoxyCodeLine{00103\ \};}
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00105\ \}\ \textcolor{comment}{//\ namespace\ vge}}
+\DoxyCodeLine{00106\ }
+\DoxyCodeLine{00107\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

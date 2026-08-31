@@ -16,9 +16,6 @@ int main() {
    * because that would probably cause issues.
    */
 
-  Pointer<float> ptr;
-  ptr.Malloc(0);
-
   {
     Shader defaultShader = Shader("default", "assets/shaders/default.frag",
                                   "assets/shaders/default.vert");

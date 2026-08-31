@@ -1,0 +1,73 @@
+\doxysection{vge::Window Struct Reference}
+\hypertarget{structvge_1_1Window}{}\label{structvge_1_1Window}\index{vge::Window@{vge::Window}}
+Inheritance diagram for vge::Window:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{structvge_1_1Window}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structvge_1_1Window_afbc8eaeca7abcb8612bcfcd3d3fea222}\label{structvge_1_1Window_afbc8eaeca7abcb8612bcfcd3d3fea222} 
+static void {\bfseries Init} (String title="{}VGE"{}, uint32 width=960, uint32 height=640, bool allow\+Resize=true, bool fullscreen=false)
+\item 
+\Hypertarget{structvge_1_1Window_a587f22de78285ef4730a0e601042b10c}\label{structvge_1_1Window_a587f22de78285ef4730a0e601042b10c} 
+static void {\bfseries Shutdown} ()
+\begin{DoxyCompactList}\small\item\em {\ttfamily \doxylink{structvge_1_1Window_a587f22de78285ef4730a0e601042b10c}{Window::\+\+Shutdown}} is for internal use only! Use {\ttfamily Window::\+\+Stop} instead! \end{DoxyCompactList}\item 
+\Hypertarget{structvge_1_1Window_a427fff390ccd649e9fd52d55f7f28c1b}\label{structvge_1_1Window_a427fff390ccd649e9fd52d55f7f28c1b} 
+static void {\bfseries Stop} ()
+\item 
+\Hypertarget{structvge_1_1Window_a4fcb91e9e0e50ae157b3c3a723d3bbef}\label{structvge_1_1Window_a4fcb91e9e0e50ae157b3c3a723d3bbef} 
+static bool {\bfseries Process} ()
+\item 
+\Hypertarget{structvge_1_1Window_afc4e7d5e1244698f8f34fc89f252eaaa}\label{structvge_1_1Window_afc4e7d5e1244698f8f34fc89f252eaaa} 
+static \doxymbox{\hyperlink{unionvge_1_1Vector2I}{Vector2I}} {\bfseries Get\+Dimensions} ()
+\item 
+\Hypertarget{structvge_1_1Window_a6e65c6846a1c6422107a59beb0b91677}\label{structvge_1_1Window_a6e65c6846a1c6422107a59beb0b91677} 
+static void {\bfseries Swap\+Buffer} ()
+\item 
+\Hypertarget{structvge_1_1Window_aadb475ef20489f59b105f4dd46c10fbb}\label{structvge_1_1Window_aadb475ef20489f59b105f4dd46c10fbb} 
+static SDL\+\_\+\+Window \texorpdfstring{$\ast$}{*} {\bfseries Get\+Window} ()
+\item 
+\Hypertarget{structvge_1_1Window_af52a2857fb207159b80d763bba8a48cd}\label{structvge_1_1Window_af52a2857fb207159b80d763bba8a48cd} 
+static void {\bfseries Set\+Title} (const String \&title)
+\item 
+\Hypertarget{structvge_1_1Window_af32559de5a6a011b0e3e222cdb41121c}\label{structvge_1_1Window_af32559de5a6a011b0e3e222cdb41121c} 
+static void {\bfseries Create\+Pop\+Up} (const String \&title, const String \&content, bool error\+Window=false)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions inherited from \doxymbox{\hyperlink{structvge_1_1Singleton}{vge::\+\+Singleton$<$ Window $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+static \doxymbox{\hyperlink{structvge_1_1Window}{Window}} \& {\bfseries Get} ()
+\item 
+static bool {\bfseries Is\+Init} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structvge_1_1Window_a80bfda5814c6c02a9e55815ff094a14b}\label{structvge_1_1Window_a80bfda5814c6c02a9e55815ff094a14b} 
+SDL\+\_\+\+Window \texorpdfstring{$\ast$}{*} {\bfseries window}
+\item 
+\Hypertarget{structvge_1_1Window_a0bae45db6985acfb0da7dc37912f2bd4}\label{structvge_1_1Window_a0bae45db6985acfb0da7dc37912f2bd4} 
+bool {\bfseries running}
+\item 
+\Hypertarget{structvge_1_1Window_a036bf87a5754093ebed1e87e71f72948}\label{structvge_1_1Window_a036bf87a5754093ebed1e87e71f72948} 
+bool {\bfseries pillarboxed} = false
+\item 
+\Hypertarget{structvge_1_1Window_aacedbdcdda0a0583e70cebbf2b78e8a2}\label{structvge_1_1Window_aacedbdcdda0a0583e70cebbf2b78e8a2} 
+\doxymbox{\hyperlink{unionvge_1_1Vector2I}{Vector2I}} {\bfseries viewport\+Size} = \doxymbox{\hyperlink{unionvge_1_1Vector2I}{Vector2I}}()
+\item 
+\Hypertarget{structvge_1_1Window_ab25a264edb8a005cfb28a4a5d7fb59da}\label{structvge_1_1Window_ab25a264edb8a005cfb28a4a5d7fb59da} 
+\doxymbox{\hyperlink{unionvge_1_1Vector2I}{Vector2I}} {\bfseries viewport\+Position} = \doxymbox{\hyperlink{unionvge_1_1Vector2I}{Vector2I}}()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \doxymbox{\hyperlink{structvge_1_1Singleton}{vge::\+\+Singleton$<$ Window $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+bool {\bfseries initialized}
+\end{DoxyCompactItemize}
+
+
+The documentation for this struct was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+engine/\+inc/window.\+hpp\end{DoxyCompactItemize}

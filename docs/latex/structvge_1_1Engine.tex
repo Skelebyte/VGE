@@ -1,0 +1,103 @@
+\doxysection{vge::Engine Struct Reference}
+\hypertarget{structvge_1_1Engine}{}\label{structvge_1_1Engine}\index{vge::Engine@{vge::Engine}}
+Inheritance diagram for vge::Engine:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{structvge_1_1Engine}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \doxymbox{\hyperlink{structvge_1_1Engine_a96fbce87b703026acc777ce585d24f06}{Init}} (String title="{}VGE"{}, uint32 width=960, uint32 height=640, bool allow\+Resize=true, bool fullscreen=false)
+\begin{DoxyCompactList}\small\item\em Initializes the engine, window, and renderer. \end{DoxyCompactList}\item 
+\Hypertarget{structvge_1_1Engine_a3c6356ef41c5c52905efa76521062492}\label{structvge_1_1Engine_a3c6356ef41c5c52905efa76521062492} 
+static void {\bfseries Shutdown} ()
+\begin{DoxyCompactList}\small\item\em Shuts down the engine, window, and renderer. \end{DoxyCompactList}\item 
+\Hypertarget{structvge_1_1Engine_ae641ecd86201b0b7cdaf01dacacb8cec}\label{structvge_1_1Engine_ae641ecd86201b0b7cdaf01dacacb8cec} 
+static bool {\bfseries Process} ()
+\item 
+\Hypertarget{structvge_1_1Engine_a1299851643dd90b8f34a8ad1e772f29a}\label{structvge_1_1Engine_a1299851643dd90b8f34a8ad1e772f29a} 
+static void {\bfseries Begin\+Frame} ()
+\item 
+\Hypertarget{structvge_1_1Engine_a68d7fe0c603587a491675444545ea386}\label{structvge_1_1Engine_a68d7fe0c603587a491675444545ea386} 
+static void {\bfseries End\+Frame} ()
+\item 
+\Hypertarget{structvge_1_1Engine_a3cc5134757e93cc3d2ff07ea14423918}\label{structvge_1_1Engine_a3cc5134757e93cc3d2ff07ea14423918} 
+static void {\bfseries Set\+Target\+Fps} (uint32 target)
+\item 
+\Hypertarget{structvge_1_1Engine_a765a789a46fcd832169c6b8bac2f8ac2}\label{structvge_1_1Engine_a765a789a46fcd832169c6b8bac2f8ac2} 
+static uint32 {\bfseries Get\+Fps} ()
+\item 
+\Hypertarget{structvge_1_1Engine_a1620d1a509584d2dc84c62fa7425a376}\label{structvge_1_1Engine_a1620d1a509584d2dc84c62fa7425a376} 
+static uint64 {\bfseries Get\+Uptime\+Ms} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions inherited from \doxymbox{\hyperlink{structvge_1_1Singleton}{vge::\+\+Singleton$<$ Engine $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+static \doxymbox{\hyperlink{structvge_1_1Engine}{Engine}} \& {\bfseries Get} ()
+\item 
+static bool {\bfseries Is\+Init} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structvge_1_1Engine_a55c00410a616f43f3c08c8800f4faf22}\label{structvge_1_1Engine_a55c00410a616f43f3c08c8800f4faf22} 
+bool {\bfseries is\+Process\+Frame} = false
+\item 
+\Hypertarget{structvge_1_1Engine_a7677fb3ecedb84056b77de11e0ab4e91}\label{structvge_1_1Engine_a7677fb3ecedb84056b77de11e0ab4e91} 
+float {\bfseries process\+Time}
+\item 
+\Hypertarget{structvge_1_1Engine_ae3ad689aa6c0aaf07e19c0f46d1d965e}\label{structvge_1_1Engine_ae3ad689aa6c0aaf07e19c0f46d1d965e} 
+float {\bfseries frame\+Time}
+\item 
+\Hypertarget{structvge_1_1Engine_a66bd9db86191ccd257478d7294e552f3}\label{structvge_1_1Engine_a66bd9db86191ccd257478d7294e552f3} 
+float {\bfseries target\+Fps}
+\item 
+\Hypertarget{structvge_1_1Engine_ad8eb87f0e8071d37bbdbbbfcc7295aba}\label{structvge_1_1Engine_ad8eb87f0e8071d37bbdbbbfcc7295aba} 
+uint32 {\bfseries fps}
+\item 
+\Hypertarget{structvge_1_1Engine_addca36a769fd771b95954efd87c4ca62}\label{structvge_1_1Engine_addca36a769fd771b95954efd87c4ca62} 
+uint32 {\bfseries frames}
+\item 
+\Hypertarget{structvge_1_1Engine_a0299a22a9e23d1a3fedd1a221071c3f9}\label{structvge_1_1Engine_a0299a22a9e23d1a3fedd1a221071c3f9} 
+uint64 {\bfseries engine\+Start\+Time}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \doxymbox{\hyperlink{structvge_1_1Singleton}{vge::\+\+Singleton$<$ Engine $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+bool {\bfseries initialized}
+\end{DoxyCompactItemize}
+
+
+\label{structvge_1_1Engine_doc-func-members}
+\Hypertarget{structvge_1_1Engine_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{structvge_1_1Engine_a96fbce87b703026acc777ce585d24f06}\index{vge::Engine@{vge::Engine}!Init@{Init}}
+\index{Init@{Init}!vge::Engine@{vge::Engine}}
+\doxysubsubsection{\texorpdfstring{Init()}{Init()}}
+{\footnotesize\ttfamily \label{structvge_1_1Engine_a96fbce87b703026acc777ce585d24f06} 
+void vge::\+\+Engine::\+\+Init (\begin{DoxyParamCaption}\item[{String}]{title}{ = {\ttfamily "{}VGE"{}}, }\item[{uint32}]{width}{ = {\ttfamily 960}, }\item[{uint32}]{height}{ = {\ttfamily 640}, }\item[{bool}]{allow\+Resize}{ = {\ttfamily true}, }\item[{bool}]{fullscreen}{ = {\ttfamily false}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Initializes the engine, window, and renderer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em title} & \\
+\hline
+{\em width} & \\
+\hline
+{\em height} & \\
+\hline
+{\em allow\+Resize} & \\
+\hline
+{\em fullscreen} & \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this struct was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+engine/\+inc/engine.\+hpp\end{DoxyCompactItemize}

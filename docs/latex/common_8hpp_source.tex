@@ -1,0 +1,62 @@
+\doxysection{common.\+hpp}
+\hypertarget{common_8hpp_source}{}\label{common_8hpp_source}\index{engine/inc/common.hpp@{engine/inc/common.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ VGE\_COMMON\_HPP}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ VGE\_COMMON\_HPP}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <cstdint>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}../ext/glad/gl.h"{}}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{keyword}{namespace\ }vge\ \{}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{comment}{//\ template\ <typename\ T>\ using\ Vector\ =\ std::vector<T>;}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{using\ }uchar\ =\ \textcolor{keywordtype}{unsigned}\ char;}
+\DoxyCodeLine{00016\ \textcolor{keyword}{using\ }uint8\ =\ uint8\_t;}
+\DoxyCodeLine{00017\ \textcolor{keyword}{using\ }uint32\ =\ uint32\_t;}
+\DoxyCodeLine{00018\ \textcolor{keyword}{using\ }uint64\ =\ uint64\_t;}
+\DoxyCodeLine{00019\ \textcolor{keyword}{using\ }int32\ =\ int32\_t;}
+\DoxyCodeLine{00020\ \textcolor{keyword}{using\ }int64\ =\ int64\_t;}
+\DoxyCodeLine{00021\ \textcolor{keyword}{using\ }String\ =\ std::string;}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#define\ VGE\_CALL\_INFO\ \_\_FILE\_\_,\ \_\_FUNCTION\_\_,\ \_\_LINE\_\_}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#define\ VGE\_CALL\_PARAMS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00025\ \textcolor{preprocessor}{\ \ const\ String\ \&file,\ const\ String\ \&func,\ const\ uint32\ line}}
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#define\ VGE\_CALL\_PARAMS\_USAGE\ file,\ func,\ line}}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#define\ ToString(value)\ std::to\_string(value)}}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{structvge_1_1Singleton}{Singleton}}\ \{}
+\DoxyCodeLine{00032\ \ \ \textcolor{comment}{//\ Singleton(const\ Singleton\ \&)\ =\ delete;}}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \ \ \textcolor{keyword}{static}\ T\ \&Get()\ \{}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keyword}{static}\ T\ instance;}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordflow}{return}\ instance;}
+\DoxyCodeLine{00037\ \ \ \}}
+\DoxyCodeLine{00038\ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ IsInit()\ \{\ \textcolor{keywordflow}{return}\ Get().initialized;\ \}}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00041\ \ \ \textcolor{keywordtype}{bool}\ initialized\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00042\ \};}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{structvge_1_1ID}{ID}}\ \{}
+\DoxyCodeLine{00045\ \ \ uint32\ GetID()\ \{\ \textcolor{keywordflow}{return}\ id;\ \}}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00048\ \ \ uint32\ *GetID\_Ptr()\ \{\ \textcolor{keywordflow}{return}\ \&id;\ \}}
+\DoxyCodeLine{00049\ \ \ \textcolor{keywordtype}{void}\ SetID(uint32\ newID)\ \{\ \textcolor{keywordtype}{id}\ =\ newID;\ \}}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00052\ \ \ uint32\ id;}
+\DoxyCodeLine{00053\ \};}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \}\ \textcolor{comment}{//\ namespace\ vge}}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

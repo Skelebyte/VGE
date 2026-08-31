@@ -1,0 +1,49 @@
+\doxysection{vge::Matrix4x4 Struct Reference}
+\hypertarget{structvge_1_1Matrix4x4}{}\label{structvge_1_1Matrix4x4}\index{vge::Matrix4x4@{vge::Matrix4x4}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structvge_1_1Matrix4x4_ad2536abb12a5eacaa389c907c57d43b4}\label{structvge_1_1Matrix4x4_ad2536abb12a5eacaa389c907c57d43b4} 
+{\bfseries Matrix4x4} (bool identity=false)
+\item 
+\Hypertarget{structvge_1_1Matrix4x4_aa64e7b9eda691fae44226d4037008657}\label{structvge_1_1Matrix4x4_aa64e7b9eda691fae44226d4037008657} 
+void {\bfseries Identity} ()
+\item 
+\Hypertarget{structvge_1_1Matrix4x4_a3dda8e6d09425c0108591987d328ac81}\label{structvge_1_1Matrix4x4_a3dda8e6d09425c0108591987d328ac81} 
+void {\bfseries Set\+Translation} (const \doxymbox{\hyperlink{unionvge_1_1Vector3}{Vector3}} \&point)
+\item 
+\Hypertarget{structvge_1_1Matrix4x4_aff63693502a2dd94d44198f0722c4d82}\label{structvge_1_1Matrix4x4_aff63693502a2dd94d44198f0722c4d82} 
+void {\bfseries Set\+Rotation} (const \doxymbox{\hyperlink{unionvge_1_1Vector3}{Vector3}} \&angles)
+\item 
+\Hypertarget{structvge_1_1Matrix4x4_a8e4632b441c903698c558000acee8eed}\label{structvge_1_1Matrix4x4_a8e4632b441c903698c558000acee8eed} 
+void {\bfseries Set\+Scale} (const \doxymbox{\hyperlink{unionvge_1_1Vector3}{Vector3}} \&scale)
+\item 
+\Hypertarget{structvge_1_1Matrix4x4_a431a750146a05b732ab1d63169fde41c}\label{structvge_1_1Matrix4x4_a431a750146a05b732ab1d63169fde41c} 
+void {\bfseries Look\+At} (const \doxymbox{\hyperlink{unionvge_1_1Vector3}{Vector3}} \&target, const \doxymbox{\hyperlink{unionvge_1_1Vector3}{Vector3}} \&position, const \doxymbox{\hyperlink{unionvge_1_1Vector3}{Vector3}} \&forward)
+\item 
+\Hypertarget{structvge_1_1Matrix4x4_a260d0d5118e8d0f5ff09e246c2dbc112}\label{structvge_1_1Matrix4x4_a260d0d5118e8d0f5ff09e246c2dbc112} 
+Matrix4x4 {\bfseries operator\texorpdfstring{$\ast$}{*}} (const Matrix4x4 \&other)
+\item 
+\Hypertarget{structvge_1_1Matrix4x4_a6b672fed388790a852b27cbcd0fa651a}\label{structvge_1_1Matrix4x4_a6b672fed388790a852b27cbcd0fa651a} 
+void {\bfseries operator=} (const Matrix4x4 \&other)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structvge_1_1Matrix4x4_ae145124a7497fab319fc6cb0fda74bb8}\label{structvge_1_1Matrix4x4_ae145124a7497fab319fc6cb0fda74bb8} 
+static Matrix4x4 {\bfseries Transformation} (const \doxymbox{\hyperlink{unionvge_1_1Vector3}{Vector3}} \&position, const \doxymbox{\hyperlink{unionvge_1_1Vector3}{Vector3}} \&rotation, const \doxymbox{\hyperlink{unionvge_1_1Vector3}{Vector3}} \&scale)
+\item 
+\Hypertarget{structvge_1_1Matrix4x4_a12907d51750c870ed680a7e771d42ac1}\label{structvge_1_1Matrix4x4_a12907d51750c870ed680a7e771d42ac1} 
+static Matrix4x4 {\bfseries Perspective} (float fov\+Deg, float aspect, float near, float far)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structvge_1_1Matrix4x4_ae40e096cc3cd557f43b44c0a5d9c35d4}\label{structvge_1_1Matrix4x4_ae40e096cc3cd557f43b44c0a5d9c35d4} 
+\doxymbox{\hyperlink{structvge_1_1Pointer}{Pointer}}$<$ float $>$ {\bfseries data}
+\end{DoxyCompactItemize}
+
+
+The documentation for this struct was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+engine/\+inc/matrix4x4.\+hpp\end{DoxyCompactItemize}

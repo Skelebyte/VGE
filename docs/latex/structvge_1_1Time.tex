@@ -1,0 +1,76 @@
+\doxysection{vge::Time Struct Reference}
+\hypertarget{structvge_1_1Time}{}\label{structvge_1_1Time}\index{vge::Time@{vge::Time}}
+Inheritance diagram for vge::Time:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{structvge_1_1Time}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structvge_1_1Time_a9501dec75a111ca6c826762156a0f766}\label{structvge_1_1Time_a9501dec75a111ca6c826762156a0f766} 
+static void {\bfseries Init} (float tick)
+\item 
+\Hypertarget{structvge_1_1Time_a9f8f1f6b8b290086b022547be2f2c437}\label{structvge_1_1Time_a9f8f1f6b8b290086b022547be2f2c437} 
+static void {\bfseries New\+Frame} (float tick)
+\item 
+\Hypertarget{structvge_1_1Time_a8ecd30e237163efe7c75a6dda93ac7a1}\label{structvge_1_1Time_a8ecd30e237163efe7c75a6dda93ac7a1} 
+static float {\bfseries Delta\+Time} ()
+\item 
+\Hypertarget{structvge_1_1Time_a33c56b143e01a27ddd98b1c002d81f0b}\label{structvge_1_1Time_a33c56b143e01a27ddd98b1c002d81f0b} 
+static float {\bfseries Unscaled\+Delta\+Time} ()
+\item 
+static String \doxymbox{\hyperlink{structvge_1_1Time_ac8599d73dd71ef628d31e3a6695a9634}{Get\+Date\+String}} ()
+\begin{DoxyCompactList}\small\item\em Get current date. \end{DoxyCompactList}\item 
+static String \doxymbox{\hyperlink{structvge_1_1Time_a9a1e090e4133e5136763a6c1120f9826}{Get\+Time\+String}} ()
+\begin{DoxyCompactList}\small\item\em Get current time. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions inherited from \doxymbox{\hyperlink{structvge_1_1Singleton}{vge::\+\+Singleton$<$ Time $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+static \doxymbox{\hyperlink{structvge_1_1Time}{Time}} \& {\bfseries Get} ()
+\item 
+static bool {\bfseries Is\+Init} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \doxymbox{\hyperlink{structvge_1_1Singleton}{vge::\+\+Singleton$<$ Time $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+bool {\bfseries initialized}
+\end{DoxyCompactItemize}
+
+
+\label{structvge_1_1Time_doc-func-members}
+\Hypertarget{structvge_1_1Time_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{structvge_1_1Time_ac8599d73dd71ef628d31e3a6695a9634}\index{vge::Time@{vge::Time}!GetDateString@{GetDateString}}
+\index{GetDateString@{GetDateString}!vge::Time@{vge::Time}}
+\doxysubsubsection{\texorpdfstring{GetDateString()}{GetDateString()}}
+{\footnotesize\ttfamily \label{structvge_1_1Time_ac8599d73dd71ef628d31e3a6695a9634} 
+String vge::\+\+Time::\+\+Get\+Date\+String (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Get current date. 
+
+\begin{DoxyReturn}{Returns}
+Current date in {\ttfamily YYYY-\/\+MM-\/\+DD} format. 
+\end{DoxyReturn}
+\Hypertarget{structvge_1_1Time_a9a1e090e4133e5136763a6c1120f9826}\index{vge::Time@{vge::Time}!GetTimeString@{GetTimeString}}
+\index{GetTimeString@{GetTimeString}!vge::Time@{vge::Time}}
+\doxysubsubsection{\texorpdfstring{GetTimeString()}{GetTimeString()}}
+{\footnotesize\ttfamily \label{structvge_1_1Time_a9a1e090e4133e5136763a6c1120f9826} 
+String vge::\+\+Time::\+\+Get\+Time\+String (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Get current time. 
+
+\begin{DoxyReturn}{Returns}
+Current time in {\ttfamily HH:\+\+MM:SS} format. 
+\end{DoxyReturn}
+
+
+The documentation for this struct was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+engine/\+inc/time.\+hpp\end{DoxyCompactItemize}

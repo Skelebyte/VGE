@@ -1,0 +1,82 @@
+\doxysection{asset.\+hpp}
+\hypertarget{asset_8hpp_source}{}\label{asset_8hpp_source}\index{engine/inc/asset.hpp@{engine/inc/asset.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ VGE\_ASSET\_HPP}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ VGE\_ASSET\_HPP}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}../ext/stb/stb\_image.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}common.hpp"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}file.hpp"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}graphics.hpp"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}list.hpp"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}mathf.hpp"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}memory.hpp"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}vector2.hpp"{}}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}vector3.hpp"{}}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{namespace\ }vge\ \{}
+\DoxyCodeLine{00015\ \textcolor{keyword}{struct\ }Asset\ \{}
+\DoxyCodeLine{00016\ \ \ Asset()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00017\ \ \ Asset(\textcolor{keyword}{const}\ String\ \&path);}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \ \ \textcolor{keyword}{const}\ String\ \&GetPath()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00022\ \ \ String\ path;}
+\DoxyCodeLine{00023\ \};}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \textcolor{keyword}{enum}\ TextureFilter\ \{\ LINEAR\ =\ 0,\ NEAREST\ =\ 1\ \};}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{keyword}{struct\ }Texture\ :\ \textcolor{keyword}{public}\ Asset,\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{structvge_1_1ID}{ID}}\ \{}
+\DoxyCodeLine{00028\ \ \ Texture(uint32\ width,\ uint32\ height,\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{unionvge_1_1Color}{Color}}\ \&a,\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{unionvge_1_1Color}{Color}}\ \&b,}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \ \ TextureFilter\ filter\ =\ TextureFilter::NEAREST);}
+\DoxyCodeLine{00030\ \ \ Texture(\textcolor{keyword}{const}\ String\ \&path,}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ TextureFilter\ \&filter\ =\ TextureFilter::NEAREST);}
+\DoxyCodeLine{00032\ \ \ \string~Texture();}
+\DoxyCodeLine{00033\ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ CheckeredTextureData(\doxymbox{\hyperlink{structvge_1_1Pointer}{Pointer<uchar>}}\ \&data,\ uint32\ width,}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\ height,\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{unionvge_1_1Color}{Color}}\ \&a,}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{unionvge_1_1Color}{Color}}\ \&b);}
+\DoxyCodeLine{00036\ \ \ \textcolor{keywordtype}{void}\ Bind();}
+\DoxyCodeLine{00037\ \ \ \textcolor{keywordtype}{void}\ Unbind();}
+\DoxyCodeLine{00038\ \ \ \textcolor{keywordtype}{bool}\ IsValid()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00041\ \ \ \textcolor{keywordtype}{void}\ TextureFallback();}
+\DoxyCodeLine{00042\ \ \ \textcolor{keywordtype}{void}\ LoadFromData(\doxymbox{\hyperlink{structvge_1_1Pointer}{Pointer<uchar>}}\ \&data,\ uint32\ channels,\ uint32\ width,}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\ height,}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ TextureFilter\ \&filter\ =\ TextureFilter::NEAREST);}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00047\ \ \ \textcolor{keywordtype}{bool}\ valid;}
+\DoxyCodeLine{00048\ \};}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \textcolor{keyword}{struct\ }Vertex\ \{}
+\DoxyCodeLine{00051\ \ \ Vertex();}
+\DoxyCodeLine{00052\ \ \ Vertex(\doxymbox{\hyperlink{unionvge_1_1Vector3}{Vector3}}\ pos,\ \doxymbox{\hyperlink{unionvge_1_1Vector2}{Vector2}}\ uv,\ \doxymbox{\hyperlink{unionvge_1_1Vector3}{Vector3}}\ norm);}
+\DoxyCodeLine{00053\ \ \ \string~Vertex()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \ \ \doxymbox{\hyperlink{unionvge_1_1Vector3}{Vector3}}\ position;}
+\DoxyCodeLine{00056\ \ \ \doxymbox{\hyperlink{unionvge_1_1Vector2}{Vector2}}\ uv;}
+\DoxyCodeLine{00057\ \ \ \doxymbox{\hyperlink{unionvge_1_1Vector3}{Vector3}}\ normal;}
+\DoxyCodeLine{00058\ \};}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \textcolor{keyword}{struct\ }Mesh\ :\ Asset\ \{}
+\DoxyCodeLine{00061\ \ \ Mesh()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00062\ \ \ Mesh(\textcolor{keyword}{const}\ String\ \&path,\ \textcolor{keywordtype}{bool}\ blenderFix\ =\ \textcolor{keyword}{true});}
+\DoxyCodeLine{00063\ \ \ \string~Mesh()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \ \ \textcolor{keyword}{static}\ Mesh\ GeneratePlane(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{unionvge_1_1Vector2}{Vector2}}\ \&dimensions\ =\ \doxymbox{\hyperlink{unionvge_1_1Vector2}{Vector2}}(1.0f),}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ int32\ divisions\ =\ 1);}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \ \ \doxymbox{\hyperlink{structvge_1_1List}{List<Vertex>}}\ vertices;}
+\DoxyCodeLine{00069\ \ \ \doxymbox{\hyperlink{structvge_1_1List}{List<uint32>}}\ indices;}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ \ \ \doxymbox{\hyperlink{structvge_1_1List}{List<float>}}\ data;}
+\DoxyCodeLine{00072\ \};}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ \}\ \textcolor{comment}{//\ namespace\ vge}}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

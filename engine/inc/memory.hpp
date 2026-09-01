@@ -1,18 +1,11 @@
-#pragma once
-
-// #ifndef VGE_MEMORY_HPP
-// #define VGE_MEMORY_HPP
+#ifndef VGE_MEMORY_HPP
+#define VGE_MEMORY_HPP
 
 #include "common.hpp"
 #include "logger.hpp"
 
 namespace vge {
 
-/**
- * @brief gurt: yo
- * @def Malloc(size)
- * Calls `internal_Malloc` passing size and `VGE_CALL_INFO`
- */
 #define Malloc(size) internal_Malloc(size, VGE_CALL_INFO)
 
 #define Free() internal_Free(VGE_CALL_INFO)
@@ -32,30 +25,14 @@ private:
 
 enum MemoryState { UNALLOCATED = 0, ALLOCATED = 1, FREED = 2 };
 
-/**
- * @brief Wrapper for `*` types. Handles freeing memory automatically.
- * @warning Do not use as a `*` (`Pointer<...> *ptr;`) unless you are going to
- * free it manually.
- *
- * @tparam T Type of the pointer.
- */
 template <typename T> struct Pointer {
 
-  /**
-   * @brief Assigns member variables to default values, except `typeSize` which
-   * is set to `sizeof(T)`
-   *
-   */
   Pointer() {
     typeSize = sizeof(T);
     state = MemoryState::UNALLOCATED;
     data = nullptr;
   }
-  /**
-   * @brief Frees `data`. Will be automatically called when this object leaves
-   * scope (assuimg it's not declared as `Pointer<...> *ptr`)
-   *
-   */
+
   ~Pointer() { internal_Free(VGE_CALL_INFO); }
 
   /**
@@ -178,20 +155,10 @@ template <typename T> struct Pointer {
     count = 0;
   }
 
-  /**
-   * @brief Get the `data` member
-   *
-   * @return T*
-   */
   T *GetData() { return data; }
 
   T *GetData() const { return data; }
 
-  /**
-   * @brief Directly sets the `data` member.
-   *
-   * @param newData New value for the `data` member.
-   */
   void SetData(T *newData) { data = newData; }
 
   /**
@@ -240,4 +207,4 @@ protected:
 
 } // namespace vge
 
-// #endif
+#endif

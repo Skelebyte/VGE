@@ -4,4 +4,4 @@ Project started July 10, 2026
 
 A very creative name for a very creative project.
 
-[Docs](book/index.html)
+[Docs](./book/index.html)

@@ -11,9 +11,6 @@ build:
     ruby: "3.3"
 
   commands:
-    # Install dependencies
     - gem install bundler
     - bundle install
-    # Build the site and save generated files into Read the Docs directory
-    - jekyll build --destination $READTHEDOCS_OUTPUT/html
-        
+    - bundle exec jekyll build --destination $READTHEDOCS_OUTPUT/html --baseurl "/en/$READTHEDOCS_VERSION"

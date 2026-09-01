@@ -37,14 +37,13 @@ var NAVTREE =
     ] ],
     [ "Files", "files.html", [
       [ "File List", "files.html", "files_dup" ]
-    ] ],
-    [ "Examples", "examples.html", "examples" ]
+    ] ]
   ] ]
 ];
 
 var NAVTREEINDEX =
 [
-"If-example.html"
+"annotated.html"
 ];
 
 const SYNCONMSG = 'click to disable panel synchronization';

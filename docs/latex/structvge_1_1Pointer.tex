@@ -1,29 +1,38 @@
 \doxysection{vge::Pointer\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Struct Template Reference}
 \hypertarget{structvge_1_1Pointer}{}\label{structvge_1_1Pointer}\index{vge::Pointer$<$ T $>$@{vge::Pointer$<$ T $>$}}
+
+
+Wrapper for {\ttfamily \texorpdfstring{$\ast$}{*}} types. Handles freeing memory automatically.  
+
+
+
+
+{\ttfamily \+\#include $<$memory.\+hpp$>$}
+
 \doxysubsubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\Hypertarget{structvge_1_1Pointer_a0c9f71954c0dab0a4f9c96e5255f6dca}\label{structvge_1_1Pointer_a0c9f71954c0dab0a4f9c96e5255f6dca} 
-bool {\bfseries internal\+\_\+\+Malloc} (size\+\_\+t size, const String \&file, const String \&func, uint32 line)
-\item 
-\Hypertarget{structvge_1_1Pointer_afc5d2ec6b6fa5a4b5399e5d53f1f79e8}\label{structvge_1_1Pointer_afc5d2ec6b6fa5a4b5399e5d53f1f79e8} 
-void {\bfseries internal\+\_\+\+Free} (const String \&file, const String \&func, uint32 line)
-\item 
-\Hypertarget{structvge_1_1Pointer_a48177bc27d7db3578b2ce362cde4e791}\label{structvge_1_1Pointer_a48177bc27d7db3578b2ce362cde4e791} 
-T \texorpdfstring{$\ast$}{*} {\bfseries Get\+Data} ()
-\item 
+\Hypertarget{structvge_1_1Pointer_a9b501ee93e9f24e2e138164bf1a2ba68}\label{structvge_1_1Pointer_a9b501ee93e9f24e2e138164bf1a2ba68} 
+{\bfseries Pointer} ()
+\begin{DoxyCompactList}\small\item\em Assigns member variables to default values, except {\ttfamily type\+Size} which is set to {\ttfamily sizeof(\+T)}. \end{DoxyCompactList}\item 
+\Hypertarget{structvge_1_1Pointer_adb03a10e0556404fd8df3b3a0098e268}\label{structvge_1_1Pointer_adb03a10e0556404fd8df3b3a0098e268} 
+{\bfseries \texorpdfstring{$\sim$}{\string~}\+Pointer} ()
+\begin{DoxyCompactList}\small\item\em Frees {\ttfamily data}. Will be automatically called when this object leaves scope (assuimg it\textquotesingle{}s not declared as {\ttfamily \doxylink{structvge_1_1Pointer}{Pointer}\texorpdfstring{$<$}{<}...\texorpdfstring{$>$}{>} \texorpdfstring{$\ast$}{*}ptr}). \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{structvge_1_1Pointer_a69b417db0f5dab9071461616d834611c}{internal\+\_\+\+Malloc}} (size\+\_\+t amount, const String \&file, const String \&func, uint32 line)
+\begin{DoxyCompactList}\small\item\em Allocates memory. Use the macro {\ttfamily Malloc} when calling. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{structvge_1_1Pointer_afc5d2ec6b6fa5a4b5399e5d53f1f79e8}{internal\+\_\+\+Free}} (const String \&file, const String \&func, uint32 line)
+\begin{DoxyCompactList}\small\item\em Frees the memory. Use the macro {\ttfamily Free} when calling. \end{DoxyCompactList}\item 
+T \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{structvge_1_1Pointer_a48177bc27d7db3578b2ce362cde4e791}{Get\+Data}} ()
+\begin{DoxyCompactList}\small\item\em Get the {\ttfamily data} member. \end{DoxyCompactList}\item 
 \Hypertarget{structvge_1_1Pointer_a25eb33d8402657b2dc9a2b44231b2938}\label{structvge_1_1Pointer_a25eb33d8402657b2dc9a2b44231b2938} 
 T \texorpdfstring{$\ast$}{*} {\bfseries Get\+Data} () const
 \item 
-\Hypertarget{structvge_1_1Pointer_a489e6e7ae685eb23f5b787977e1f53e6}\label{structvge_1_1Pointer_a489e6e7ae685eb23f5b787977e1f53e6} 
-void {\bfseries Set\+Data} (T \texorpdfstring{$\ast$}{*}new\+Data)
-\item 
-\Hypertarget{structvge_1_1Pointer_a2cf292d637971d0ba468c375dc54eae6}\label{structvge_1_1Pointer_a2cf292d637971d0ba468c375dc54eae6} 
-size\+\_\+t {\bfseries Get\+Allocated\+Size} () const
-\item 
-\Hypertarget{structvge_1_1Pointer_aed2da09be079d5c336095c87da5e7db8}\label{structvge_1_1Pointer_aed2da09be079d5c336095c87da5e7db8} 
-size\+\_\+t {\bfseries Get\+Amount\+Allocated} () const
-\item 
+void \doxymbox{\hyperlink{structvge_1_1Pointer_a489e6e7ae685eb23f5b787977e1f53e6}{Set\+Data}} (T \texorpdfstring{$\ast$}{*}new\+Data)
+\begin{DoxyCompactList}\small\item\em Directly sets the {\ttfamily data} member. \end{DoxyCompactList}\item 
+size\+\_\+t \doxymbox{\hyperlink{structvge_1_1Pointer_a2cf292d637971d0ba468c375dc54eae6}{Get\+Allocated\+Size}} () const
+\begin{DoxyCompactList}\small\item\em Get the amount of memory allocated in bytes. \end{DoxyCompactList}\item 
+size\+\_\+t \doxymbox{\hyperlink{structvge_1_1Pointer_aed2da09be079d5c336095c87da5e7db8}{Get\+Amount\+Allocated}} () const
+\begin{DoxyCompactList}\small\item\em Returns the number of {\ttfamily T} where allocated. \end{DoxyCompactList}\item 
 \Hypertarget{structvge_1_1Pointer_a58307d11b49ec8360c83925867f05b9c}\label{structvge_1_1Pointer_a58307d11b49ec8360c83925867f05b9c} 
 T \& {\bfseries operator\+[$\,$]} (int i)
 \item 
@@ -54,6 +63,143 @@ Memory\+State {\bfseries state}
 \Hypertarget{structvge_1_1Pointer_a301e127fc7475fa36334596dfcf52cec}\label{structvge_1_1Pointer_a301e127fc7475fa36334596dfcf52cec} 
 \doxymbox{\hyperlink{structvge_1_1LogData}{Log\+Data}} {\bfseries malloc\+Data}
 \end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename T$>$\newline
+struct vge::\+\+Pointer$<$ T $>$}
+Wrapper for {\ttfamily \texorpdfstring{$\ast$}{*}} types. Handles freeing memory automatically. 
+
+\begin{DoxyWarning}{Warning}
+Do not use as a {\ttfamily \texorpdfstring{$\ast$}{*}} ({\ttfamily \doxylink{structvge_1_1Pointer}{Pointer}\texorpdfstring{$<$}{<}...\texorpdfstring{$>$}{>} \texorpdfstring{$\ast$}{*}ptr;}) unless you are going to free it manually.
+\end{DoxyWarning}
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & Type of the pointer. \\
+\hline
+\end{DoxyTemplParams}
+
+
+\label{structvge_1_1Pointer_doc-func-members}
+\Hypertarget{structvge_1_1Pointer_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{structvge_1_1Pointer_a2cf292d637971d0ba468c375dc54eae6}\index{vge::Pointer$<$ T $>$@{vge::Pointer$<$ T $>$}!GetAllocatedSize@{GetAllocatedSize}}
+\index{GetAllocatedSize@{GetAllocatedSize}!vge::Pointer$<$ T $>$@{vge::Pointer$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{GetAllocatedSize()}{GetAllocatedSize()}}
+{\footnotesize\ttfamily \label{structvge_1_1Pointer_a2cf292d637971d0ba468c375dc54eae6} 
+template$<$typename T$>$ \\
+size\+\_\+t \doxymbox{\hyperlink{structvge_1_1Pointer}{vge::\+\+Pointer}}$<$ T $>$::\+\+Get\+Allocated\+Size (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Get the amount of memory allocated in bytes. 
+
+\begin{DoxyReturn}{Returns}
+size\+\_\+t 
+\end{DoxyReturn}
+\Hypertarget{structvge_1_1Pointer_aed2da09be079d5c336095c87da5e7db8}\index{vge::Pointer$<$ T $>$@{vge::Pointer$<$ T $>$}!GetAmountAllocated@{GetAmountAllocated}}
+\index{GetAmountAllocated@{GetAmountAllocated}!vge::Pointer$<$ T $>$@{vge::Pointer$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{GetAmountAllocated()}{GetAmountAllocated()}}
+{\footnotesize\ttfamily \label{structvge_1_1Pointer_aed2da09be079d5c336095c87da5e7db8} 
+template$<$typename T$>$ \\
+size\+\_\+t \doxymbox{\hyperlink{structvge_1_1Pointer}{vge::\+\+Pointer}}$<$ T $>$::\+\+Get\+Amount\+Allocated (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns the number of {\ttfamily T} where allocated. 
+
+\begin{DoxyReturn}{Returns}
+size\+\_\+t The amount of {\ttfamily T} allocated. 
+\end{DoxyReturn}
+\Hypertarget{structvge_1_1Pointer_a48177bc27d7db3578b2ce362cde4e791}\index{vge::Pointer$<$ T $>$@{vge::Pointer$<$ T $>$}!GetData@{GetData}}
+\index{GetData@{GetData}!vge::Pointer$<$ T $>$@{vge::Pointer$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{GetData()}{GetData()}}
+{\footnotesize\ttfamily \label{structvge_1_1Pointer_a48177bc27d7db3578b2ce362cde4e791} 
+template$<$typename T$>$ \\
+T \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{structvge_1_1Pointer}{vge::\+\+Pointer}}$<$ T $>$::\+\+Get\+Data (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Get the {\ttfamily data} member. 
+
+\begin{DoxyReturn}{Returns}
+T\texorpdfstring{$\ast$}{*} 
+\end{DoxyReturn}
+\Hypertarget{structvge_1_1Pointer_afc5d2ec6b6fa5a4b5399e5d53f1f79e8}\index{vge::Pointer$<$ T $>$@{vge::Pointer$<$ T $>$}!internal\_Free@{internal\_Free}}
+\index{internal\_Free@{internal\_Free}!vge::Pointer$<$ T $>$@{vge::Pointer$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{internal\_Free()}{internal\_Free()}}
+{\footnotesize\ttfamily \label{structvge_1_1Pointer_afc5d2ec6b6fa5a4b5399e5d53f1f79e8} 
+template$<$typename T$>$ \\
+void \doxymbox{\hyperlink{structvge_1_1Pointer}{vge::\+\+Pointer}}$<$ T $>$::\+internal\+\_\+\+Free (\begin{DoxyParamCaption}\item[{const String \&}]{file}{, }\item[{const String \&}]{func}{, }\item[{uint32}]{line}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Frees the memory. Use the macro {\ttfamily Free} when calling. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file} & The file this function was called in. \\
+\hline
+{\em func} & The function this function was called in. \\
+\hline
+{\em line} & The line this function was called on. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{structvge_1_1Pointer_a69b417db0f5dab9071461616d834611c}\index{vge::Pointer$<$ T $>$@{vge::Pointer$<$ T $>$}!internal\_Malloc@{internal\_Malloc}}
+\index{internal\_Malloc@{internal\_Malloc}!vge::Pointer$<$ T $>$@{vge::Pointer$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{internal\_Malloc()}{internal\_Malloc()}}
+{\footnotesize\ttfamily \label{structvge_1_1Pointer_a69b417db0f5dab9071461616d834611c} 
+template$<$typename T$>$ \\
+bool \doxymbox{\hyperlink{structvge_1_1Pointer}{vge::\+\+Pointer}}$<$ T $>$::\+internal\+\_\+\+Malloc (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{amount}{, }\item[{const String \&}]{file}{, }\item[{const String \&}]{func}{, }\item[{uint32}]{line}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Allocates memory. Use the macro {\ttfamily Malloc} when calling. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em amount} & The amount of {\ttfamily type\+Size} to allocate. \\
+\hline
+{\em file} & The file this function was called in. \\
+\hline
+{\em func} & The function this function was called in. \\
+\hline
+{\em line} & The line this function was called on.\\
+\hline
+\end{DoxyParams}
+{\bfseries{Example:}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\doxymbox{\hyperlink{structvge_1_1Pointer_a9b501ee93e9f24e2e138164bf1a2ba68}{Pointer<float>}}\ ptr;}
+\DoxyCodeLine{ptr.Malloc(3);\ \textcolor{comment}{//\ 3\ floats\ allocated}}
+\DoxyCodeLine{\textcolor{comment}{//\ then\ do\ whatever.\ access\ \`{}data`\ with\ \`{}ptr[...]`\ or\ \`{}ptr.GetData()`}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ out\ of\ scope,\ the\ destructor\ is\ called\ automatically}}
+\DoxyCodeLine{ptr.\string~Pointer();}
+
+\end{DoxyCode}
+
+
+\begin{DoxyReturn}{Returns}
+true Successful allocation. 
+
+false Unsuccessful allocation. 
+\end{DoxyReturn}
+\Hypertarget{structvge_1_1Pointer_a489e6e7ae685eb23f5b787977e1f53e6}\index{vge::Pointer$<$ T $>$@{vge::Pointer$<$ T $>$}!SetData@{SetData}}
+\index{SetData@{SetData}!vge::Pointer$<$ T $>$@{vge::Pointer$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{SetData()}{SetData()}}
+{\footnotesize\ttfamily \label{structvge_1_1Pointer_a489e6e7ae685eb23f5b787977e1f53e6} 
+template$<$typename T$>$ \\
+void \doxymbox{\hyperlink{structvge_1_1Pointer}{vge::\+\+Pointer}}$<$ T $>$::\+\+Set\+Data (\begin{DoxyParamCaption}\item[{T \texorpdfstring{$\ast$}{*}}]{new\+Data}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Directly sets the {\ttfamily data} member. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+Data} & New value for the {\ttfamily data} member. \\
+\hline
+\end{DoxyParams}
 
 
 The documentation for this struct was generated from the following file:\begin{DoxyCompactItemize}

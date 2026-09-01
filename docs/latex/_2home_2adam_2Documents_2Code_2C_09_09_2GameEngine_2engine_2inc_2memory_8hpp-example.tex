@@ -1,0 +1,208 @@
+\doxysection{/\+home/\+adam/\+\+Documents/\+\+Code/\+\+C++/\+\+Game\+Engine/\+engine/\+inc/\+memory.\+hpp}
+\hypertarget{_2home_2adam_2Documents_2Code_2C_09_09_2GameEngine_2engine_2inc_2memory_8hpp-example}{}\label{_2home_2adam_2Documents_2Code_2C_09_09_2GameEngine_2engine_2inc_2memory_8hpp-example}Allocates memory. Use the macro {\ttfamily MALLOC} when calling.
+
+Allocates memory. Use the macro {\ttfamily MALLOC} when calling.
+\begin{DoxyParams}{Parameters}
+{\em amount} & The amount of {\ttfamily type\+Size} to allocate. \\
+\hline
+{\em file} & The file this function was called in. \\
+\hline
+{\em func} & The function this function was called in. \\
+\hline
+{\em line} & The line this function was called on.\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{Pointer<float>\ ptr;}
+\DoxyCodeLine{ptr.MALLOC(3);\ \textcolor{comment}{//\ 3\ floats\ allocated}}
+\DoxyCodeLine{\textcolor{comment}{//\ then\ do\ whatever.\ access\ \`{}data`\ with\ \`{}ptr[...]`\ or\ \`{}ptr.GetData()`}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ Out\ of\ scope,\ the\ destructor\ is\ called}}
+\DoxyCodeLine{ptr.\string~Pointer();}
+
+\end{DoxyCode}
+
+
+\begin{DoxyReturn}{Returns}
+true Successful allocation. 
+
+false Unsuccessful allocation.
+\end{DoxyReturn}
+
+\begin{DoxyCodeInclude}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ \#ifndef\ VGE\_MEMORY\_HPP}}
+\DoxyCodeLine{\textcolor{comment}{//\ \#define\ VGE\_MEMORY\_HPP}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ "{}common.hpp"{}}}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ "{}logger.hpp"{}}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{namespace\ }vge\ \{}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{preprocessor}{\#define\ MALLOC(size)\ internal\_Malloc(size,\ VGE\_CALL\_INFO)}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{preprocessor}{\#define\ FREE()\ internal\_Free(VGE\_CALL\_INFO)}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }\doxymbox{\hyperlink{structvge_1_1Memory}{Memory}}\ :\ \doxymbox{\hyperlink{structvge_1_1Singleton}{Singleton}}<Memory>\ \{}
+\DoxyCodeLine{\ \ \textcolor{keywordtype}{bool}\ logMallocSizes\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\ \ \textcolor{keywordtype}{bool}\ logFreeSizes\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ IncreaseUsedMemory(\textcolor{keywordtype}{size\_t}\ amount);}
+\DoxyCodeLine{\ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ DecreaseUsedMemory(\textcolor{keywordtype}{size\_t}\ amount);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{size\_t}\ GetUsedMemory();}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \textcolor{keywordtype}{size\_t}\ usedMemory;}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{enum}\ MemoryState\ \{\ UNALLOCATED\ =\ 0,\ ALLOCATED\ =\ 1,\ FREED\ =\ 2\ \};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{structvge_1_1Pointer}{Pointer}}\ \{}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \doxymbox{\hyperlink{structvge_1_1Pointer_a9b501ee93e9f24e2e138164bf1a2ba68}{Pointer}}()\ \{}
+\DoxyCodeLine{\ \ \ \ typeSize\ =\ \textcolor{keyword}{sizeof}(T);}
+\DoxyCodeLine{\ \ \ \ state\ =\ MemoryState::UNALLOCATED;}
+\DoxyCodeLine{\ \ \ \ data\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\ \ \}}
+\DoxyCodeLine{\ \ \doxymbox{\hyperlink{structvge_1_1Pointer_a9b501ee93e9f24e2e138164bf1a2ba68}{\string~Pointer}}()\ \{\ \doxymbox{\hyperlink{structvge_1_1Pointer_afc5d2ec6b6fa5a4b5399e5d53f1f79e8}{internal\_Free}}(VGE\_CALL\_INFO);\ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \textcolor{keywordtype}{bool}\ internal\_Malloc(\textcolor{keywordtype}{size\_t}\ amount,\ \textcolor{keyword}{const}\ String\ \&file,\ \textcolor{keyword}{const}\ String\ \&func,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\ line)\ \{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}\ (data)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ Logger::internal\_Log(\textcolor{stringliteral}{"{}You\ need\ to\ call\ FREE\ first!"{}},\ file,\ func,\ line);}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}\ (amount\ ==\ 0)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ Logger::internal\_LogFatal(\textcolor{stringliteral}{"{}Cant\ allocate\ 0\ bytes\ of\ memory!"{}},\ file,\ func,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ line);}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ allocationSize\ =\ typeSize\ *\ amount;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}\ (Memory::Get().logMallocSizes)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ Logger::internal\_Log(\textcolor{stringliteral}{"{}Attempting\ to\ allocate\ "{}}\ +}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ToString(allocationSize)\ +\ \textcolor{stringliteral}{"{}\ bytes\ of\ memory."{}},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ file,\ func,\ line);}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ data\ =\ (T\ *)std::malloc(allocationSize);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}\ (!data)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keywordflow}{if}\ (Memory::Get().logMallocSizes)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ Logger::internal\_Log(\textcolor{stringliteral}{"{}Failed\ to\ allocate\ "{}}\ +\ ToString(allocationSize)\ +}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\ bytes\ of\ memory!"{}},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ file,\ func,\ line);}
+\DoxyCodeLine{\ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ amount;\ i++)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{new}\ (\&data[i])\ T();}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ count\ =\ amount;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ Memory::IncreaseUsedMemory(allocationSize);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ mallocData\ =\ LogData(func,\ file,\ \textcolor{stringliteral}{"{}"{}},\ \textcolor{stringliteral}{"{}"{}},\ \textcolor{stringliteral}{"{}"{}},\ line);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ state\ =\ MemoryState::ALLOCATED;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{structvge_1_1Pointer_afc5d2ec6b6fa5a4b5399e5d53f1f79e8}{internal\_Free}}(\textcolor{keyword}{const}\ String\ \&file,\ \textcolor{keyword}{const}\ String\ \&func,\ uint32\ line)\ \{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{switch}\ (state)\ \{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{case}\ UNALLOCATED:}
+\DoxyCodeLine{\ \ \ \ \ \ Logger::internal\_Log(\textcolor{stringliteral}{"{}You\ need\ to\ call\ MALLOC\ first!\ State:\ UNALLOCATED"{}},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ file,\ func,\ line);}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{case}\ ALLOCATED:}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{case}\ FREED:}
+\DoxyCodeLine{\ \ \ \ \ \ Logger::internal\_Log(\textcolor{stringliteral}{"{}You\ need\ to\ call\ MALLOC\ first!\ State:\ FREED"{}},\ file,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ func,\ line);}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{\ \ \ \ \ \ Logger::internal\_Log(\textcolor{stringliteral}{"{}You\ need\ to\ call\ MALLOC\ first!\ State:\ UNKNOWN"{}},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ file,\ func,\ line);}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}\ (!data)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ Logger::internal\_Log(\textcolor{stringliteral}{"{}Data\ is\ not\ valid!"{}},\ file,\ func,\ line);}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ count;\ i++)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ data[i].\string~T();}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}\ (Memory::Get().logFreeSizes)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ Logger::internal\_Log(\textcolor{stringliteral}{"{}Freeing\ "{}}\ +\ ToString(allocationSize)\ +}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\ bytes\ of\ memory."{}},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ file,\ func,\ line);}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ std::free(data);}
+\DoxyCodeLine{\ \ \ \ data\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ Memory::DecreaseUsedMemory(allocationSize);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ state\ =\ MemoryState::FREED;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ allocationSize\ =\ 0;}
+\DoxyCodeLine{\ \ \ \ count\ =\ 0;}
+\DoxyCodeLine{\ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ T\ *\doxymbox{\hyperlink{structvge_1_1Pointer_a48177bc27d7db3578b2ce362cde4e791}{GetData}}()\ \{\ \textcolor{keywordflow}{return}\ data;\ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ T\ *\doxymbox{\hyperlink{structvge_1_1Pointer_a48177bc27d7db3578b2ce362cde4e791}{GetData}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ data;\ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{structvge_1_1Pointer_a489e6e7ae685eb23f5b787977e1f53e6}{SetData}}(T\ *newData)\ \{\ data\ =\ newData;\ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \textcolor{keywordtype}{size\_t}\ \doxymbox{\hyperlink{structvge_1_1Pointer_a2cf292d637971d0ba468c375dc54eae6}{GetAllocatedSize}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ allocationSize;\ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \textcolor{comment}{//\ TODO:\ fix\ the\ way\ this\ is\ written\ (specifically\ the\ brief)}}
+\DoxyCodeLine{\ \ \textcolor{keywordtype}{size\_t}\ \doxymbox{\hyperlink{structvge_1_1Pointer_aed2da09be079d5c336095c87da5e7db8}{GetAmountAllocated}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ count;\ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ T\ \&operator[](\textcolor{keywordtype}{int}\ i)\ \{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}\ (i\ <\ 0)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keywordflow}{return}\ data[0];}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}\ (i\ >\ count)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keywordflow}{return}\ data[0];}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ data[i];}
+\DoxyCodeLine{\ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ T\ \&operator[](\textcolor{keywordtype}{int}\ i)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}\ (i\ <\ 0)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keywordflow}{return}\ data[0];}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}\ (i\ >\ count)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keywordflow}{return}\ data[0];}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ data[i];}
+\DoxyCodeLine{\ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \textcolor{keywordtype}{bool}\ operator!()\ \{\ \textcolor{keywordflow}{return}\ !data;\ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{protected}:}
+\DoxyCodeLine{\ \ \textcolor{keywordtype}{size\_t}\ count;}
+\DoxyCodeLine{\ \ \textcolor{keywordtype}{size\_t}\ allocationSize\ =\ 0;}
+\DoxyCodeLine{\ \ \textcolor{keywordtype}{size\_t}\ typeSize\ =\ 0;}
+\DoxyCodeLine{\ \ T\ *data\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\ \ MemoryState\ state;}
+\DoxyCodeLine{\ \ LogData\ mallocData;}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\}\ \textcolor{comment}{//\ namespace\ vge}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ \#endif}}
+
+\end{DoxyCodeInclude}
+ 

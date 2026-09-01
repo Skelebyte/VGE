@@ -1,3 +1,4 @@
+#include "engine/inc/memory.hpp"
 #include "engine/vge.hpp"
 #include <iostream>
 
@@ -15,6 +16,8 @@ int main() {
    * its so destructors get called correctly, and not after Engine::Shutdown,
    * because that would probably cause issues.
    */
+
+  Pointer<float> gurt;
 
   {
     Shader defaultShader = Shader("default", "assets/shaders/default.frag",

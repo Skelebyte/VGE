@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['shutdown_0',['Shutdown',['../structvge_1_1Engine.html#a3c6356ef41c5c52905efa76521062492',1,'vge::Engine::Shutdown()'],['../structvge_1_1Window.html#a587f22de78285ef4730a0e601042b10c',1,'vge::Window::Shutdown()']]],
-  ['size_1',['Size',['../structvge_1_1List.html#a9932e347da48ac87d7ba59d4cbc0b6a9',1,'vge::List']]]
+  ['pointer_0',['Pointer',['../structvge_1_1Pointer.html#a9b501ee93e9f24e2e138164bf1a2ba68',1,'vge::Pointer']]]
 ];

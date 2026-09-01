@@ -111,23 +111,34 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('structvge_1_1P
   <div class="headertitle"><div class="title">vge::Pointer&lt; T &gt; Struct Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Wrapper for <span class="tt">*</span> types. Handles freeing memory automatically.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="memory_8hpp_source.html">memory.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a0c9f71954c0dab0a4f9c96e5255f6dca" id="r_a0c9f71954c0dab0a4f9c96e5255f6dca"><td class="memItemLeft"><a id="a0c9f71954c0dab0a4f9c96e5255f6dca" name="a0c9f71954c0dab0a4f9c96e5255f6dca"></a>
-bool&#160;</td><td class="memItemRight"><b>internal_Malloc</b> (size_t size, const String &amp;file, const String &amp;func, uint32 line)</td></tr>
-<tr class="memitem:afc5d2ec6b6fa5a4b5399e5d53f1f79e8" id="r_afc5d2ec6b6fa5a4b5399e5d53f1f79e8"><td class="memItemLeft"><a id="afc5d2ec6b6fa5a4b5399e5d53f1f79e8" name="afc5d2ec6b6fa5a4b5399e5d53f1f79e8"></a>
-void&#160;</td><td class="memItemRight"><b>internal_Free</b> (const String &amp;file, const String &amp;func, uint32 line)</td></tr>
-<tr class="memitem:a48177bc27d7db3578b2ce362cde4e791" id="r_a48177bc27d7db3578b2ce362cde4e791"><td class="memItemLeft"><a id="a48177bc27d7db3578b2ce362cde4e791" name="a48177bc27d7db3578b2ce362cde4e791"></a>
-T *&#160;</td><td class="memItemRight"><b>GetData</b> ()</td></tr>
+<tr class="memitem:a9b501ee93e9f24e2e138164bf1a2ba68" id="r_a9b501ee93e9f24e2e138164bf1a2ba68"><td class="memItemLeft"><a id="a9b501ee93e9f24e2e138164bf1a2ba68" name="a9b501ee93e9f24e2e138164bf1a2ba68"></a>
+&#160;</td><td class="memItemRight"><b>Pointer</b> ()</td></tr>
+<tr class="memdesc:a9b501ee93e9f24e2e138164bf1a2ba68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assigns member variables to default values, except <span class="tt">typeSize</span> which is set to <span class="tt">sizeof(T)</span>. <br /></td></tr>
+<tr class="memitem:adb03a10e0556404fd8df3b3a0098e268" id="r_adb03a10e0556404fd8df3b3a0098e268"><td class="memItemLeft"><a id="adb03a10e0556404fd8df3b3a0098e268" name="adb03a10e0556404fd8df3b3a0098e268"></a>
+&#160;</td><td class="memItemRight"><b>~Pointer</b> ()</td></tr>
+<tr class="memdesc:adb03a10e0556404fd8df3b3a0098e268"><td class="mdescLeft">&#160;</td><td class="mdescRight">Frees <span class="tt">data</span>. Will be automatically called when this object leaves scope (assuimg it's not declared as <span class="tt"><a class="el" href="structvge_1_1Pointer.html" title="Wrapper for * types. Handles freeing memory automatically.">Pointer</a>&lt;...&gt; *ptr</span>). <br /></td></tr>
+<tr class="memitem:a69b417db0f5dab9071461616d834611c" id="r_a69b417db0f5dab9071461616d834611c"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a69b417db0f5dab9071461616d834611c">internal_Malloc</a> (size_t amount, const String &amp;file, const String &amp;func, uint32 line)</td></tr>
+<tr class="memdesc:a69b417db0f5dab9071461616d834611c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocates memory. Use the macro <span class="tt">Malloc</span> when calling.  <br /></td></tr>
+<tr class="memitem:afc5d2ec6b6fa5a4b5399e5d53f1f79e8" id="r_afc5d2ec6b6fa5a4b5399e5d53f1f79e8"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#afc5d2ec6b6fa5a4b5399e5d53f1f79e8">internal_Free</a> (const String &amp;file, const String &amp;func, uint32 line)</td></tr>
+<tr class="memdesc:afc5d2ec6b6fa5a4b5399e5d53f1f79e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Frees the memory. Use the macro <span class="tt">Free</span> when calling.  <br /></td></tr>
+<tr class="memitem:a48177bc27d7db3578b2ce362cde4e791" id="r_a48177bc27d7db3578b2ce362cde4e791"><td class="memItemLeft">T *&#160;</td><td class="memItemRight"><a class="el" href="#a48177bc27d7db3578b2ce362cde4e791">GetData</a> ()</td></tr>
+<tr class="memdesc:a48177bc27d7db3578b2ce362cde4e791"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <span class="tt">data</span> member.  <br /></td></tr>
 <tr class="memitem:a25eb33d8402657b2dc9a2b44231b2938" id="r_a25eb33d8402657b2dc9a2b44231b2938"><td class="memItemLeft"><a id="a25eb33d8402657b2dc9a2b44231b2938" name="a25eb33d8402657b2dc9a2b44231b2938"></a>
 T *&#160;</td><td class="memItemRight"><b>GetData</b> () const</td></tr>
-<tr class="memitem:a489e6e7ae685eb23f5b787977e1f53e6" id="r_a489e6e7ae685eb23f5b787977e1f53e6"><td class="memItemLeft"><a id="a489e6e7ae685eb23f5b787977e1f53e6" name="a489e6e7ae685eb23f5b787977e1f53e6"></a>
-void&#160;</td><td class="memItemRight"><b>SetData</b> (T *newData)</td></tr>
-<tr class="memitem:a2cf292d637971d0ba468c375dc54eae6" id="r_a2cf292d637971d0ba468c375dc54eae6"><td class="memItemLeft"><a id="a2cf292d637971d0ba468c375dc54eae6" name="a2cf292d637971d0ba468c375dc54eae6"></a>
-size_t&#160;</td><td class="memItemRight"><b>GetAllocatedSize</b> () const</td></tr>
-<tr class="memitem:aed2da09be079d5c336095c87da5e7db8" id="r_aed2da09be079d5c336095c87da5e7db8"><td class="memItemLeft"><a id="aed2da09be079d5c336095c87da5e7db8" name="aed2da09be079d5c336095c87da5e7db8"></a>
-size_t&#160;</td><td class="memItemRight"><b>GetAmountAllocated</b> () const</td></tr>
+<tr class="memitem:a489e6e7ae685eb23f5b787977e1f53e6" id="r_a489e6e7ae685eb23f5b787977e1f53e6"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a489e6e7ae685eb23f5b787977e1f53e6">SetData</a> (T *newData)</td></tr>
+<tr class="memdesc:a489e6e7ae685eb23f5b787977e1f53e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Directly sets the <span class="tt">data</span> member.  <br /></td></tr>
+<tr class="memitem:a2cf292d637971d0ba468c375dc54eae6" id="r_a2cf292d637971d0ba468c375dc54eae6"><td class="memItemLeft">size_t&#160;</td><td class="memItemRight"><a class="el" href="#a2cf292d637971d0ba468c375dc54eae6">GetAllocatedSize</a> () const</td></tr>
+<tr class="memdesc:a2cf292d637971d0ba468c375dc54eae6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the amount of memory allocated in bytes.  <br /></td></tr>
+<tr class="memitem:aed2da09be079d5c336095c87da5e7db8" id="r_aed2da09be079d5c336095c87da5e7db8"><td class="memItemLeft">size_t&#160;</td><td class="memItemRight"><a class="el" href="#aed2da09be079d5c336095c87da5e7db8">GetAmountAllocated</a> () const</td></tr>
+<tr class="memdesc:aed2da09be079d5c336095c87da5e7db8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the number of <span class="tt">T</span> where allocated.  <br /></td></tr>
 <tr class="memitem:a58307d11b49ec8360c83925867f05b9c" id="r_a58307d11b49ec8360c83925867f05b9c"><td class="memItemLeft"><a id="a58307d11b49ec8360c83925867f05b9c" name="a58307d11b49ec8360c83925867f05b9c"></a>
 T &amp;&#160;</td><td class="memItemRight"><b>operator[]</b> (int i)</td></tr>
 <tr class="memitem:a23a0eef96a3cad18edbed99b3f41362f" id="r_a23a0eef96a3cad18edbed99b3f41362f"><td class="memItemLeft"><a id="a23a0eef96a3cad18edbed99b3f41362f" name="a23a0eef96a3cad18edbed99b3f41362f"></a>
@@ -150,6 +161,251 @@ MemoryState&#160;</td><td class="memItemRight"><b>state</b></td></tr>
 <tr class="memitem:a301e127fc7475fa36334596dfcf52cec" id="r_a301e127fc7475fa36334596dfcf52cec"><td class="memItemLeft"><a id="a301e127fc7475fa36334596dfcf52cec" name="a301e127fc7475fa36334596dfcf52cec"></a>
 <a class="el" href="structvge_1_1LogData.html">LogData</a>&#160;</td><td class="memItemRight"><b>mallocData</b></td></tr>
 </table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename T&gt;<br />
+struct vge::Pointer&lt; T &gt;</div><p>Wrapper for <span class="tt">*</span> types. Handles freeing memory automatically. </p>
+<dl class="section warning"><dt>Warning</dt><dd>Do not use as a <span class="tt">*</span> (<span class="tt"><a class="el" href="structvge_1_1Pointer.html" title="Wrapper for * types. Handles freeing memory automatically.">Pointer</a>&lt;...&gt; *ptr;</span>) unless you are going to free it manually.</dd></dl>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Type of the pointer. </td></tr>
+  </table>
+  </dd>
+</dl>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="a2cf292d637971d0ba468c375dc54eae6" name="a2cf292d637971d0ba468c375dc54eae6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2cf292d637971d0ba468c375dc54eae6">&#9670;&#160;</a></span>GetAllocatedSize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t <a class="el" href="structvge_1_1Pointer.html">vge::Pointer</a>&lt; T &gt;::GetAllocatedSize </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the amount of memory allocated in bytes. </p>
+<dl class="section return"><dt>Returns</dt><dd>size_t </dd></dl>
+
+</div>
+</div>
+<a id="aed2da09be079d5c336095c87da5e7db8" name="aed2da09be079d5c336095c87da5e7db8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aed2da09be079d5c336095c87da5e7db8">&#9670;&#160;</a></span>GetAmountAllocated()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t <a class="el" href="structvge_1_1Pointer.html">vge::Pointer</a>&lt; T &gt;::GetAmountAllocated </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the number of <span class="tt">T</span> where allocated. </p>
+<dl class="section return"><dt>Returns</dt><dd>size_t The amount of <span class="tt">T</span> allocated. </dd></dl>
+
+</div>
+</div>
+<a id="a48177bc27d7db3578b2ce362cde4e791" name="a48177bc27d7db3578b2ce362cde4e791"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a48177bc27d7db3578b2ce362cde4e791">&#9670;&#160;</a></span>GetData()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T * <a class="el" href="structvge_1_1Pointer.html">vge::Pointer</a>&lt; T &gt;::GetData </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the <span class="tt">data</span> member. </p>
+<dl class="section return"><dt>Returns</dt><dd>T* </dd></dl>
+
+</div>
+</div>
+<a id="afc5d2ec6b6fa5a4b5399e5d53f1f79e8" name="afc5d2ec6b6fa5a4b5399e5d53f1f79e8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afc5d2ec6b6fa5a4b5399e5d53f1f79e8">&#9670;&#160;</a></span>internal_Free()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="structvge_1_1Pointer.html">vge::Pointer</a>&lt; T &gt;::internal_Free </td>
+          <td>(</td>
+          <td class="paramtype">const String &amp;</td>          <td class="paramname"><span class="paramname"><em>file</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const String &amp;</td>          <td class="paramname"><span class="paramname"><em>func</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32</td>          <td class="paramname"><span class="paramname"><em>line</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Frees the memory. Use the macro <span class="tt">Free</span> when calling. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">file</td><td>The file this function was called in. </td></tr>
+    <tr><td class="paramname">func</td><td>The function this function was called in. </td></tr>
+    <tr><td class="paramname">line</td><td>The line this function was called on. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a69b417db0f5dab9071461616d834611c" name="a69b417db0f5dab9071461616d834611c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a69b417db0f5dab9071461616d834611c">&#9670;&#160;</a></span>internal_Malloc()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="structvge_1_1Pointer.html">vge::Pointer</a>&lt; T &gt;::internal_Malloc </td>
+          <td>(</td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>amount</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const String &amp;</td>          <td class="paramname"><span class="paramname"><em>file</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const String &amp;</td>          <td class="paramname"><span class="paramname"><em>func</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32</td>          <td class="paramname"><span class="paramname"><em>line</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Allocates memory. Use the macro <span class="tt">Malloc</span> when calling. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">amount</td><td>The amount of <span class="tt">typeSize</span> to allocate. </td></tr>
+    <tr><td class="paramname">file</td><td>The file this function was called in. </td></tr>
+    <tr><td class="paramname">func</td><td>The function this function was called in. </td></tr>
+    <tr><td class="paramname">line</td><td>The line this function was called on.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>Example:</b> </p><div class="fragment"><div class="line"><a class="code hl_function" href="#a9b501ee93e9f24e2e138164bf1a2ba68">Pointer&lt;float&gt;</a> ptr;</div>
+<div class="line">ptr.Malloc(3); <span class="comment">// 3 floats allocated</span></div>
+<div class="line"><span class="comment">// then do whatever. access `data` with `ptr[...]` or `ptr.GetData()`</span></div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// out of scope, the destructor is called automatically</span></div>
+<div class="line">ptr.<a class="code hl_function" href="#adb03a10e0556404fd8df3b3a0098e268">~Pointer</a>();</div>
+<div class="ttc" id="astructvge_1_1Pointer_html_a9b501ee93e9f24e2e138164bf1a2ba68"><div class="ttname"><a href="#a9b501ee93e9f24e2e138164bf1a2ba68">vge::Pointer::Pointer</a></div><div class="ttdeci">Pointer()</div><div class="ttdoc">Assigns member variables to default values, except typeSize which is set to sizeof(T).</div><div class="ttdef"><b>Definition</b> memory.hpp:49</div></div>
+<div class="ttc" id="astructvge_1_1Pointer_html_adb03a10e0556404fd8df3b3a0098e268"><div class="ttname"><a href="#adb03a10e0556404fd8df3b3a0098e268">vge::Pointer::~Pointer</a></div><div class="ttdeci">~Pointer()</div><div class="ttdoc">Frees data. Will be automatically called when this object leaves scope (assuimg it&#39;s not declared as ...</div><div class="ttdef"><b>Definition</b> memory.hpp:59</div></div>
+</div><!-- fragment --><dl class="section return"><dt>Returns</dt><dd>true Successful allocation. </dd>
+<dd>
+false Unsuccessful allocation. </dd></dl>
+
+</div>
+</div>
+<a id="a489e6e7ae685eb23f5b787977e1f53e6" name="a489e6e7ae685eb23f5b787977e1f53e6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a489e6e7ae685eb23f5b787977e1f53e6">&#9670;&#160;</a></span>SetData()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="structvge_1_1Pointer.html">vge::Pointer</a>&lt; T &gt;::SetData </td>
+          <td>(</td>
+          <td class="paramtype">T *</td>          <td class="paramname"><span class="paramname"><em>newData</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Directly sets the <span class="tt">data</span> member. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">newData</td><td>New value for the <span class="tt">data</span> member. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
 <li>engine/inc/<a class="el" href="memory_8hpp_source.html">memory.hpp</a></li>
 </ul>

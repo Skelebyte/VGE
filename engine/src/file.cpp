@@ -28,8 +28,8 @@ String File::Read(const String &path) {
   if (!file.read(buffer.GetData(), size)) {
     // THROW_ERROR(ERROR.Derived("", "Failed to read file " + path + "."));
     // delete[] buffer;
-    //? buffer.Free(); // im not sure about commenting this out, im pretty sure
-    //? the Pointer destructor will handle it though.
+    //? buffer.Free(); // im not sure about commenting this out, im pretty
+    // sure ? the Pointer destructor will handle it though.
     return "";
   }
 

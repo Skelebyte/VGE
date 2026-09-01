@@ -18,7 +18,7 @@ var annotated_dup =
       [ "Memory", "structvge_1_1Memory.html", null ],
       [ "Mesh", "structvge_1_1Mesh.html", null ],
       [ "Object3D", "structvge_1_1Object3D.html", null ],
-      [ "Pointer", "structvge_1_1Pointer.html", null ],
+      [ "Pointer", "structvge_1_1Pointer.html", "structvge_1_1Pointer" ],
       [ "Processable", "structvge_1_1Processable.html", null ],
       [ "Renderer", "structvge_1_1Renderer.html", null ],
       [ "Shader", "structvge_1_1Shader.html", null ],

@@ -20,6 +20,10 @@ using int32 = int32_t;
 using int64 = int64_t;
 using String = std::string;
 
+/**
+ * @def VGE_CALL_INFO
+ * its bogus
+ */
 #define VGE_CALL_INFO __FILE__, __FUNCTION__, __LINE__
 #define VGE_CALL_PARAMS                                                        \
   const String &file, const String &func, const uint32 line

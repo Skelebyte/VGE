@@ -1,8 +1,8 @@
 var indexSectionsWithContent =
 {
-  0: "[acefgilmoprstuvw",
+  0: "[acefgilmoprstuvw~",
   1: "[acefilmoprstuvw",
-  2: "gis",
+  2: "gips~",
   3: "f"
 };
 

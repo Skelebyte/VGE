@@ -5,10 +5,12 @@ repo_url: https://github.com/Skelebyte/VGE
 nav:
   - Home: index.md
   - "API":
-    - "Memory":
-        - api/memory/Memory.md
-        - api/memory/Pointer.md
-        - api/memory/Macros.md
+    - "Structs":
+        - api/structs/Memory.md
+        - api/structs/Pointer.md
+    - "Macros":
+        - api/macros/Malloc.md
+        - api/macros/Free.md
 
 theme:
   name: material

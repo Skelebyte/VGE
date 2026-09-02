@@ -6,9 +6,9 @@ nav:
   - Home: index.md
   - "API":
     - "Memory":
-        - Memory.md
-        - Pointer.md
-        - Macros.md
+        - api/memory/Memory.md
+        - api/memory/Pointer.md
+        - api/memory/Macros.md
 
 theme:
   name: material

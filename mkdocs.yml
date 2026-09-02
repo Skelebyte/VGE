@@ -1,6 +1,7 @@
 site_name: VGE Documentation
 site_url: https://vge.readthedocs.io
 theme:
+  name: material
   palette:
 
     # Palette toggle for automatic mode

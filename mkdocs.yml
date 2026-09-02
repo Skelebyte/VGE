@@ -1,5 +1,7 @@
 site_name: VGE Documentation
 site_url: https://vge.readthedocs.io
+repo_url: https://github.com/Skelebyte/VGE
+
 theme:
   name: material
   palette:
@@ -26,3 +28,11 @@ theme:
 
 plugins:
   - search
+
+nav:
+  - Home: index.md
+  - "API":
+    - "Memory":
+        - Memory.md
+        - Pointer.md
+        - Macros.md

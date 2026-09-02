@@ -18,8 +18,8 @@ Destructor for the `Pointer` struct. Automatically frees the `data` member varia
 
 Allocates memory for the `Pointer` struct using `amount * typeSize`. Returns `true` if successful, `false` otherwise.
 
-WARNING:
-Use the macro `Malloc` instead of calling this function directly.
+!!! warning
+    Use the macro `Malloc` instead of calling this function directly.
 
 ##### Parameters
 
@@ -32,8 +32,8 @@ Use the macro `Malloc` instead of calling this function directly.
 
 Frees the memory allocated by `internal_Malloc`. Returns `true` if successful, `false` otherwise.
 
-WARNING:
-Use the macro `Free` instead of calling this function directly.
+!!! warning
+    Use the macro `Free` instead of calling this function directly.
 
 ##### Parameters
 

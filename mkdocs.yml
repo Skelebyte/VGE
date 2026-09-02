@@ -6,11 +6,11 @@ nav:
   - Home: index.md
   - "API":
     - "Structs":
-        - api/structs/Memory.md
-        - api/structs/Pointer.md
+        - "Memory": api/structs/Memory.md
+        - "Pointer": api/structs/Pointer.md
     - "Macros":
-        - api/macros/Malloc.md
-        - api/macros/Free.md
+        - "Malloc": api/macros/Malloc.md
+        - "Free": api/macros/Free.md
 
 theme:
   name: material
@@ -38,3 +38,8 @@ theme:
 
 plugins:
   - search
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences

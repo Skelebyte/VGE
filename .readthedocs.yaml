@@ -8,9 +8,15 @@ version: 2
 build:
   os: ubuntu-24.04
   tools:
-    ruby: "3.3"
+    python: "3.13"
 
-  commands:
-    - gem install bundler
-    - bundle install
-    - bundle exec jekyll build --destination $READTHEDOCS_OUTPUT/html --baseurl "/en/$READTHEDOCS_VERSION"
+# Build documentation with Mkdocs
+mkdocs:
+   configuration: mkdocs.yml
+
+# Optionally, but recommended,
+# declare the Python requirements required to build your documentation
+# See https://docs.readthedocs.io/en/stable/guides/reproducible-builds.html
+# python:
+#    install:
+#    - requirements: docs/requirements.txt

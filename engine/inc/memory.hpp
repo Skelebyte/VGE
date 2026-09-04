@@ -27,10 +27,12 @@ enum MemoryState { UNALLOCATED = 0, ALLOCATED = 1, FREED = 2 };
 
 template <typename T> struct Pointer {
 
-  Pointer() {
-    typeSize = sizeof(T);
-    state = MemoryState::UNALLOCATED;
-    data = nullptr;
+  Pointer(const String &name = "Unnamed Pointer") { Initialize(name); }
+
+  Pointer(const Pointer &ptr) {
+    Initialize("Copy of " + ptr.name);
+
+    CopyData(ptr.data, ptr.count);
   }
 
   ~Pointer() { internal_Free(VGE_CALL_INFO); }
@@ -73,7 +75,8 @@ template <typename T> struct Pointer {
 
     if (Memory::Get().logMallocSizes) {
       Logger::internal_Log("Attempting to allocate " +
-                               ToString(allocationSize) + " bytes of memory.",
+                               ToString(allocationSize) +
+                               " bytes of memory for Pointer \"" + name + "\".",
                            file, func, line);
     }
 
@@ -81,7 +84,8 @@ template <typename T> struct Pointer {
     if (!data) {
       if (Memory::Get().logMallocSizes) {
         Logger::internal_Log("Failed to allocate " + ToString(allocationSize) +
-                                 " bytes of memory!",
+                                 " bytes of memory for Pointer \"" + name +
+                                 "\"!",
                              file, func, line);
       }
       return false;
@@ -112,26 +116,33 @@ template <typename T> struct Pointer {
   void internal_Free(const String &file, const String &func, uint32 line) {
     switch (state) {
     case UNALLOCATED:
-      Logger::internal_Log("You need to call Malloc first! State: UNALLOCATED",
-                           file, func, line);
+      Logger::internal_Log(
+          "You need to call Malloc first! State: UNALLOCATED (for Pointer \"" +
+              name + "\")",
+          file, func, line);
       return;
       break;
     case ALLOCATED:
       break;
     case FREED:
-      Logger::internal_Log("You need to call Malloc first! State: FREED", file,
-                           func, line);
+      Logger::internal_Log(
+          "You need to call Malloc first! State: FREED (for Pointer \"" + name +
+              "\")",
+          file, func, line);
       return;
       break;
     default:
-      Logger::internal_Log("You need to call Malloc first! State: UNKNOWN",
-                           file, func, line);
+      Logger::internal_Log(
+          "You need to call Malloc first! State: UNKNOWN (for Pointer \"" +
+              name + "\")",
+          file, func, line);
       return;
       break;
     }
 
     if (!data) {
-      Logger::internal_Log("Data is not valid!", file, func, line);
+      Logger::internal_Log("Data is not valid! (for Pointer \"" + name + "\")",
+                           file, func, line);
       return;
     }
 
@@ -141,7 +152,7 @@ template <typename T> struct Pointer {
 
     if (Memory::Get().logFreeSizes) {
       Logger::internal_Log("Freeing " + ToString(allocationSize) +
-                               " bytes of memory.",
+                               " bytes of memory for Pointer \"" + name + "\"!",
                            file, func, line);
     }
     std::free(data);
@@ -196,7 +207,46 @@ template <typename T> struct Pointer {
 
   bool operator!() { return !data; }
 
+  Pointer &operator=(const Pointer &other) {
+    if (this == other)
+      return this;
+    if (other.state == UNALLOCATED) {
+      Logger::LOG("other is UNALLOCATED! Cant copy!");
+      return this;
+    }
+    if (other.state == FREED) {
+      Logger::LOG("other is FREED! Cant copy!");
+      this;
+    }
+    if (state == ALLOCATED) {
+      Free();
+    }
+
+    Initialize("Copy of " + other.name);
+
+    CopyData(other.data, other.count);
+
+    return this;
+  }
+
+private:
+  void Initialize(const String &name) {
+    typeSize = sizeof(T);
+    state = MemoryState::UNALLOCATED;
+    data = nullptr;
+
+    this->name = name;
+  }
+  void CopyData(const T *source, uint32 count) {
+    Malloc(count);
+
+    for (int i = 0; i < this->count; i++) {
+      this->data[i] = source[i];
+    }
+  }
+
 protected:
+  String name;
   size_t count;
   size_t allocationSize = 0;
   size_t typeSize = 0;

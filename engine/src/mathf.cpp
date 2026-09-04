@@ -46,7 +46,6 @@ float Mathf::Max(float a, float b) {
 }
 
 float Mathf::Abs(float a) {
-  std::cout << "abs: " << a << std::endl;
 
   if (a < 0) {
     return a - (a * 2);

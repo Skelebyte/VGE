@@ -39,11 +39,11 @@ Uniform::Uniform(const String &name, uint32 shaderID) {
 
 const String &Uniform::GetName() const { return name; }
 
-void Uniform::SetValue(const Matrix4x4 &value) {
-  glUniformMatrix4fv(GetID(), 1, GL_FALSE, value.data.GetData());
-  Logger::CHECK_OPENGL(
-      "Failed to set Matrix4x4 value on uniform \"" + GetName() + "\".", 2);
-}
+// void Uniform::SetValue(const Matrix4x4 &value) {
+//   glUniformMatrix4fv(GetID(), 1, GL_FALSE, value.data.GetData());
+//   Logger::CHECK_OPENGL(
+//       "Failed to set Matrix4x4 value on uniform \"" + GetName() + "\".", 2);
+// }
 
 void Uniform::SetValue(const Vector3 &value) {
   glUniform3fv(GetID(), 1, value.data);

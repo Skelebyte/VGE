@@ -4,7 +4,7 @@
 #include "common.hpp"
 #include "list.hpp"
 #include "logger.hpp"
-#include "matrix4x4.hpp"
+// #include "matrix4x4.hpp"
 #include "memory.hpp"
 #include "vector3.hpp"
 
@@ -51,8 +51,8 @@ struct Camera : Object3D {
   float fov;
   float near;
   float far;
-  Matrix4x4 view;
-  Matrix4x4 perspective;
+  // Matrix4x4 view;
+  // Matrix4x4 perspective;
   bool current;
 
 protected:

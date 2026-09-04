@@ -23,7 +23,7 @@ int main() {
 
   std::cout << c.AsString() << std::endl;
 
-  std::cout << c.GetEntry(1, 3) << std::endl;
+  std::cout << c.GetEntry(1, 2) << std::endl;
 
   /*
    * why the scope brackets?

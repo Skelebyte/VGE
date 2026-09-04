@@ -113,7 +113,7 @@ void Matrix::SetEntry(uint32 columnIdx, uint32 rowIdx, float value) const {
     return;
   }
 
-  data[columnIdx * GetRows() + rowIdx] = value;
+  data[rowIdx * GetRows() + columnIdx] = value;
 }
 
 Matrix Matrix::operator*(float other) {
@@ -144,11 +144,12 @@ Matrix Matrix::operator*(const Matrix &other) {
   for (int row = 0; row < GetRows(); row++) {
     for (int col = 0; col < other.GetColumns(); col++) {
       out.data[row * GetRows() + col] = 0;
-
+      float sum = 0.0f;
       for (int i = 0; i < GetColumns(); i++) {
-        out.data[row * GetRows() + col] +=
-            data[i * GetRows() + col] * other.data[row * GetColumns() + i];
+        sum += data[i * GetRows() + col] * other.data[row * GetColumns() + i];
       }
+      // out.data[row * GetRows() + col] = sum;
+      out.SetEntry(col, row, sum);
     }
   }
 

@@ -33,6 +33,7 @@ union Vector2I {
   void operator+=(const Vector2I &other);
   void operator-=(const Vector2I &other);
   bool operator==(const Vector2I &other) const;
+  bool operator!=(const Vector2I &other) const;
 };
 
 } // namespace vge

@@ -5,25 +5,54 @@
 using namespace vge;
 
 int main() {
-  // Memory::Get().logFreeSizes = false;
-  // Memory::Get().logMallocSizes = false;
+  Memory::Get().logFreeSizes = false;
+  Memory::Get().logMallocSizes = false;
 
   // Engine::Init("hi mum");
-  // Engine::SetTargetFps(-1);
 
-  Matrix a(Vector2I(3), true);
-  Matrix b(Vector2I(3), true);
+  // Matrix a(3, true);
+  // for (int i = 0; i < a.TotalEntries(); i++) {
+  //   a.data[i] = i;
+  // }
 
-  for (int i = 0; i < a.GetNumberOfValues(); i++) {
-    a.data[i] = i;
-    b.data[i] = i;
-  }
+  // Matrix b(3, true);
+  // for (int i = 0; i < b.TotalEntries(); i++) {
+  //   b.data[i] = i;
+  // }
 
-  Matrix c = a * b;
+  // Matrix c = a * b;
 
-  std::cout << c.AsString() << std::endl;
+  // for (int i = 0; i < c.TotalEntries(); i++) {
+  //   std::cout << c.data[i] << " ";
+  // }
+  // std::cout << std::endl;
+  // std::cout << c.AsString() << std::endl;
 
-  std::cout << c.GetEntry(1, 2) << std::endl;
+  // Matrix d(4, true);
+  // d.SetEntry(1, 2, 999);
+  // std::cout << d.AsString() << std::endl;
+
+  // Matrix tm(4, true);
+  // tm.Transform(Vector3(3, -5, 7), Vector3(45, -65, 12), Vector3(1));
+  // std::cout << tm.AsString() << std::endl;
+
+  // Matrix rm(3, true);
+  // rm.SetRotation(Vector3(45, -65, 12));
+  // std::cout << rm.AsString() << std::endl;
+
+  // Matrix sm(4, true);
+  // sm.SetScale(Vector3(2));
+  // std::cout << sm.AsString() << std::endl;
+
+  // Transform3D transform(Vector3(3, -5, 7), Vector3(45, -65, 12), Vector3(1));
+  // std::cout << transform.Forward().Length() << std::endl;
+
+  Matrix m(4, true);
+  m.LookAt(Vector3(5, 0, 0), Vector3(0, 1, 0), Vector3(0, 12, -6));
+
+  std::cout << m.AsString() << std::endl;
+
+  // std::cout << Vector3(3, 4, 0).Normalized().Length() << std::endl;
 
   /*
    * why the scope brackets?

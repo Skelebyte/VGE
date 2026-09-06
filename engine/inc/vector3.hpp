@@ -22,6 +22,7 @@ union Vector3 {
 
   float Length() const;
   Vector3 Normalized() const;
+  String AsString() const;
 
   Vector3 operator+(const Vector3 &other) const;
   Vector3 operator-(const Vector3 &other) const;

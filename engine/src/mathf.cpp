@@ -53,3 +53,9 @@ float Mathf::Abs(float a) {
     return a;
   }
 }
+
+float Mathf::Sin(float a) { return std::sin(a); }
+
+float Mathf::Cos(float a) { return std::cos(a); }
+
+float Mathf::Tan(float a) { return std::tan(a); }

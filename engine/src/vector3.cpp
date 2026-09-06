@@ -39,6 +39,10 @@ Vector3 Vector3::Normalized() const {
   return norm;
 }
 
+String Vector3::AsString() const {
+  return "(" + ToString(x) + ", " + ToString(y) + ", " + ToString(z) + ")";
+}
+
 Vector3 Vector3::operator+(const Vector3 &other) const {
   return Vector3(x + other.x, y + other.y, z + other.z);
 }

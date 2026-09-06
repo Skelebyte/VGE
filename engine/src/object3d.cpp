@@ -5,16 +5,31 @@ using namespace vge;
 /* ------------ Transform3D ------------ */
 
 Transform3D::Transform3D(const Vector3 &pos, const Vector3 &rotEul,
-                         const Vector3 &scl) {
-  position = pos;
-  rotationEuler = rotEul;
-  scale = scl;
+                         const Vector3 &scl)
+    : position(pos), rotation(rotEul), scale(scl), transformation(4, true) {
+
+  transformation.Transform(position, rotation, scale);
 }
 
-bool Transform3D::Process() { return true; }
+bool Transform3D::Process() {
+  transformation.Transform(position, rotation, scale);
+  return true;
+}
 
-// TODO: finish
-Vector3 Transform3D::Forward() const { return Vector3(); }
+Matrix &Transform3D::GetTransformationMatrix() { return transformation; }
+
+Vector3 Transform3D::Right() const {
+  return Vector3(transformation.GetEntry(0, 0), transformation.GetEntry(0, 1),
+                 transformation.GetEntry(0, 2));
+}
+Vector3 Transform3D::Up() const {
+  return Vector3(transformation.GetEntry(2, 0), transformation.GetEntry(2, 1),
+                 transformation.GetEntry(2, 2));
+}
+Vector3 Transform3D::Forward() const {
+  return Vector3(transformation.GetEntry(1, 0), transformation.GetEntry(1, 1),
+                 transformation.GetEntry(1, 2));
+}
 
 /* ------------ Object3D ------------ */
 

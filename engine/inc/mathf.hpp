@@ -14,6 +14,9 @@ struct Mathf {
   static float Min(float a, float b);
   static float Max(float a, float b);
   static float Abs(float a);
+  static float Sin(float a);
+  static float Cos(float a);
+  static float Tan(float a);
 };
 
 } // namespace vge

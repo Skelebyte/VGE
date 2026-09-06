@@ -4,7 +4,7 @@
 #include "common.hpp"
 #include "list.hpp"
 #include "logger.hpp"
-// #include "matrix4x4.hpp"
+#include "matrix.hpp"
 #include "memory.hpp"
 #include "vector3.hpp"
 
@@ -20,11 +20,20 @@ struct Transform3D : Processable {
               const Vector3 &scl = Vector3(1.0f));
 
   bool Process() override;
+  Matrix &GetTransformationMatrix();
+  Vector3 Right() const;
+  Vector3 Up() const;
   Vector3 Forward() const;
 
   Vector3 position;
-  Vector3 rotationEuler;
+  /**
+   * @brief Euler rotation in degrees
+   */
+  Vector3 rotation;
   Vector3 scale;
+
+protected:
+  Matrix transformation;
 };
 
 struct Object3D : Processable {

@@ -74,3 +74,7 @@ void Vector2I::operator-=(const Vector2I &other) {
 bool Vector2I::operator==(const Vector2I &other) const {
   return (x == other.x && y == other.y);
 }
+
+bool Vector2I::operator!=(const Vector2I &other) const {
+  return !(*this == other);
+}

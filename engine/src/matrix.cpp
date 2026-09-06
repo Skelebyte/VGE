@@ -266,3 +266,21 @@ void Matrix::LookAt(const Vector3 &eye, const Vector3 &eyeUp,
   SetEntry(3, 1, -Vector3::Dot(up, eye));
   SetEntry(3, 2, Vector3::Dot(fwd, eye));
 }
+
+// https://stackoverflow.com/a/53366142 - Pmsmm Nov 18, 2018 (CC BY-SA 4.0)
+void Matrix::Perspective(float fovDeg, float aspect, float near, float far) {
+  if (dimensions != 4) {
+    Logger::LOG("This function only works with 4x4 matrices!");
+    return;
+  }
+
+  float fovRad = Mathf::ToRadians(fovDeg);
+  float tanFov = Mathf::Tan(fovRad / 2);
+
+  Zero();
+  SetEntry(0, 0, 1 / (aspect * tanFov));
+  SetEntry(1, 1, 1 / tanFov);
+  SetEntry(2, 2, -((far + near) / (far - near)));
+  SetEntry(2, 3, -1);
+  SetEntry(3, 2, -((2 * far * near) / (far - near)));
+}

@@ -52,13 +52,11 @@ bool Object3D::Process() {
 
 /* ------------ Camera ------------ */
 
-Camera::Camera(float fovDeg, float near, float far) : Object3D() {
+Camera::Camera(float fovDeg, float near, float far)
+    : Object3D(), view(4), projection(4) {
   fov = fovDeg;
   this->near = near;
   this->far = far;
-
-  // view = Matrix4x4(true);
-  // perspective = Matrix4x4(true);
 
   current = true;
 }
@@ -69,8 +67,10 @@ bool Camera::Process() {
   if (!Object3D::Process())
     return false;
 
-  // view.LookAt(transform.position, transform.position + transform.Forward(),
-  //             Vector3(0.0f, 1.0f, 0.0f));
+  view.LookAt(transform.position, transform.position + transform.Forward(),
+              Vector3(0.0f, 1.0f, 0.0f));
+
+  projection.Perspective(fov, Window::GetViewportAspect(), near, far);
 
   return true;
 }

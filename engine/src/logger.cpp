@@ -1,6 +1,7 @@
 #include "../inc/logger.hpp"
 #include "../inc/memory.hpp"
 #include "../inc/window.hpp"
+#include <cassert>
 #include <cstdlib>
 
 using namespace vge;
@@ -42,12 +43,27 @@ void Logger::Init() {
 
 void Logger::internal_Log(const String &msg, const String &file,
                           const String &function, uint32 lineNumber,
-                          bool overwriteLog, bool fatal) {
+                          bool overwriteLog, LogType logType) {
+
+  String type = "";
+  switch (logType) {
+  case LogType::STANDARD:
+    type = "";
+    break;
+  case LogType::FATAL:
+    type = " FATAL ";
+    break;
+  case LogType::ASSERT:
+    type = " ASSERT ";
+    break;
+  default:
+    type = "";
+    break;
+  }
 
   String logString = Time::GetDateString() + ", " + Time::GetTimeString() +
                      " [ from: " + file + ":" + ToString(lineNumber) + ", " +
-                     function + "() ] " + (fatal ? " FATAL ERROR " : "") +
-                     " | " + msg;
+                     function + "() ] " + type + " | " + msg;
 
   File::Write(".log", logString, overwriteLog);
 
@@ -59,9 +75,8 @@ void Logger::internal_Log(const String &msg, const String &file,
 
 void Logger::internal_LogFatal(const String &msg, const String &file,
                                const String &function, uint32 lineNumber) {
-  internal_Log(msg, file, function, lineNumber, false, true);
+  internal_Log(msg, file, function, lineNumber, false, LogType::FATAL);
 
-  // TODO: popup window
   Window::CreatePopUp("Fatal Error",
                       msg + "\n\nfrom: " + file + ":" + ToString(lineNumber) +
                           ", " + function + "()",
@@ -78,6 +93,18 @@ void Logger::internal_CheckOpenGLError(const String &msg, const String &file,
   if (glErr != GL_NO_ERROR) {
     internal_LogFatal(msg + "\n OpenGL error: " + ToString(glErr) + ".", file,
                       function, lineNumber);
+  }
+}
+
+void Logger::internal_Assert(bool condition, const String &msg,
+                             VGE_CALL_PARAMS) {
+  if (condition == false) {
+    internal_Log(msg, VGE_CALL_PARAMS_USAGE, false, LogType::ASSERT);
+    Window::CreatePopUp("Assert Failed!",
+                        msg + "\n\nfrom: " + file + ":" + ToString(line) +
+                            ", " + func + "()",
+                        true);
+    exit(EXIT_FAILURE);
   }
 }
 

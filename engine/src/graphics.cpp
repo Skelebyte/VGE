@@ -39,11 +39,12 @@ Uniform::Uniform(const String &name, uint32 shaderID) {
 
 const String &Uniform::GetName() const { return name; }
 
-// void Uniform::SetValue(const Matrix4x4 &value) {
-//   glUniformMatrix4fv(GetID(), 1, GL_FALSE, value.data.GetData());
-//   Logger::CHECK_OPENGL(
-//       "Failed to set Matrix4x4 value on uniform \"" + GetName() + "\".", 2);
-// }
+void Uniform::SetValue(const Matrix &value) {
+  Logger::ASSERT(value.GetDimensions() == 4, "Matrix must be 4x4!");
+  glUniformMatrix4fv(GetID(), 1, GL_FALSE, value.data.GetData());
+  Logger::CHECK_OPENGL(
+      "Failed to set Matrix4x4 value on uniform \"" + GetName() + "\".", 2);
+}
 
 void Uniform::SetValue(const Vector3 &value) {
   glUniform3fv(GetID(), 1, value.data);
@@ -195,7 +196,7 @@ bool Shader::IsCompileOk(uint32 shader, const String &type) {
   glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
   if (!success) {
     Pointer<char> log;
-    log.Malloc(1024);
+    log.MALLOC(1024);
     if (!log) {
       Logger::LOG("log is not valid!");
     }
@@ -217,7 +218,7 @@ bool Shader::IsLinkOk() {
   if (!success) {
 
     Pointer<char> log;
-    log.Malloc(1024);
+    log.MALLOC(1024);
     glGetProgramInfoLog(GetID(), 1024, nullptr, log.GetData());
 
     Logger::CHECK_OPENGL(

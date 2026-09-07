@@ -21,6 +21,7 @@ struct Window : Singleton<Window> {
   static void SetTitle(const String &title);
   static void CreatePopUp(const String &title, const String &content,
                           bool errorWindow = false);
+  static float GetViewportAspect();
 
 protected:
   SDL_Window *window;

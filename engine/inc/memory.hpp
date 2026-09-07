@@ -6,9 +6,9 @@
 
 namespace vge {
 
-#define Malloc(size) internal_Malloc(size, VGE_CALL_INFO)
+#define MALLOC(size) internal_Malloc(size, VGE_CALL_INFO)
 
-#define Free() internal_Free(VGE_CALL_INFO)
+#define FREE() internal_Free(VGE_CALL_INFO)
 
 struct Memory : Singleton<Memory> {
   bool logMallocSizes = true;
@@ -38,7 +38,7 @@ template <typename T> struct Pointer {
   ~Pointer() { internal_Free(VGE_CALL_INFO); }
 
   /**
-   * @brief Allocates memory. Use the macro `Malloc` when calling.
+   * @brief Allocates memory. Use the macro `MALLOC` when calling.
    *
    * @param amount The amount of `typeSize` to allocate.
    * @param file The file this function was called in.
@@ -49,7 +49,7 @@ template <typename T> struct Pointer {
    * @code{.cpp}
 
    Pointer<float> ptr;
-   ptr.Malloc(3); // 3 floats allocated
+   ptr.MALLOC(3); // 3 floats allocated
    // then do whatever. access `data` with `ptr[...]` or `ptr.GetData()`
 
    // out of scope, the destructor is called automatically
@@ -62,7 +62,7 @@ template <typename T> struct Pointer {
   bool internal_Malloc(size_t amount, const String &file, const String &func,
                        uint32 line) {
     if (data) {
-      Logger::internal_Log("You need to call Free first!", file, func, line);
+      Logger::internal_Log("You need to call FREE first!", file, func, line);
       return false;
     }
     if (amount == 0) {
@@ -117,7 +117,7 @@ template <typename T> struct Pointer {
     switch (state) {
     case UNALLOCATED:
       Logger::internal_Log(
-          "You need to call Malloc first! State: UNALLOCATED (for Pointer \"" +
+          "You need to call MALLOC first! State: UNALLOCATED (for Pointer \"" +
               name + "\")",
           file, func, line);
       return;
@@ -126,14 +126,14 @@ template <typename T> struct Pointer {
       break;
     case FREED:
       Logger::internal_Log(
-          "You need to call Malloc first! State: FREED (for Pointer \"" + name +
+          "You need to call MALLOC first! State: FREED (for Pointer \"" + name +
               "\")",
           file, func, line);
       return;
       break;
     default:
       Logger::internal_Log(
-          "You need to call Malloc first! State: UNKNOWN (for Pointer \"" +
+          "You need to call MALLOC first! State: UNKNOWN (for Pointer \"" +
               name + "\")",
           file, func, line);
       return;
@@ -219,7 +219,7 @@ template <typename T> struct Pointer {
       this;
     }
     if (state == ALLOCATED) {
-      Free();
+      FREE();
     }
 
     Initialize("Copy of " + other.name);
@@ -238,7 +238,7 @@ private:
     this->name = name;
   }
   void CopyData(const T *source, uint32 count) {
-    Malloc(count);
+    MALLOC(count);
 
     for (int i = 0; i < this->count; i++) {
       this->data[i] = source[i];

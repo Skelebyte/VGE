@@ -25,11 +25,13 @@ int main() {
 
     Texture texture(4, 4, Color::White(), Color::Green());
 
-    // Camera camera;
+    Camera camera;
 
     while (Window::Process()) {
       Engine::BeginFrame();
       Window::SetTitle("FPS: " + ToString(Engine::GetFps()));
+
+      camera.Process();
 
       Window::SwapBuffer();
     }

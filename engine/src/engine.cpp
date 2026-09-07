@@ -21,10 +21,8 @@ void Engine::Init(String title, uint32 width, uint32 height, bool allowResize,
     return;
   }
 
-  if (!SDL_Init(SDL_INIT_VIDEO)) {
-    Logger::LOG("MEGA FUCKING FATAL!!!!");
-    return;
-  }
+  Logger::ASSERT(SDL_Init(SDL_INIT_VIDEO),
+                 "SDL_Init failed! SDL error: " + (String)SDL_GetError());
 
   SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
   SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);

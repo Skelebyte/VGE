@@ -6,7 +6,7 @@
 
 // Matrix4x4::Matrix4x4(bool identity) {
 //   // data = Pointer<float>();
-//   data.Malloc(16);
+//   data.MALLOC(16);
 
 //   if (identity) {
 //     this->Identity();

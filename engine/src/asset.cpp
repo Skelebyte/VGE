@@ -66,7 +66,7 @@ Texture::~Texture() { glDeleteTextures(1, GetID_Ptr()); }
 void Texture::CheckeredTextureData(Pointer<uchar> &data, uint32 width,
                                    uint32 height, const Color &a,
                                    const Color &b) {
-  data.Malloc(width * height * 4);
+  data.MALLOC(width * height * 4);
   for (int32 y = 0; y < height; y++) {
     for (int32 x = 0; x < width; x++) {
       float t = (float)x / width;

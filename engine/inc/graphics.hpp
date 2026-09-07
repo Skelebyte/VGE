@@ -4,7 +4,6 @@
 #include "common.hpp"
 #include "engine.hpp"
 #include "list.hpp"
-// #include "matrix4x4.hpp"
 #include "memory.hpp"
 #include "object3d.hpp"
 #include "vector2.hpp"
@@ -38,7 +37,7 @@ struct Uniform : public ID {
   Uniform(const String &name, uint32 shaderID);
   const String &GetName() const;
 
-  // void SetValue(const Matrix4x4 &value);
+  void SetValue(const Matrix &value);
   void SetValue(const Vector3 &value);
   void SetValue(const Vector2 &value);
   void SetValue(const Color &value);

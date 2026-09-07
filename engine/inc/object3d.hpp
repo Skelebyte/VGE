@@ -7,6 +7,7 @@
 #include "matrix.hpp"
 #include "memory.hpp"
 #include "vector3.hpp"
+#include "window.hpp"
 
 namespace vge {
 
@@ -60,11 +61,9 @@ struct Camera : Object3D {
   float fov;
   float near;
   float far;
-  // Matrix4x4 view;
-  // Matrix4x4 perspective;
+  Matrix view;
+  Matrix projection;
   bool current;
-
-protected:
 };
 
 } // namespace vge

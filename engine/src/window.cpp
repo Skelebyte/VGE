@@ -199,3 +199,11 @@ void Window::CreatePopUp(const String &title, const String &content,
       (errorWindow ? SDL_MESSAGEBOX_ERROR : SDL_MESSAGEBOX_INFORMATION),
       title.c_str(), content.c_str(), NULL);
 }
+
+float Window::GetViewportAspect() {
+  if (Get().viewportSize.x == 0 || Get().viewportSize.y == 0) {
+    Logger::LOG("Viewport size is (0, 0)! Cant calculate aspect!");
+    return 0.0f;
+  }
+  return (float)Get().viewportSize.x / (float)Get().viewportSize.y;
+}

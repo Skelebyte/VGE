@@ -24,7 +24,7 @@ String File::Read(const String &path) {
 
   // char *buffer = new char[size + 1];
   Pointer<char> buffer;
-  buffer.Malloc(size + 1);
+  buffer.MALLOC(size + 1);
   if (!file.read(buffer.GetData(), size)) {
     // THROW_ERROR(ERROR.Derived("", "Failed to read file " + path + "."));
     // delete[] buffer;

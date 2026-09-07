@@ -37,7 +37,7 @@ struct Matrix {
   void SetScale(const Vector3 &scale);  // This function works with 3x3 matrices
   // void LookAt(const Vector3 &target, const Vector3 &position,
   //             const Vector3 &forward, const Vector3 &up);
-  void LookAt(const Vector3 &eye, const Vector3 &eyeUp, const Vector3 &target);
+  void LookAt(const Vector3 &eye, const Vector3 &target, const Vector3 &eyeUp);
   void Perspective(float fovDeg, float aspect, float near, float far);
 
   Pointer<float> data;

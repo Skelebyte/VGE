@@ -15,7 +15,7 @@ Matrix::Matrix(const Vector2I &dimensions, bool identity)
 
   entries = this->dimensions.x * this->dimensions.y;
 
-  data.Malloc(entries);
+  data.MALLOC(entries);
 
   if (identity) {
     Identity();
@@ -238,8 +238,8 @@ void Matrix::SetScale(const Vector3 &scale) {
 }
 
 // https://github.com/g-truc/glm/blob/6f14f4792a0cde5d0cf2c910506724d61cb95834/glm/ext/matrix_transform.inl#L153
-void Matrix::LookAt(const Vector3 &eye, const Vector3 &eyeUp,
-                    const Vector3 &target) {
+void Matrix::LookAt(const Vector3 &eye, const Vector3 &target,
+                    const Vector3 &eyeUp) {
   if (dimensions != 4) {
     Logger::LOG("This function only works with 4x4 matrices!");
     return;

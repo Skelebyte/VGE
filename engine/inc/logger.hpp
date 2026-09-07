@@ -29,20 +29,17 @@ private:
   uint32 lineNumber;
 };
 
+enum LogType { STANDARD = 0, FATAL = 1, ASSERT = 2 };
+
 struct Logger : Singleton<Logger> {
   static void Init();
-  static void internal_Log(const String &msg, const String &file = __FILE__,
-                           const String &function = "__FUNCTION__",
-                           const uint32 lineNumber = 0,
-                           bool overwriteLog = false, bool fatal = false);
-  static void internal_LogFatal(const String &msg,
-                                const String &file = __FILE__,
-                                const String &function = "__FUNCTION__",
-                                const uint32 lineNumber = 0);
-  static void internal_CheckOpenGLError(const String &msg,
-                                        const String &file = __FILE__,
-                                        const String &function = "__FUNCTION__",
-                                        const uint32 lineNumber = 0);
+  static void internal_Log(const String &msg, VGE_CALL_PARAMS,
+                           bool overwriteLog = false,
+                           LogType logType = LogType::STANDARD);
+  static void internal_LogFatal(const String &msg, VGE_CALL_PARAMS);
+  static void internal_CheckOpenGLError(const String &msg, VGE_CALL_PARAMS);
+  static void internal_Assert(bool condition, const String &msg,
+                              VGE_CALL_PARAMS);
 
   static const LogData &GetLastLog();
 
@@ -63,6 +60,8 @@ protected:
  */
 #define CHECK_OPENGL(msg, linesAbove)                                          \
   internal_CheckOpenGLError(msg, __FILE__, __FUNCTION__, __LINE__ - linesAbove)
+
+#define ASSERT(condition, msg) internal_Assert(condition, msg, VGE_CALL_INFO)
 
 } // namespace vge
 

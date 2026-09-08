@@ -25,22 +25,21 @@ private:
 enum TextureFilter { LINEAR = 0, NEAREST = 1 };
 
 struct Texture : public Asset, public ID {
-  Texture(uint32 width, uint32 height, const Color &a, const Color &b,
+  Texture(uint width, uint height, const Color &a, const Color &b,
           TextureFilter filter = TextureFilter::NEAREST);
   Texture(const String &path,
           const TextureFilter &filter = TextureFilter::NEAREST);
   ~Texture();
-  static void CheckeredTextureData(Pointer<uchar> &data, uint32 width,
-                                   uint32 height, const Color &a,
-                                   const Color &b);
+  static void CheckeredTextureData(Pointer<uchar> &data, uint width,
+                                   uint height, const Color &a, const Color &b);
   void Bind();
   void Unbind();
   bool IsValid() const;
 
 protected:
   void TextureFallback();
-  void LoadFromData(Pointer<uchar> &data, uint32 channels, uint32 width,
-                    uint32 height,
+  void LoadFromData(Pointer<uchar> &data, uint channels, uint width,
+                    uint height,
                     const TextureFilter &filter = TextureFilter::NEAREST);
 
 private:
@@ -63,10 +62,10 @@ struct Mesh : Asset {
   ~Mesh() = default;
 
   static Mesh GeneratePlane(const Vector2 &dimensions = Vector2(1.0f),
-                            int32 divisions = 1);
+                            int divisions = 1);
 
   List<Vertex> vertices;
-  List<uint32> indices;
+  List<uint> indices;
 
   List<float> data;
 };

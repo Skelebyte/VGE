@@ -9,7 +9,7 @@ const String &Asset::GetPath() const { return path; }
 
 /* ------------ Texture ------------ */
 
-Texture::Texture(uint32 width, uint32 height, const Color &a, const Color &b,
+Texture::Texture(uint width, uint height, const Color &a, const Color &b,
                  TextureFilter filter)
     : Asset("CHECKERED") {
 
@@ -42,7 +42,7 @@ Texture::Texture(const String &path, const TextureFilter &filter)
 
   stbi_set_flip_vertically_on_load(1);
 
-  int32 width, height, channels;
+  int width, height, channels;
 
   // uchar *data;
 
@@ -63,17 +63,17 @@ Texture::Texture(const String &path, const TextureFilter &filter)
 
 Texture::~Texture() { glDeleteTextures(1, GetID_Ptr()); }
 
-void Texture::CheckeredTextureData(Pointer<uchar> &data, uint32 width,
-                                   uint32 height, const Color &a,
+void Texture::CheckeredTextureData(Pointer<uchar> &data, uint width,
+                                   uint height, const Color &a,
                                    const Color &b) {
   data.MALLOC(width * height * 4);
-  for (int32 y = 0; y < height; y++) {
-    for (int32 x = 0; x < width; x++) {
+  for (int y = 0; y < height; y++) {
+    for (int x = 0; x < width; x++) {
       float t = (float)x / width;
       float s = (float)y / height;
 
-      int32 index = (y * width + x) * 4;
-      if (((int32)(s * height) + (int32)(t * width)) % 2 == 0) {
+      int index = (y * width + x) * 4;
+      if (((int)(s * height) + (int)(t * width)) % 2 == 0) {
         data[index] = a.r;
         data[index + 1] = a.g;
         data[index + 2] = a.b;
@@ -102,8 +102,8 @@ void Texture::TextureFallback() {
 }
 
 // TODO: add opengl error checking
-void Texture::LoadFromData(Pointer<uchar> &data, uint32 channels, uint32 width,
-                           uint32 height, const TextureFilter &filter) {
+void Texture::LoadFromData(Pointer<uchar> &data, uint channels, uint width,
+                           uint height, const TextureFilter &filter) {
   if (!data) {
     Logger::LOG("data parameter is not valid!");
     return;
@@ -137,7 +137,7 @@ void Texture::LoadFromData(Pointer<uchar> &data, uint32 channels, uint32 width,
     // THROW_ERROR_GL(FATAL.Derived("", "Setting MAG_FILTER failed."));
   }
 
-  uint32 format = channels == 4 ? GL_RGBA : GL_RGB;
+  uint format = channels == 4 ? GL_RGBA : GL_RGB;
 
   glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format,
                GL_UNSIGNED_BYTE, data.GetData());
@@ -165,9 +165,9 @@ Vertex::Vertex(Vector3 pos, Vector2 uv, Vector3 norm) {
 
 /* ------------ Mesh ------------ */
 
-Mesh Mesh::GeneratePlane(const Vector2 &dimensions, int32 divisions) {
+Mesh Mesh::GeneratePlane(const Vector2 &dimensions, int divisions) {
   Vector2 planeDimensions;
-  int32 planeDivisions = Mathf::Max(1, divisions);
+  int planeDivisions = Mathf::Max(1, divisions);
 
   if (divisions == 0)
     planeDivisions = 1;
@@ -183,13 +183,13 @@ Mesh Mesh::GeneratePlane(const Vector2 &dimensions, int32 divisions) {
   float triangleSideX = planeDimensions.x / divisions;
   float triangleSideY = planeDimensions.y / divisions;
 
-  for (uint32 row = 0; row <= divisions;
+  for (uint row = 0; row <= divisions;
        row++) { // possibly may need to use divisions + 1
-    for (uint32 col = 0; col <= divisions;
+    for (uint col = 0; col <= divisions;
          col++) { // possibly may need to use divisions + 1
 
       if (row < divisions && col < divisions) {
-        uint32 index = row * (divisions + 1) + col;
+        uint index = row * (divisions + 1) + col;
 
         // top triangle
         mesh.indices.Add(index);

@@ -7,7 +7,7 @@
 using namespace vge;
 
 LogData::LogData(const String &func, const String &file, const String &msg,
-                 const String &time, const String &date, uint32 line) {
+                 const String &time, const String &date, uint line) {
   this->function = func;
   this->file = file;
   this->message = msg;
@@ -21,7 +21,7 @@ String LogData::GetFile() const { return file; }
 String LogData::GetMessage() const { return message; }
 String LogData::GetTime() const { return time; }
 String LogData::GetDate() const { return date; }
-uint32 LogData::GetLineNumber() const { return lineNumber; }
+uint LogData::GetLineNumber() const { return lineNumber; }
 
 bool Logger::print = true;
 LogData Logger::lastLog = LogData();
@@ -42,7 +42,7 @@ void Logger::Init() {
 }
 
 void Logger::internal_Log(const String &msg, const String &file,
-                          const String &function, uint32 lineNumber,
+                          const String &function, uint lineNumber,
                           bool overwriteLog, LogType logType) {
 
   String type = "";
@@ -74,7 +74,7 @@ void Logger::internal_Log(const String &msg, const String &file,
 }
 
 void Logger::internal_LogFatal(const String &msg, const String &file,
-                               const String &function, uint32 lineNumber) {
+                               const String &function, uint lineNumber) {
   internal_Log(msg, file, function, lineNumber, false, LogType::FATAL);
 
   Window::CreatePopUp("Fatal Error",
@@ -87,8 +87,8 @@ void Logger::internal_LogFatal(const String &msg, const String &file,
 
 void Logger::internal_CheckOpenGLError(const String &msg, const String &file,
                                        const String &function,
-                                       uint32 lineNumber) {
-  uint32 glErr = glGetError();
+                                       uint lineNumber) {
+  uint glErr = glGetError();
 
   if (glErr != GL_NO_ERROR) {
     internal_LogFatal(msg + "\n OpenGL error: " + ToString(glErr) + ".", file,

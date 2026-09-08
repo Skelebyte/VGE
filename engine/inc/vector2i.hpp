@@ -9,9 +9,9 @@ namespace vge {
 
 union Vector2I {
   struct {
-    int32 x, y;
+    int x, y;
   };
-  int32 data[2];
+  int data[2];
 
   Vector2I() = default;
   Vector2I(int xy);

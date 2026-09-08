@@ -11,9 +11,9 @@ template <typename T> struct List {
   /**
    * @brief Returns number of elements
    *
-   * @return uint32
+   * @return uint
    */
-  uint32 Size() { return data.size(); }
+  uint Size() { return data.size(); }
   void Add(const T &value, bool first = false) {
     if (first) {
       data.insert(data.begin(), value);
@@ -22,7 +22,7 @@ template <typename T> struct List {
     }
   }
 
-  void internal_Remove(uint32 index, VGE_CALL_PARAMS) {
+  void internal_Remove(uint index, VGE_CALL_PARAMS) {
     if (index > Size()) {
       Logger::internal_LogFatal(
           "Index " + ToString(index) +
@@ -35,7 +35,7 @@ template <typename T> struct List {
   }
 
   void internal_RemoveElement(T element, VGE_CALL_PARAMS) {
-    for (uint32 i = 0; i < Size(); i++) {
+    for (uint i = 0; i < Size(); i++) {
       if (data[i] == element) {
         internal_Remove(i);
         break;
@@ -49,7 +49,7 @@ template <typename T> struct List {
 
   std::vector<T> *AsVector() { return &data; }
 
-  T &operator[](uint32 index) {
+  T &operator[](uint index) {
     if (index >= Size()) {
       Logger::LOG_FATAL("Index " + ToString(index) +
                         " is out of bounds (list size: " + ToString(Size()) +

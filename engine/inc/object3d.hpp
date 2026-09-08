@@ -21,7 +21,7 @@ struct Transform3D : Processable {
               const Vector3 &scl = Vector3(1.0f));
 
   bool Process() override;
-  Matrix &GetTransformationMatrix();
+  Matrix<4, 4> &GetTransformationMatrix();
   Vector3 Right() const;
   Vector3 Up() const;
   Vector3 Forward() const;
@@ -34,7 +34,7 @@ struct Transform3D : Processable {
   Vector3 scale;
 
 protected:
-  Matrix transformation;
+  Matrix<4, 4> transformation;
 };
 
 struct Object3D : Processable {
@@ -61,8 +61,8 @@ struct Camera : Object3D {
   float fov;
   float near;
   float far;
-  Matrix view;
-  Matrix projection;
+  Matrix<4, 4> view;
+  Matrix<4, 4> projection;
   bool current;
 };
 

@@ -66,6 +66,6 @@ String File::GetExtension(const String &path) {
   return ((std::filesystem::path)path).extension();
 }
 
-size_t File::MbToBytes(uint32 mb) { return mb * 1024 * 1024; }
+size_t File::MbToBytes(uint mb) { return mb * 1024 * 1024; }
 
 double File::BytesToMb(size_t bytes) { return (double)bytes / 1024 / 1024; }

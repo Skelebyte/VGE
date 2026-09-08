@@ -5,7 +5,7 @@
 
 using namespace vge;
 
-void Window::Init(String title, uint32 width, uint32 height, bool allowResize,
+void Window::Init(String title, uint width, uint height, bool allowResize,
                   bool fullscreen) {
   if (Engine::IsInit() == false) {
     Logger::LOG("You must call `Engine::init()` first!");
@@ -15,7 +15,7 @@ void Window::Init(String title, uint32 width, uint32 height, bool allowResize,
     return;
   }
 
-  uint32 flags = SDL_WINDOW_OPENGL;
+  uint flags = SDL_WINDOW_OPENGL;
   if (allowResize) {
     flags |= SDL_WINDOW_RESIZABLE;
   }
@@ -100,7 +100,7 @@ bool Window::Process() {
   Get().pillarboxed = false;
 
   if (windowAspect > gameAspect) {
-    Get().viewportSize.x = (int32)(dimensions.y * gameAspect);
+    Get().viewportSize.x = (int)(dimensions.y * gameAspect);
     Get().viewportSize.y = dimensions.y;
 
     Get().viewportPosition.x = (dimensions.x - Get().viewportSize.x) / 2;
@@ -108,7 +108,7 @@ bool Window::Process() {
     Get().pillarboxed = true;
   } else {
     Get().viewportSize.x = dimensions.x;
-    Get().viewportSize.y = (int32)(dimensions.x / gameAspect);
+    Get().viewportSize.y = (int)(dimensions.x / gameAspect);
 
     Get().viewportPosition.x = 0;
     Get().viewportPosition.y = (dimensions.y - Get().viewportSize.y) / 2;
@@ -141,8 +141,8 @@ Vector2I Window::GetDimensions() {
     return Vector2I();
   }
 
-  int32 x;
-  int32 y;
+  int x;
+  int y;
   Vector2I dimensions;
 
   if (SDL_GetWindowSize(Get().window, &x, &y) == false) {

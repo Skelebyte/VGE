@@ -6,7 +6,7 @@ using namespace vge;
 
 Transform3D::Transform3D(const Vector3 &pos, const Vector3 &rotEul,
                          const Vector3 &scl)
-    : position(pos), rotation(rotEul), scale(scl), transformation(4, true) {
+    : position(pos), rotation(rotEul), scale(scl), transformation(true) {
 
   transformation.Transform(position, rotation, scale);
 }
@@ -16,7 +16,7 @@ bool Transform3D::Process() {
   return true;
 }
 
-Matrix &Transform3D::GetTransformationMatrix() { return transformation; }
+Matrix<4, 4> &Transform3D::GetTransformationMatrix() { return transformation; }
 
 Vector3 Transform3D::Right() const {
   return Vector3(transformation.GetEntry(0, 0), transformation.GetEntry(0, 1),
@@ -53,7 +53,7 @@ bool Object3D::Process() {
 /* ------------ Camera ------------ */
 
 Camera::Camera(float fovDeg, float near, float far)
-    : Object3D(), view(4), projection(4) {
+    : Object3D(), view(), projection() {
   fov = fovDeg;
   this->near = near;
   this->far = far;

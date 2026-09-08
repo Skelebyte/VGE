@@ -60,7 +60,7 @@ template <typename T> struct Pointer {
    * @return false Unsuccessful allocation.
    */
   bool internal_Malloc(size_t amount, const String &file, const String &func,
-                       uint32 line) {
+                       uint line) {
     if (data) {
       Logger::internal_Log("You need to call FREE first!", file, func, line);
       return false;
@@ -113,7 +113,7 @@ template <typename T> struct Pointer {
    * @param func The function this function was called in.
    * @param line The line this function was called on.
    */
-  void internal_Free(const String &file, const String &func, uint32 line) {
+  void internal_Free(const String &file, const String &func, uint line) {
     switch (state) {
     case UNALLOCATED:
       Logger::internal_Log(
@@ -237,7 +237,7 @@ private:
 
     this->name = name;
   }
-  void CopyData(const T *source, uint32 count) {
+  void CopyData(const T *source, uint count) {
     MALLOC(count);
 
     for (int i = 0; i < this->count; i++) {

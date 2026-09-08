@@ -3,13 +3,13 @@
 
 using namespace vge;
 
-Vector2I::Vector2I(int32 xy) {
+Vector2I::Vector2I(int xy) {
 
   x = xy;
   y = xy;
 }
 
-Vector2I::Vector2I(int32 x, int32 y) {
+Vector2I::Vector2I(int x, int y) {
   this->x = x;
   this->y = y;
 }

@@ -10,7 +10,7 @@ namespace vge {
 struct LogData {
   LogData() = default;
   LogData(const String &func, const String &file, const String &msg,
-          const String &time, const String &date, uint32 line);
+          const String &time, const String &date, uint line);
   ~LogData() = default;
 
   String GetFunction() const;
@@ -18,7 +18,7 @@ struct LogData {
   String GetMessage() const;
   String GetTime() const;
   String GetDate() const;
-  uint32 GetLineNumber() const;
+  uint GetLineNumber() const;
 
 private:
   String function;
@@ -26,7 +26,7 @@ private:
   String message;
   String time;
   String date;
-  uint32 lineNumber;
+  uint lineNumber;
 };
 
 enum LogType { STANDARD = 0, FATAL = 1, ASSERT = 2 };

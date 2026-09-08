@@ -11,7 +11,7 @@
 
 using namespace vge;
 
-void Engine::Init(String title, uint32 width, uint32 height, bool allowResize,
+void Engine::Init(String title, uint width, uint height, bool allowResize,
                   bool fullscreen) {
   Logger::Init();
 
@@ -105,7 +105,7 @@ void Engine::EndFrame() {
   }
 }
 
-void Engine::SetTargetFps(uint32 target) {
+void Engine::SetTargetFps(uint target) {
   if (target > 999) {
     Get().targetFps = 1.0f / 999.0f;
   } else {
@@ -113,7 +113,7 @@ void Engine::SetTargetFps(uint32 target) {
   }
 }
 
-uint32 Engine::GetFps() { return Get().fps; }
+uint Engine::GetFps() { return Get().fps; }
 
 uint64 Engine::GetUptimeMs() {
   return (std::chrono::system_clock::now().time_since_epoch() /

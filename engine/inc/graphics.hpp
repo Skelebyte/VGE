@@ -34,15 +34,15 @@ union Color {
 };
 
 struct Uniform : public ID {
-  Uniform(const String &name, uint32 shaderID);
+  Uniform(const String &name, uint shaderID);
   const String &GetName() const;
 
-  void SetValue(const Matrix &value);
+  void SetValue(const Matrix<4, 4> &value);
   void SetValue(const Vector3 &value);
   void SetValue(const Vector2 &value);
   void SetValue(const Color &value);
   void SetValue(float value);
-  void SetValue(int32 value);
+  void SetValue(int value);
   void SetValue(bool value);
 
 protected:
@@ -61,7 +61,7 @@ struct Shader : public ID {
 protected:
   String name;
   List<Uniform> uniforms;
-  bool IsCompileOk(uint32 shader, const String &type);
+  bool IsCompileOk(uint shader, const String &type);
   bool IsLinkOk();
 };
 
@@ -79,12 +79,12 @@ struct VAO : public ID {
 
   void Bind();
   void Unbind();
-  void LinkAttrib(VBO &vbo, uint32 layout, uint32 components, uint32 type,
+  void LinkAttrib(VBO &vbo, uint layout, uint components, uint type,
                   size_t stride, void *offset);
 };
 
 struct EBO : public ID {
-  EBO(uint32 *indices, size_t size);
+  EBO(uint *indices, size_t size);
   ~EBO();
 
   void Bind();

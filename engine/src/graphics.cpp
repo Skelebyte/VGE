@@ -30,7 +30,7 @@ Color Color::Grey() { return Color(0.5f, 0.5f, 0.5f); }
 
 /* ------------ Uniform ------------ */
 
-Uniform::Uniform(const String &name, uint32 shaderID) {
+Uniform::Uniform(const String &name, uint shaderID) {
   SetID(glGetUniformLocation(shaderID, name.c_str()));
   // TODO: add opengl error check
 
@@ -39,9 +39,8 @@ Uniform::Uniform(const String &name, uint32 shaderID) {
 
 const String &Uniform::GetName() const { return name; }
 
-void Uniform::SetValue(const Matrix &value) {
-  Logger::ASSERT(value.GetDimensions() == 4, "Matrix must be 4x4!");
-  glUniformMatrix4fv(GetID(), 1, GL_FALSE, value.data.GetData());
+void Uniform::SetValue(const Matrix<4, 4> &value) {
+  glUniformMatrix4fv(GetID(), 1, GL_FALSE, value.data);
   Logger::CHECK_OPENGL(
       "Failed to set Matrix4x4 value on uniform \"" + GetName() + "\".", 2);
 }
@@ -70,10 +69,10 @@ void Uniform::SetValue(float value) {
       "Failed to set float value on uniform \"" + GetName() + "\".", 2);
 }
 
-void Uniform::SetValue(int32 value) {
+void Uniform::SetValue(int value) {
   glUniform1i(GetID(), value);
   Logger::CHECK_OPENGL(
-      "Failed to set int32 value on uniform \"" + GetName() + "\".", 2);
+      "Failed to set int value on uniform \"" + GetName() + "\".", 2);
 }
 
 void Uniform::SetValue(bool value) {
@@ -110,7 +109,7 @@ Shader::Shader(const String &name, const String &fragPath,
   const char *cstrFrag = fragContent.c_str();
   const char *cstrVert = vertContent.c_str();
 
-  uint32 frag = glCreateShader(GL_FRAGMENT_SHADER);
+  uint frag = glCreateShader(GL_FRAGMENT_SHADER);
   Logger::CHECK_OPENGL("Failed to create GL_FRAGMENT_SHADER.", 1);
 
   glShaderSource(frag, 1, &cstrFrag, nullptr);
@@ -120,7 +119,7 @@ Shader::Shader(const String &name, const String &fragPath,
 
   IsCompileOk(frag, "Fragment");
 
-  uint32 vert = glCreateShader(GL_VERTEX_SHADER);
+  uint vert = glCreateShader(GL_VERTEX_SHADER);
   Logger::CHECK_OPENGL("Failed to create GL_VERTEX_SHADER.", 1);
 
   glShaderSource(vert, 1, &cstrVert, nullptr);
@@ -143,7 +142,7 @@ Shader::Shader(const String &name, const String &fragPath,
 
   IsLinkOk();
 
-  int32 isProgramValid = glIsProgram(GetID());
+  int isProgramValid = glIsProgram(GetID());
   Logger::LOG("Is shader \"" + name + "\" valid? " +
               (isProgramValid ? "YES." : "NO."));
 
@@ -157,7 +156,7 @@ Shader::~Shader() {
 }
 
 void Shader::AddUniform(const String &name) {
-  for (int32 i = 0; i < uniforms.Size(); i++) {
+  for (int i = 0; i < uniforms.Size(); i++) {
     if (uniforms[i].GetName() == name) {
       Logger::LOG("Uniform with the name \"" + name +
                   "\" already exists in this shader!");
@@ -169,7 +168,7 @@ void Shader::AddUniform(const String &name) {
 }
 
 Uniform *Shader::GetUniform(const String &name) {
-  for (int32 i = 0; i < uniforms.Size(); i++) {
+  for (int i = 0; i < uniforms.Size(); i++) {
     if (uniforms[i].GetName() == name) {
       return &uniforms[i];
     }
@@ -190,8 +189,8 @@ void Shader::SetName(const String &name) { this->name = name; }
 
 String &Shader::GetName() { return name; }
 
-bool Shader::IsCompileOk(uint32 shader, const String &type) {
-  int32 success;
+bool Shader::IsCompileOk(uint shader, const String &type) {
+  int success;
 
   glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
   if (!success) {
@@ -211,7 +210,7 @@ bool Shader::IsCompileOk(uint32 shader, const String &type) {
 }
 
 bool Shader::IsLinkOk() {
-  int32 success;
+  int success;
 
   glGetProgramiv(GetID(), GL_LINK_STATUS, &success);
 
@@ -279,7 +278,7 @@ void VAO::Bind() {
 void VAO::Unbind() { glBindVertexArray(0); }
 
 // TODO: add error checking
-void VAO::LinkAttrib(VBO &vbo, uint32 layout, uint32 components, uint32 type,
+void VAO::LinkAttrib(VBO &vbo, uint layout, uint components, uint type,
                      size_t stride, void *offset) {
   vbo.Bind();
   glVertexAttribPointer(layout, components, type, GL_FALSE, stride, offset);
@@ -294,7 +293,7 @@ void VAO::LinkAttrib(VBO &vbo, uint32 layout, uint32 components, uint32 type,
 /* ------------ EBO ------------ */
 
 // TODO: add error checking
-EBO::EBO(uint32 *indices, size_t size) {
+EBO::EBO(uint *indices, size_t size) {
   glGenBuffers(1, GetID_Ptr());
   // THROW_ERROR_GL(FATAL.Derived("GL_GEN_BUFFERS_FAIL",
   //                              "Generating the EBO buffer failed!"));

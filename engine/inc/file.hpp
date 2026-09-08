@@ -17,7 +17,7 @@ struct File {
   static size_t FileSize(const String &path);
   static String GetExtension(const String &path);
 
-  static size_t MbToBytes(uint32 mb);
+  static size_t MbToBytes(uint mb);
   static double BytesToMb(size_t bytes);
 };
 

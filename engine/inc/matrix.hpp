@@ -10,19 +10,9 @@
 
 namespace vge {
 
-template <uint C = 1, uint R = 1> struct Matrix {
-  Matrix(bool identity = false, uint c = C, uint r = R) {
-    if (c == 0 || r == 0) {
-      Logger::LOG("Dimensions cant be (0, 0)!");
+template <uint R, uint C> struct Matrix {
 
-      return;
-    }
-
-    this->dimensions.x = c;
-    this->dimensions.y = r;
-
-    entries = this->dimensions.x * this->dimensions.y;
-
+  Matrix(bool identity = false) {
     if (identity) {
       Identity();
     } else {
@@ -30,17 +20,23 @@ template <uint C = 1, uint R = 1> struct Matrix {
     }
   }
 
+  void Zero() {
+    for (int i = 0; i < ENTRIES; i++) {
+      data[i] = 0;
+    }
+  }
+
   void Identity() {
     if (!IsSquareMatrix()) {
-      Logger::LOG("Matrix is not uniform! Cant make identity matrix.");
+      Logger::LOG("Matrix is not square! Cant make identity matrix.");
       return;
     }
 
     int n = 0;
-    for (int i = 0; i < entries; i++) {
+    for (int i = 0; i < ENTRIES; i++) {
       if (n == 0) {
         data[i] = 1;
-        n = dimensions.x;
+        n = COLUMNS;
       } else {
         data[i] = 0;
         n--;
@@ -48,26 +44,51 @@ template <uint C = 1, uint R = 1> struct Matrix {
     }
   }
 
-  bool IsSquareMatrix() const { return dimensions.x == dimensions.y; }
+  bool IsSquareMatrix() const { return COLUMNS == ROWS; }
 
-  uint TotalEntries() const { return entries; }
-
-  uint GetColumns() const { return dimensions.x; }
-
-  uint GetRows() const { return dimensions.y; }
-
-  void Zero() {
-    for (int i = 0; i < entries; i++) {
-      data[i] = 0;
+  float GetEntry(uint c, uint r) const {
+    if (c > COLUMNS - 1) {
+      Logger::LOG("There are only " + ToString(COLUMNS) + " (" +
+                  ToString(COLUMNS - 1) + ") columns in this matrix! Column " +
+                  ToString(c) + " is out of bounds!");
+      return 0.0f;
     }
+
+    if (r > ROWS - 1) {
+      Logger::LOG("There are only " + ToString(ROWS) + " (" +
+                  ToString(ROWS - 1) + ") rows in this matrix! Row " +
+                  ToString(r) + " is out of bounds!");
+      return 0.0f;
+    }
+
+    return data[r * ROWS + c];
   }
+
+  void SetEntry(uint c, uint r, float value) {
+    if (c > COLUMNS - 1) {
+      Logger::LOG("There are only " + ToString(COLUMNS) + " (" +
+                  ToString(COLUMNS - 1) + ") columns in this matrix! Column " +
+                  ToString(c) + " is out of bounds!");
+      return;
+    }
+
+    if (r > ROWS - 1) {
+      Logger::LOG("There are only " + ToString(ROWS) + " (" +
+                  ToString(ROWS - 1) + ") rows in this matrix! Row " +
+                  ToString(r) + " is out of bounds!");
+      return;
+    }
+
+    data[r * ROWS + c] = value;
+  }
+
   String AsString() const {
     String out = "";
 
-    for (int row = 0; row < GetRows(); row++) {
+    for (int row = 0; row < ROWS; row++) {
       out += "[ ";
-      for (int col = 0; col < GetColumns(); col++) {
-        out += ToString(data[col * GetRows() + row]) + " ";
+      for (int col = 0; col < COLUMNS; col++) {
+        out += ToString(GetEntry(col, row)) + " ";
       }
       out += "]\n";
     }
@@ -75,78 +96,43 @@ template <uint C = 1, uint R = 1> struct Matrix {
     return out;
   }
 
-  float GetEntry(uint columnIdx, uint rowIdx) const {
-    if (columnIdx > GetColumns() - 1) {
-      Logger::LOG("There are only " + ToString(GetColumns()) + " (" +
-                  ToString(GetColumns() - 1) +
-                  ") columns in this matrix! Column " + ToString(columnIdx) +
-                  " is out of bounds!");
-      return 0.0f;
-    }
-
-    if (rowIdx > GetRows() - 1) {
-      Logger::LOG("There are only " + ToString(GetRows()) + " (" +
-                  ToString(GetRows() - 1) + ") rows in this matrix! Row " +
-                  ToString(rowIdx) + " is out of bounds!");
-      return 0.0f;
-    }
-
-    return data[columnIdx * GetRows() + rowIdx];
-  }
-  void SetEntry(uint columnIdx, uint rowIdx, float value) {
-    if (columnIdx > GetColumns() - 1) {
-      Logger::LOG("There are only " + ToString(GetColumns()) + " (" +
-                  ToString(GetColumns() - 1) +
-                  ") columns in this matrix! Column " + ToString(columnIdx) +
-                  " is out of bounds!");
-      return;
-    }
-
-    if (rowIdx > GetRows() - 1) {
-      Logger::LOG("There are only " + ToString(GetRows()) + " (" +
-                  ToString(GetRows() - 1) + ") rows in this matrix! Row " +
-                  ToString(rowIdx) + " is out of bounds!");
-      return;
-    }
-
-    // i think i flipped rowIdx and columnIdx by accident
-    // data[rowIdx * GetRows() + columnIdx] = value;
-    data[columnIdx * GetRows() + rowIdx] = value;
-  }
-
   Matrix operator*(float other) {
-    Matrix<C, R> out(false);
+    Matrix<R, C> out;
 
-    for (int i = 0; i < entries; i++) {
+    for (int i = 0; i < ENTRIES; i++) {
       out.data[i] = data[i] * other;
     }
 
     return out;
   }
 
-  static Matrix Multiply(const Matrix &a, const Matrix &b) {
-    if (a.columns != b.rows) {
+  // https://stackoverflow.com/a/22149009 -  M Oehm Mar 3, 2014. (CC
+  // BY-SA 3.0)
+  template <uint C2> Matrix<R, C2> operator*(const Matrix<R, C2> &other) {
+    if (COLUMNS != other.ROWS) {
       Logger::LOG(
           "Cant multiply matrices where the amount of columns of the left "
           "matrix "
-          "does not match the amount of rows of the right matrix! Returning "
+          "does not match the amount of rows of the right matrix! "
+          "Returning "
           "a new " +
-          ToString(a.columns) + "x" + ToString(a.rows) + " matrix.");
-      return Matrix<a.columns, a.rows>(false);
+          ToString(R) + "x" + ToString(C) + " matrix.");
+      return Matrix<R, C2>();
     }
 
-    Matrix<b.columns, a.rows> out(false);
+    // resulting matrix has the amount of columns of the right matrix and
+    // the amount of rows the left matrix
+    Matrix<ROWS, other.COLUMNS> out;
 
-    for (int row = 0; row < a.rows; row++) {
-      for (int col = 0; col < b.columns; col++) {
-        // out.data[row * GetRows() + col] = 0;
+    for (int row = 0; row < ROWS; row++) {
+      for (int col = 0; col < other.COLUMNS; col++) {
+        // out.data[row * ROWS + col] = 0;
         out.SetEntry(col, row, 0.0f);
         float sum = 0.0f;
-        for (int i = 0; i < a.columns; i++) {
-          sum += out[i * a.rows + col] *
-                 b[row * b.columns + i]; // this was this->GetColumns()
+        for (int i = 0; i < COLUMNS; i++) {
+          sum += data[i * ROWS + col] * other.data[row * other.COLUMNS + i];
         }
-        // out.data[row * GetRows() + col] = sum;
+        // out.data[row * ROWS + col] = sum;
         out.SetEntry(col, row, sum);
       }
     }
@@ -154,48 +140,16 @@ template <uint C = 1, uint R = 1> struct Matrix {
     return out;
   }
 
-  // https://stackoverflow.com/a/22149009 -  M Oehm Mar 3, 2014. (CC BY-SA 3.0)
-  Matrix operator*(const Matrix &other) {
-    if (GetColumns() != other.GetRows()) {
-      Logger::LOG(
-          "Cant multiply matrices where the amount of columns of the left "
-          "matrix "
-          "does not match the amount of rows of the right matrix! Returning "
-          "a new " +
-          ToString(GetColumns()) + "x" + ToString(GetRows()) + " matrix.");
-      return Matrix<C, R>(false);
-    }
-
-    // resulting matrix has the amount of columns of the right matrix and the
-    // amount of rows the left matrix
-    Matrix<other.columns, rows> out(false);
-
-    for (int row = 0; row < GetRows(); row++) {
-      for (int col = 0; col < other.GetColumns(); col++) {
-        // out.data[row * GetRows() + col] = 0;
-        out.SetEntry(col, row, 0.0f);
-        float sum = 0.0f;
-        for (int i = 0; i < GetColumns(); i++) {
-          sum += data[i * GetRows() + col] *
-                 other.data[row * other.GetColumns() +
-                            i]; // this was this->GetColumns()
-        }
-        // out.data[row * GetRows() + col] = sum;
-        out.SetEntry(col, row, sum);
-      }
-    }
-
-    return out;
-  }
   void operator=(const Matrix &other) {
     for (int i = 0; i < 16; i++) {
       this->data[i] = other.data[i];
     }
   }
+
   float &operator[](uint i) {
     if (i < 0)
       return data[0];
-    if (i > entries)
+    if (i > ENTRIES)
       return data[0];
 
     return data[i];
@@ -204,140 +158,54 @@ template <uint C = 1, uint R = 1> struct Matrix {
   float &operator[](uint i) const {
     if (i < 0)
       return data[0];
-    if (i > entries)
+    if (i > ENTRIES)
       return data[0];
 
     return data[i];
   }
 
-  // 4x4 Matrix Specific Functions
-  void Transform(const Vector3 &position, const Vector3 &rotation,
-                 const Vector3 &scale) {
-    if (dimensions != 4) {
-      Logger::LOG("Cant transform a matrix that is not 4x4!");
-      return;
-    }
-
-    Matrix<4, 4> posMat(true);
-    Matrix<4, 4> rotMat(true);
-    Matrix<4, 4> scaMat(true);
-
-    posMat.SetTranslation(position);
-    rotMat.SetRotation(rotation);
-    scaMat.SetScale(scale);
-
-    *this = (posMat * rotMat * scaMat);
-  }
-  void SetTranslation(const Vector3 &position) {
-    if (dimensions != 4) {
-      Logger::LOG("This function only works for 4x4 transformation matrices!");
-      return;
-    }
-    Identity();
-    SetEntry(3, 0, position.x);
-    SetEntry(3, 1, position.y);
-    SetEntry(3, 2, position.z);
-  }
-  // This function works with 3x3 and 4x4 matrices
-
-  void SetRotation(const Vector3 &rotation) {
-
-    if (dimensions != 3 && dimensions != 4) {
-      Logger::LOG("This function only works for 3x3 or 4x4 matrices!");
-      return;
-    }
-
-    Matrix<columns, rows> xRot(true);
-    xRot.SetEntry(1, 1, Mathf::Cos(rotation.x));
-    xRot.SetEntry(2, 1, -Mathf::Sin(rotation.x));
-
-    xRot.SetEntry(1, 2, Mathf::Sin(rotation.x));
-    xRot.SetEntry(2, 2, Mathf::Cos(rotation.x));
-
-    Matrix<columns, rows> yRot(true);
-    yRot.SetEntry(0, 0, Mathf::Cos(rotation.y));
-    yRot.SetEntry(2, 0, Mathf::Sin(rotation.y));
-
-    yRot.SetEntry(0, 2, -Mathf::Sin(rotation.y));
-    yRot.SetEntry(2, 2, Mathf::Cos(rotation.y));
-
-    Matrix<columns, rows> zRot(true);
-    zRot.SetEntry(0, 0, Mathf::Cos(rotation.z));
-    zRot.SetEntry(1, 0, -Mathf::Sin(rotation.z));
-    zRot.SetEntry(0, 1, Mathf::Sin(rotation.z));
-    zRot.SetEntry(1, 1, Mathf::Cos(rotation.z));
-
-    *this = (xRot * yRot * zRot);
-  }
-
-  // This function works with 3x3 and 4x4 matrices
-  void SetScale(const Vector3 &scale) {
-    if (dimensions != 3 && dimensions != 4) {
-      Logger::LOG("This function only works for 3x3 or 4x4 matrices!");
-      return;
-    }
-
-    Identity();
-    SetEntry(0, 0, scale.x);
-    SetEntry(1, 1, scale.y);
-    SetEntry(2, 2, scale.z);
-  }
-  // https://github.com/g-truc/glm/blob/6f14f4792a0cde5d0cf2c910506724d61cb95834/glm/ext/matrix_transform.inl#L153
-  void LookAt(const Vector3 &eye, const Vector3 &target, const Vector3 &eyeUp) {
-    if (dimensions != 4) {
-      Logger::LOG("This function only works with 4x4 matrices!");
-      return;
-    }
-
-    Vector3 fwd = (target - eye).Normalized(); // forward
-    Vector3 rht = Vector3::Cross(fwd, eyeUp);  // right
-    Vector3 up = Vector3::Cross(rht, fwd);     // up
-
-    Identity();
-    SetEntry(0, 0, rht.x);
-    SetEntry(0, 1, rht.y);
-    SetEntry(0, 2, rht.z);
-
-    SetEntry(1, 0, up.x);
-    SetEntry(1, 1, up.y);
-    SetEntry(1, 2, up.z);
-
-    SetEntry(2, 0, -fwd.x);
-    SetEntry(2, 1, -fwd.y);
-    SetEntry(2, 2, -fwd.z);
-
-    SetEntry(3, 0, -Vector3::Dot(rht, eye));
-    SetEntry(3, 1, -Vector3::Dot(up, eye));
-    SetEntry(3, 2, Vector3::Dot(fwd, eye));
-  }
-
-  // https://stackoverflow.com/a/53366142 - Pmsmm Nov 18, 2018 (CC BY-SA 4.0)
-  void Perspective(float fovDeg, float aspect, float near, float far) {
-    if (dimensions != 4) {
-      Logger::LOG("This function only works with 4x4 matrices!");
-      return;
-    }
-
-    float fovRad = Mathf::ToRadians(fovDeg);
-    float tanFov = Mathf::Tan(fovRad / 2);
-
-    Zero();
-    SetEntry(0, 0, 1 / (aspect * tanFov));
-    SetEntry(1, 1, 1 / tanFov);
-    SetEntry(2, 2, -((far + near) / (far - near)));
-    SetEntry(2, 3, -1);
-    SetEntry(3, 2, -((2 * far * near) / (far - near)));
-  }
-
   float data[C * R];
 
-  static constexpr uint columns = C;
-  static constexpr uint rows = R;
-
-protected:
-  Vector2I dimensions;
-  uint entries;
+  static constexpr uint COLUMNS = C;
+  static constexpr uint ROWS = R;
+  static constexpr uint ENTRIES = C * R;
 };
+
+// struct Matrix {
+//   Matrix(const Vector2I &dimensions, bool identity = false);
+//   ~Matrix();
+
+//   void Identity();
+//   bool IsSquareMatrix() const;
+//   Vector2I GetDimensions() const;
+//   uint TotalEntries() const;
+//   void Zero();
+//   String AsString() const;
+//   float GetEntry(uint column, uint row) const;
+//   void SetEntry(uint column, uint row, float value) const;
+
+//   Matrix operator*(float other);
+//   Matrix operator*(const Matrix &other);
+//   void operator=(const Matrix &other);
+
+//   // 4x4 Matrix Specific Functions
+//   void Transform(const Vector3 &position, const Vector3 &rotation,
+//                  const Vector3 &scale);
+//   void SetTranslation(const Vector3 &position);
+//   // This function works with 3x3 and 4x4  matrices
+//   void SetRotation(const Vector3 &rotation);
+//   // This function works with 3x3 and 4x4  matrices
+//   void SetScale(const Vector3 &scale);
+//   void LookAt(const Vector3 &eye, const Vector3 &target, const Vector3
+//   &eyeUp); void Perspective(float fovDeg, float aspect, float near, float
+//   far);
+
+//   float data;
+
+// protected:
+//   Vector2I dimensions;
+//   uint entries;
+// };
 } // namespace vge
 
 #endif

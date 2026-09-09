@@ -10,8 +10,8 @@
 
 namespace vge {
 
-template <uint columns = 1, uint rows = 1> struct Matrix {
-  Matrix(bool identity = false, uint c = columns, uint r = rows) {
+template <uint C = 1, uint R = 1> struct Matrix {
+  Matrix(bool identity = false, uint c = C, uint r = R) {
     if (c == 0 || r == 0) {
       Logger::LOG("Dimensions cant be (0, 0)!");
 
@@ -115,10 +115,40 @@ template <uint columns = 1, uint rows = 1> struct Matrix {
   }
 
   Matrix operator*(float other) {
-    Matrix<> out(false, dimensions.x, dimensions.y);
+    Matrix<C, R> out(false);
 
     for (int i = 0; i < entries; i++) {
       out.data[i] = data[i] * other;
+    }
+
+    return out;
+  }
+
+  static Matrix Multiply(const Matrix &a, const Matrix &b) {
+    if (a.columns != b.rows) {
+      Logger::LOG(
+          "Cant multiply matrices where the amount of columns of the left "
+          "matrix "
+          "does not match the amount of rows of the right matrix! Returning "
+          "a new " +
+          ToString(a.columns) + "x" + ToString(a.rows) + " matrix.");
+      return Matrix<a.columns, a.rows>(false);
+    }
+
+    Matrix<b.columns, a.rows> out(false);
+
+    for (int row = 0; row < a.rows; row++) {
+      for (int col = 0; col < b.columns; col++) {
+        // out.data[row * GetRows() + col] = 0;
+        out.SetEntry(col, row, 0.0f);
+        float sum = 0.0f;
+        for (int i = 0; i < a.columns; i++) {
+          sum += out[i * a.rows + col] *
+                 b[row * b.columns + i]; // this was this->GetColumns()
+        }
+        // out.data[row * GetRows() + col] = sum;
+        out.SetEntry(col, row, sum);
+      }
     }
 
     return out;
@@ -133,12 +163,12 @@ template <uint columns = 1, uint rows = 1> struct Matrix {
           "does not match the amount of rows of the right matrix! Returning "
           "a new " +
           ToString(GetColumns()) + "x" + ToString(GetRows()) + " matrix.");
-      return Matrix(false, GetColumns(), GetRows());
+      return Matrix<C, R>(false);
     }
 
     // resulting matrix has the amount of columns of the right matrix and the
     // amount of rows the left matrix
-    Matrix out(false, other.GetColumns(), GetRows());
+    Matrix<other.columns, rows> out(false);
 
     for (int row = 0; row < GetRows(); row++) {
       for (int col = 0; col < other.GetColumns(); col++) {
@@ -162,11 +192,28 @@ template <uint columns = 1, uint rows = 1> struct Matrix {
       this->data[i] = other.data[i];
     }
   }
+  float &operator[](uint i) {
+    if (i < 0)
+      return data[0];
+    if (i > entries)
+      return data[0];
+
+    return data[i];
+  }
+
+  float &operator[](uint i) const {
+    if (i < 0)
+      return data[0];
+    if (i > entries)
+      return data[0];
+
+    return data[i];
+  }
 
   // 4x4 Matrix Specific Functions
   void Transform(const Vector3 &position, const Vector3 &rotation,
                  const Vector3 &scale) {
-    if (dimensions != Vector2I(4)) {
+    if (dimensions != 4) {
       Logger::LOG("Cant transform a matrix that is not 4x4!");
       return;
     }
@@ -194,61 +241,38 @@ template <uint columns = 1, uint rows = 1> struct Matrix {
   // This function works with 3x3 and 4x4 matrices
 
   void SetRotation(const Vector3 &rotation) {
-#if (dimensions == 4)
-    Matrix<4, 4> xRot(true);
+
+    if (dimensions != 3 && dimensions != 4) {
+      Logger::LOG("This function only works for 3x3 or 4x4 matrices!");
+      return;
+    }
+
+    Matrix<columns, rows> xRot(true);
     xRot.SetEntry(1, 1, Mathf::Cos(rotation.x));
     xRot.SetEntry(2, 1, -Mathf::Sin(rotation.x));
 
     xRot.SetEntry(1, 2, Mathf::Sin(rotation.x));
     xRot.SetEntry(2, 2, Mathf::Cos(rotation.x));
 
-    Matrix<4, 4> yRot(true);
+    Matrix<columns, rows> yRot(true);
     yRot.SetEntry(0, 0, Mathf::Cos(rotation.y));
     yRot.SetEntry(2, 0, Mathf::Sin(rotation.y));
 
     yRot.SetEntry(0, 2, -Mathf::Sin(rotation.y));
     yRot.SetEntry(2, 2, Mathf::Cos(rotation.y));
 
-    Matrix<4, 4> zRot(true);
+    Matrix<columns, rows> zRot(true);
     zRot.SetEntry(0, 0, Mathf::Cos(rotation.z));
     zRot.SetEntry(1, 0, -Mathf::Sin(rotation.z));
     zRot.SetEntry(0, 1, Mathf::Sin(rotation.z));
     zRot.SetEntry(1, 1, Mathf::Cos(rotation.z));
 
     *this = (xRot * yRot * zRot);
-    return;
-#endif
-#if (dimensions == 3)
-
-    Matrix<3, 3> xRot(true);
-    xRot.SetEntry(1, 1, Mathf::Cos(rotation.x));
-    xRot.SetEntry(2, 1, -Mathf::Sin(rotation.x));
-
-    xRot.SetEntry(1, 2, Mathf::Sin(rotation.x));
-    xRot.SetEntry(2, 2, Mathf::Cos(rotation.x));
-
-    Matrix<3, 3> yRot(true);
-    yRot.SetEntry(0, 0, Mathf::Cos(rotation.y));
-    yRot.SetEntry(2, 0, Mathf::Sin(rotation.y));
-
-    yRot.SetEntry(0, 2, -Mathf::Sin(rotation.y));
-    yRot.SetEntry(2, 2, Mathf::Cos(rotation.y));
-
-    Matrix<3, 3> zRot(true);
-    zRot.SetEntry(0, 0, Mathf::Cos(rotation.z));
-    zRot.SetEntry(1, 0, -Mathf::Sin(rotation.z));
-    zRot.SetEntry(0, 1, Mathf::Sin(rotation.z));
-    zRot.SetEntry(1, 1, Mathf::Cos(rotation.z));
-
-    *this = (xRot * yRot * zRot);
-#endif
-
-    Logger::LOG("This function only works for 3x3 or 4x4 matrices!");
   }
 
   // This function works with 3x3 and 4x4 matrices
   void SetScale(const Vector3 &scale) {
-    if (dimensions != 4 && dimensions != 3) {
+    if (dimensions != 3 && dimensions != 4) {
       Logger::LOG("This function only works for 3x3 or 4x4 matrices!");
       return;
     }
@@ -305,7 +329,10 @@ template <uint columns = 1, uint rows = 1> struct Matrix {
     SetEntry(3, 2, -((2 * far * near) / (far - near)));
   }
 
-  float data[columns * rows];
+  float data[C * R];
+
+  static constexpr uint columns = C;
+  static constexpr uint rows = R;
 
 protected:
   Vector2I dimensions;

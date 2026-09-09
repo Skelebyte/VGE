@@ -15,6 +15,17 @@ int main() {
    * its so destructors get called correctly, and not after Engine::Shutdown,
    * because that would probably cause issues.
    */
+
+  Matrix<1, 2> a;
+  a[0] = 1;
+  a[1] = 2;
+
+  Matrix<2, 1> b;
+  a[0] = 1;
+  a[1] = 2;
+
+  Matrix<2, 2> c = Matrix<2, 2>::Multiply(a, b);
+
   {
     Shader defaultShader("default", "assets/shaders/default.frag",
                          "assets/shaders/default.vert");

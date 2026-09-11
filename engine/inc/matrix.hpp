@@ -48,14 +48,14 @@ template <uint R, uint C> struct Matrix {
 
   float GetEntry(uint c, uint r) const {
     if (c > COLUMNS - 1) {
-      Logger::LOG("There are only " + ToString(COLUMNS) + " (" +
+      Logger::LOG("There are only " + ToString(COLUMNS) + " (highest index: " +
                   ToString(COLUMNS - 1) + ") columns in this matrix! Column " +
                   ToString(c) + " is out of bounds!");
       return 0.0f;
     }
 
     if (r > ROWS - 1) {
-      Logger::LOG("There are only " + ToString(ROWS) + " (" +
+      Logger::LOG("There are only " + ToString(ROWS) + " (highest index: " +
                   ToString(ROWS - 1) + ") rows in this matrix! Row " +
                   ToString(r) + " is out of bounds!");
       return 0.0f;
@@ -66,14 +66,14 @@ template <uint R, uint C> struct Matrix {
 
   void SetEntry(uint c, uint r, float value) {
     if (c > COLUMNS - 1) {
-      Logger::LOG("There are only " + ToString(COLUMNS) + " (" +
+      Logger::LOG("There are only " + ToString(COLUMNS) + " (highest index: " +
                   ToString(COLUMNS - 1) + ") columns in this matrix! Column " +
                   ToString(c) + " is out of bounds!");
       return;
     }
 
     if (r > ROWS - 1) {
-      Logger::LOG("There are only " + ToString(ROWS) + " (" +
+      Logger::LOG("There are only " + ToString(ROWS) + " (highest index: " +
                   ToString(ROWS - 1) + ") rows in this matrix! Row " +
                   ToString(r) + " is out of bounds!");
       return;

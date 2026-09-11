@@ -108,24 +108,22 @@ template <uint R, uint C> struct Matrix {
 
   // https://stackoverflow.com/a/22149009 -  M Oehm Mar 3, 2014. (CC
   // BY-SA 3.0)
-  template <uint C2> Matrix<R, C2> operator*(const Matrix<C2, R> &other) {
+  template <uint R2 = R, uint C2 = 1>
+  Matrix<R2, C2> operator*(const Matrix<C, C2> &other) {
     std::cout << "R: " << R << std::endl;
     std::cout << "C2: " << C2 << std::endl;
 
     if (COLUMNS != other.ROWS) {
-      Logger::LOG(
+      Logger::LOG_FATAL(
           "Cant multiply matrices where the amount of columns of the left "
           "matrix "
-          "does not match the amount of rows of the right matrix! "
-          "Returning "
-          "a new " +
-          ToString(R) + "x" + ToString(C) + " matrix.");
-      return Matrix<R, C2>();
+          "does not match the amount of rows of the right matrix! ");
+      return Matrix<ROWS, C2>();
     }
 
     // resulting matrix has the amount of columns of the right matrix and
     // the amount of rows the left matrix
-    Matrix<ROWS, other.COLUMNS> out;
+    Matrix<ROWS, C2> out;
 
     for (int row = 0; row < ROWS; row++) {
       for (int col = 0; col < other.COLUMNS; col++) {

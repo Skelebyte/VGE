@@ -16,11 +16,11 @@ int main() {
    * because that would probably cause issues.
    */
 
-  Matrix<1, 2> a;
+  Matrix<3, 3> a;
   for (int i = 0; i < a.ENTRIES; i++) {
     a[i] = i + 1;
   }
-  Matrix<2, 1> b;
+  Matrix<3, 3> b;
   for (int i = 0; i < b.ENTRIES; i++) {
     b[i] = i + 1;
   }

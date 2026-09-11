@@ -20,11 +20,11 @@ int main() {
   for (int i = 0; i < a.ENTRIES; i++) {
     a[i] = i + 1;
   }
-  Matrix<1, 2> b;
+  Matrix<2, 1> b;
   for (int i = 0; i < b.ENTRIES; i++) {
     b[i] = i + 1;
   }
-  std::cout << "a: \n" << b.AsString() << std::endl;
+  std::cout << "a: \n" << a.AsString() << std::endl;
   std::cout << "b: \n" << b.AsString() << std::endl;
   Matrix c = a * b;
   std::cout << "a * b = " << std::endl;

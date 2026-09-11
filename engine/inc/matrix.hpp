@@ -108,7 +108,10 @@ template <uint R, uint C> struct Matrix {
 
   // https://stackoverflow.com/a/22149009 -  M Oehm Mar 3, 2014. (CC
   // BY-SA 3.0)
-  template <uint C2> Matrix<R, C2> operator*(const Matrix<R, C2> &other) {
+  template <uint C2> Matrix<R, C2> operator*(const Matrix<C2, R> &other) {
+    std::cout << "R: " << R << std::endl;
+    std::cout << "C2: " << C2 << std::endl;
+
     if (COLUMNS != other.ROWS) {
       Logger::LOG(
           "Cant multiply matrices where the amount of columns of the left "

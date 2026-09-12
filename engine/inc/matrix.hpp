@@ -13,10 +13,9 @@ namespace vge {
 template <uint R, uint C> struct Matrix {
 
   Matrix(bool identity = false) {
+    Zero();
     if (identity) {
       Identity();
-    } else {
-      Zero();
     }
   }
 
@@ -46,40 +45,46 @@ template <uint R, uint C> struct Matrix {
 
   bool IsSquareMatrix() const { return COLUMNS == ROWS; }
 
-  float GetEntry(uint c, uint r) const {
-    if (c > COLUMNS - 1) {
+  // ! not entirely happy with calling the 4th arg "major" as i dont think its
+  // ! intirely accurate (as in if its columns major use ROWS, if row major use
+  // ! COLUMNS).
+  float GetEntry(uint cIdx, uint rIdx, uint major = ROWS) const {
+    if (cIdx > COLUMNS) {
       Logger::LOG("There are only " + ToString(COLUMNS) + " (highest index: " +
                   ToString(COLUMNS - 1) + ") columns in this matrix! Column " +
-                  ToString(c) + " is out of bounds!");
+                  ToString(cIdx) + " is out of bounds!");
       return 0.0f;
     }
 
-    if (r > ROWS - 1) {
+    if (rIdx > ROWS) {
       Logger::LOG("There are only " + ToString(ROWS) + " (highest index: " +
                   ToString(ROWS - 1) + ") rows in this matrix! Row " +
-                  ToString(r) + " is out of bounds!");
+                  ToString(rIdx) + " is out of bounds!");
       return 0.0f;
     }
 
-    return data[r * ROWS + c];
+    return data[rIdx + major * cIdx];
   }
 
-  void SetEntry(uint c, uint r, float value) {
-    if (c > COLUMNS - 1) {
+  // ! not entirely happy with calling the 4th arg "major" as i dont think its
+  // ! intirely accurate (as in if its columns major use ROWS, if row major use
+  // ! COLUMNS).
+  void SetEntry(uint cIdx, uint rIdx, float value, uint major = ROWS) {
+    if (cIdx > COLUMNS) {
       Logger::LOG("There are only " + ToString(COLUMNS) + " (highest index: " +
                   ToString(COLUMNS - 1) + ") columns in this matrix! Column " +
-                  ToString(c) + " is out of bounds!");
+                  ToString(cIdx) + " is out of bounds!");
       return;
     }
 
-    if (r > ROWS - 1) {
+    if (rIdx > ROWS) {
       Logger::LOG("There are only " + ToString(ROWS) + " (highest index: " +
                   ToString(ROWS - 1) + ") rows in this matrix! Row " +
-                  ToString(r) + " is out of bounds!");
+                  ToString(rIdx) + " is out of bounds!");
       return;
     }
 
-    data[r * ROWS + c] = value;
+    data[rIdx + major * cIdx] = value;
   }
 
   String AsString() const {
@@ -113,17 +118,19 @@ template <uint R, uint C> struct Matrix {
     std::cout << "R: " << R << std::endl;
     std::cout << "C2: " << C2 << std::endl;
 
-    Logger::ASSERT(COLUMNS == other.ROWS, "Amount of columns of the left matrix must be equal to the amount of rows of the right matrix");
+    Logger::ASSERT(COLUMNS == other.ROWS,
+                   "Amount of columns of the left matrix must be equal to the "
+                   "amount of rows of the right matrix");
 
-/*
-    if (COLUMNS != other.ROWS) {
-      Logger::LOG_FATAL(
-          "Cant multiply matrices where the amount of columns of the left "
-          "matrix "
-          "does not match the amount of rows of the right matrix! ");
-      return Matrix<ROWS, C2>();
-    }
-*/
+    /*
+        if (COLUMNS != other.ROWS) {
+          Logger::LOG_FATAL(
+              "Cant multiply matrices where the amount of columns of the left "
+              "matrix "
+              "does not match the amount of rows of the right matrix! ");
+          return Matrix<ROWS, C2>();
+        }
+    */
 
     // resulting matrix has the amount of columns of the right matrix and
     // the amount of rows the left matrix
@@ -131,14 +138,16 @@ template <uint R, uint C> struct Matrix {
 
     for (int row = 0; row < ROWS; row++) {
       for (int col = 0; col < other.COLUMNS; col++) {
-        // out.data[row * ROWS + col] = 0;
-        out.SetEntry(col, row, 0.0f);
+        out.data[row * ROWS + col] = 0;
+        // out.SetEntry(col, row, 0.0f);
         float sum = 0.0f;
         for (int i = 0; i < COLUMNS; i++) {
+          // sum += GetEntry(col, row, ROWS) *
+          //        other.GetEntry(col, row, other.COLUMNS);
           sum += data[i * ROWS + col] * other.data[row * other.COLUMNS + i];
         }
-        // out.data[row * ROWS + col] = sum;
-        out.SetEntry(col, row, sum);
+        out.data[row * ROWS + col] = sum;
+        // out.SetEntry(col, row, sum);
       }
     }
 
@@ -160,14 +169,14 @@ template <uint R, uint C> struct Matrix {
     return data[i];
   }
 
-  float &operator[](uint i) const {
-    if (i < 0)
-      return data[0];
-    if (i > ENTRIES)
-      return data[0];
+  // float &operator[](uint i) const {
+  //   if (i < 0)
+  //     return data[0];
+  //   if (i > ENTRIES)
+  //     return data[0];
 
-    return data[i];
-  }
+  //   return data[i];
+  // }
 
   float data[C * R];
 

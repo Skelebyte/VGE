@@ -113,6 +113,9 @@ template <uint R, uint C> struct Matrix {
     std::cout << "R: " << R << std::endl;
     std::cout << "C2: " << C2 << std::endl;
 
+    Logger::ASSERT(COLUMNS == other.ROWS, "Amount of columns of the left matrix must be equal to the amount of rows of the right matrix");
+
+/*
     if (COLUMNS != other.ROWS) {
       Logger::LOG_FATAL(
           "Cant multiply matrices where the amount of columns of the left "
@@ -120,6 +123,7 @@ template <uint R, uint C> struct Matrix {
           "does not match the amount of rows of the right matrix! ");
       return Matrix<ROWS, C2>();
     }
+*/
 
     // resulting matrix has the amount of columns of the right matrix and
     // the amount of rows the left matrix

@@ -10,8 +10,6 @@
 #include "inc/logger.hpp"
 #include "inc/mathf.hpp"
 #include "inc/matrix.hpp"
-// #include "inc/matrix3x3.hpp"
-#include "inc/matrix4x4.hpp"
 #include "inc/memory.hpp"
 #include "inc/object3d.hpp"
 #include "inc/time.hpp"

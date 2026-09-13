@@ -66,6 +66,7 @@ protected:
 };
 
 struct VBO : public ID {
+  VBO() = default;
   VBO(float *verts, size_t size);
   ~VBO();
 
@@ -84,6 +85,7 @@ struct VAO : public ID {
 };
 
 struct EBO : public ID {
+  EBO() = default;
   EBO(uint *indices, size_t size);
   ~EBO();
 

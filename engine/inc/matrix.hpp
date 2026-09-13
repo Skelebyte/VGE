@@ -290,41 +290,6 @@ template <uint R, uint C> struct Matrix {
   }
 };
 
-// struct Matrix {
-//   Matrix(const Vector2I &dimensions, bool identity = false);
-//   ~Matrix();
-
-//   void Identity();
-//   bool IsSquareMatrix() const;
-//   Vector2I GetDimensions() const;
-//   uint TotalEntries() const;
-//   void Zero();
-//   String AsString() const;
-//   float GetEntry(uint column, uint row) const;
-//   void SetEntry(uint column, uint row, float value) const;
-
-//   Matrix operator*(float other);
-//   Matrix operator*(const Matrix &other);
-//   void operator=(const Matrix &other);
-
-//   // 4x4 Matrix Specific Functions
-//   void Transform(const Vector3 &position, const Vector3 &rotation,
-//                  const Vector3 &scale);
-//   void SetTranslation(const Vector3 &position);
-//   // This function works with 3x3 and 4x4  matrices
-//   void SetRotation(const Vector3 &rotation);
-//   // This function works with 3x3 and 4x4  matrices
-//   void SetScale(const Vector3 &scale);
-//   void LookAt(const Vector3 &eye, const Vector3 &target, const Vector3
-//   &eyeUp); void Perspective(float fovDeg, float aspect, float near, float
-//   far);
-
-//   float data;
-
-// protected:
-//   Vector2I dimensions;
-//   uint entries;
-// };
 } // namespace vge
 
 #endif

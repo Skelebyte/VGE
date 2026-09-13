@@ -68,6 +68,10 @@ struct Mesh : Asset {
   List<uint> indices;
 
   List<float> data;
+
+  VAO vao;
+  VBO vbo;
+  EBO ebo;
 };
 
 } // namespace vge

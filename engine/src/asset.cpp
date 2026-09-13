@@ -219,5 +219,12 @@ Mesh Mesh::GeneratePlane(const Vector2 &dimensions, int divisions) {
     }
   }
 
+  // WARN need to do something about the fact that the VBO constructor wants
+  // WARN vertex: position, normal, and uv all in one float*
+  //
+  // mesh.vbo = VBO(mesh.vertices.AsPtr(), mesh.vertices.Size());
+  mesh.vao = VAO();
+  mesh.ebo = EBO();
+
   return mesh;
 }

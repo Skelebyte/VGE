@@ -40,6 +40,8 @@ struct Logger : Singleton<Logger> {
   static void internal_CheckOpenGLError(const String &msg, VGE_CALL_PARAMS);
   static void internal_Assert(bool condition, const String &msg,
                               VGE_CALL_PARAMS);
+  // static void internal_StaticAssert(bool condition, const String &msg,
+  //                                   VGE_CALL_PARAMS);
 
   static const LogData &GetLastLog();
 
@@ -62,6 +64,8 @@ protected:
   internal_CheckOpenGLError(msg, __FILE__, __FUNCTION__, __LINE__ - linesAbove)
 
 #define ASSERT(condition, msg) internal_Assert(condition, msg, VGE_CALL_INFO)
+
+#define STATIC_ASSERT(condition) static_assert(condition)
 
 } // namespace vge
 

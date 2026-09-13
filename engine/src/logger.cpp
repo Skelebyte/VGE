@@ -108,4 +108,21 @@ void Logger::internal_Assert(bool condition, const String &msg,
   }
 }
 
+/*
+void Logger::internal_StaticAssert(bool condition, const String &msg,
+                             VGE_CALL_PARAMS) {
+
+                               static_assert(condition);
+
+  // if (condition == false) {
+  //   internal_Log(msg, VGE_CALL_PARAMS_USAGE, false, LogType::ASSERT);
+  //   Window::CreatePopUp("Assert Failed!",
+  //                       msg + "\n\nfrom: " + file + ":" + ToString(line) +
+  //                           ", " + func + "()",
+  //                       true);
+  //   exit(EXIT_FAILURE);
+  // }
+}
+*/
+
 const LogData &Logger::GetLastLog() { return lastLog; }

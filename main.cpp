@@ -5,10 +5,10 @@
 using namespace vge;
 
 int main() {
-  // Memory::Get().logFreeSizes = false;
-  // Memory::Get().logMallocSizes = false;
+  Memory::Get().logFreeSizes = false;
+  Memory::Get().logMallocSizes = false;
 
-  // Engine::Init("hi mum");
+  Engine::Init("hi mum");
 
   /*
    * why the scope brackets?
@@ -16,57 +16,46 @@ int main() {
    * because that would probably cause issues.
    */
 
-  Matrix<4, 3> a;
+  Matrix<2, 2> a;
   for (int i = 0; i < a.ENTRIES; i++) {
-    a[i] = i + 1;
-    std::cout << a[i] << ", ";
+    a[i] = i;
   }
-  Matrix<3, 4> b;
+  std::cout << "Before:\n" << a.AsString() << std::endl;
+  Matrix<2, 2> b;
   for (int i = 0; i < b.ENTRIES; i++) {
-    b[i] = i + 1;
+    b[i] = -i;
   }
-  std::cout << "a: \n" << a.AsString() << std::endl;
-  std::cout << "b: \n" << b.AsString() << std::endl;
-  Matrix c = a * b;
-  std::cout << "a * b = " << std::endl;
-  std::cout << c.AsString() << std::endl;
+  a = b;
+  std::cout << "After:\n" << a.AsString() << std::endl;
 
-  for (int i = 0; i < c.ENTRIES; i++) {
-    std::cout << c[i] << ", ";
+  Matrix<4, 4> c;
+  c.Transform(Vector3(1, 10, -5.5), Vector3(43, 94, -12),
+              Vector3(0.75f, 0.75f, 0.75f));
+  std::cout << "C:\n" << c.AsString();
+
+  {
+    Shader defaultShader("default", "assets/shaders/default.frag",
+                         "assets/shaders/default.vert");
+    defaultShader.AddUniform("diffuseTexture");
+    defaultShader.AddUniform("color");
+
+    Mesh mesh = Mesh::GeneratePlane();
+
+    Texture texture(4, 4, Color::White(), Color::Green());
+
+    // Camera camera;
+
+    while (Window::Process()) {
+      Engine::BeginFrame();
+      Window::SetTitle("FPS: " + ToString(Engine::GetFps()));
+
+      // camera.Process();
+
+      Window::SwapBuffer();
+    }
   }
-  std::cout << std::endl;
 
-  // Matrix<2, 1> b;
-  // b.data[0] = 1;
-  // b.data[1] = 2;
-
-  // Matrix c = a * b;
-
-  // std::cout << c.AsString();
-
-  // {
-  //   Shader defaultShader("default", "assets/shaders/default.frag",
-  //                        "assets/shaders/default.vert");
-  //   defaultShader.AddUniform("diffuseTexture");
-  //   defaultShader.AddUniform("color");
-
-  //   Mesh mesh = Mesh::GeneratePlane();
-
-  //   Texture texture(4, 4, Color::White(), Color::Green());
-
-  //   Camera camera;
-
-  //   while (Window::Process()) {
-  //     Engine::BeginFrame();
-  //     Window::SetTitle("FPS: " + ToString(Engine::GetFps()));
-
-  //     camera.Process();
-
-  //     Window::SwapBuffer();
-  //   }
-  // }
-
-  // Engine::Shutdown();
+  Engine::Shutdown();
 
   return 0;
 }

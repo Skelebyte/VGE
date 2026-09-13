@@ -16,12 +16,12 @@ int main() {
    * because that would probably cause issues.
    */
 
-  Matrix<4, 4> a;
+  Matrix<4, 3> a;
   for (int i = 0; i < a.ENTRIES; i++) {
     a[i] = i + 1;
     std::cout << a[i] << ", ";
   }
-  Matrix<4, 4> b;
+  Matrix<3, 4> b;
   for (int i = 0; i < b.ENTRIES; i++) {
     b[i] = i + 1;
   }

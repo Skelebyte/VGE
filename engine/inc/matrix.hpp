@@ -144,7 +144,7 @@ template <uint R, uint C> struct Matrix {
         for (int i = 0; i < COLUMNS; i++) {
           // sum += GetEntry(col, row, ROWS) *
           //        other.GetEntry(col, row, other.COLUMNS);
-          sum += data[i * ROWS + col] * other.data[row * other.COLUMNS + i];
+          sum += data[i * ROWS + col] * other.data[row * other.ROWS + i];
         }
         out.data[row * ROWS + col] = sum;
         // out.SetEntry(col, row, sum);

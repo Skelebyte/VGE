@@ -3,7 +3,6 @@
 
 #include "common.hpp"
 #include "engine.hpp"
-#include "vector2i.hpp"
 #include <SDL3/SDL.h>
 
 namespace vge {
@@ -14,7 +13,7 @@ struct Window : Singleton<Window> {
   static void Shutdown();
   static void Stop();
   static bool Process();
-  static Vector2I GetDimensions();
+  static Vector2i GetDimensions();
   static void SwapBuffer();
   static SDL_Window *GetWindow();
   static void SetTitle(const String &title);
@@ -26,8 +25,8 @@ protected:
   SDL_Window *window;
   bool running;
   bool pillarboxed = false;
-  Vector2I viewportSize = Vector2I();
-  Vector2I viewportPosition = Vector2I();
+  Vector2i viewportSize = Vector2i();
+  Vector2i viewportPosition = Vector2i();
 };
 } // namespace vge
 

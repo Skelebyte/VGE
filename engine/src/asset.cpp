@@ -123,7 +123,7 @@ void Texture::LoadFromData(Pointer<uchar> &data, uint channels, uint width,
   // THROW_ERROR_GL(
   //     FATAL.Derived("", " Setting GL_TEXTURE_WRAP_T parameter failed."));
 
-  if (filter == NEAREST) {
+  if (filter == TextureFilter::NEAREST) {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     // THROW_ERROR_GL(FATAL.Derived("", "Setting MIN_FILTER failed."));
 
@@ -152,12 +152,12 @@ void Texture::LoadFromData(Pointer<uchar> &data, uint channels, uint width,
 /* ------------ Vertex ------------ */
 
 Vertex::Vertex() {
-  position = Vector3();
-  uv = Vector2();
-  normal = Vector3();
+  position = Vector3f();
+  uv = Vector2f();
+  normal = Vector3f();
 }
 
-Vertex::Vertex(Vector3 pos, Vector2 uv, Vector3 norm) {
+Vertex::Vertex(const Vector3f &pos, const Vector2f &uv, const Vector3f &norm) {
   position = pos;
   this->uv = uv;
   normal = norm;
@@ -165,15 +165,15 @@ Vertex::Vertex(Vector3 pos, Vector2 uv, Vector3 norm) {
 
 /* ------------ Mesh ------------ */
 
-Mesh Mesh::GeneratePlane(const Vector2 &dimensions, int divisions) {
-  Vector2 planeDimensions;
+Mesh Mesh::GeneratePlane(const Vector2f &dimensions, int divisions) {
+  Vector2f planeDimensions;
   int planeDivisions = Mathf::Max(1, divisions);
 
   if (divisions == 0)
     planeDivisions = 1;
 
-  if (dimensions == Vector2(0.0f)) {
-    planeDimensions = Vector2(1.0f);
+  if (dimensions == Vector2f(0.0f)) {
+    planeDimensions = Vector2f(1.0f);
   } else {
     planeDimensions = dimensions;
   }
@@ -202,10 +202,10 @@ Mesh Mesh::GeneratePlane(const Vector2 &dimensions, int divisions) {
         mesh.indices.Add(index + (divisions + 1));
       }
 
-      Vector3 pos = Vector3((col * triangleSideX) - dimensions.x / 2, 0.0f,
-                            (row * -triangleSideY) + dimensions.y / 2);
-      Vector2 uv = Vector2((float)col / divisions, (float)row / divisions);
-      Vector3 normal = Vector3(0, 1, 0);
+      Vector3f pos = Vector3f((col * triangleSideX) - dimensions.x / 2, 0.0f,
+                              (row * -triangleSideY) + dimensions.y / 2);
+      Vector2f uv = Vector2f((float)col / divisions, (float)row / divisions);
+      Vector3f normal = Vector3f(0, 1, 0);
       mesh.vertices.Add(Vertex(pos, uv, normal));
 
       mesh.data.Add(pos.x);
@@ -218,13 +218,6 @@ Mesh Mesh::GeneratePlane(const Vector2 &dimensions, int divisions) {
       mesh.data.Add(normal.z);
     }
   }
-
-  // WARN need to do something about the fact that the VBO constructor wants
-  // WARN vertex: position, normal, and uv all in one float*
-  //
-  // mesh.vbo = VBO(mesh.vertices.AsPtr(), mesh.vertices.Size());
-  mesh.vao = VAO();
-  mesh.ebo = EBO();
 
   return mesh;
 }

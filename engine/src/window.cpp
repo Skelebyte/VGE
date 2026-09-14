@@ -92,7 +92,7 @@ bool Window::Process() {
     }
   }
 
-  Vector2I dimensions = GetDimensions();
+  Vector2i dimensions = GetDimensions();
 
   float windowAspect = (float)dimensions.x / dimensions.y;
   float gameAspect = (float)1920 / 1080;
@@ -132,18 +132,18 @@ bool Window::Process() {
   return Get().running;
 }
 
-Vector2I Window::GetDimensions() {
+Vector2i Window::GetDimensions() {
   if (IsInit() == false) {
     Logger::LOG("You must call `Window::init()` first!");
-    return Vector2I();
+    return Vector2i();
   }
   if (Get().window == nullptr) {
-    return Vector2I();
+    return Vector2i();
   }
 
   int x;
   int y;
-  Vector2I dimensions;
+  Vector2i dimensions;
 
   if (SDL_GetWindowSize(Get().window, &x, &y) == false) {
     dimensions.x = 0;

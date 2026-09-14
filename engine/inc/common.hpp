@@ -7,6 +7,9 @@
 #include <vector>
 
 #include "../ext/glad/gl.h"
+#include "../ext/vsm.hpp"
+
+using namespace vsm;
 
 namespace vge {
 

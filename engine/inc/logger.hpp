@@ -29,7 +29,7 @@ private:
   uint lineNumber;
 };
 
-enum LogType { STANDARD = 0, FATAL = 1, ASSERT = 2 };
+enum struct LogType { STANDARD = 0, FATAL = 1, ASSERT = 2 };
 
 struct Logger : Singleton<Logger> {
   static void Init();

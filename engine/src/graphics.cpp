@@ -45,14 +45,14 @@ void Uniform::SetValue(const Matrix<4, 4> &value) {
       "Failed to set Matrix4x4 value on uniform \"" + GetName() + "\".", 2);
 }
 
-void Uniform::SetValue(const Vector3 &value) {
-  glUniform3fv(GetID(), 1, value.data);
+void Uniform::SetValue(Vector3f &value) {
+  glUniform3fv(GetID(), 1, value.GetData());
   Logger::CHECK_OPENGL(
       "Failed to set Vector3 value on uniform \"" + GetName() + "\".", 2);
 }
 
-void Uniform::SetValue(const Vector2 &value) {
-  glUniform2fv(GetID(), 1, value.data);
+void Uniform::SetValue(Vector2f &value) {
+  glUniform2fv(GetID(), 1, value.GetData());
   Logger::CHECK_OPENGL(
       "Failed to set Vector2 value on uniform \"" + GetName() + "\".", 2);
 }

@@ -23,7 +23,7 @@ private:
   size_t usedMemory;
 };
 
-enum MemoryState { UNALLOCATED = 0, ALLOCATED = 1, FREED = 2 };
+enum struct MemoryState { UNALLOCATED = 0, ALLOCATED = 1, FREED = 2 };
 
 template <typename T> struct Pointer {
 
@@ -115,16 +115,16 @@ template <typename T> struct Pointer {
    */
   void internal_Free(const String &file, const String &func, uint line) {
     switch (state) {
-    case UNALLOCATED:
+    case MemoryState::UNALLOCATED:
       Logger::internal_Log(
           "You need to call MALLOC first! State: UNALLOCATED (for Pointer \"" +
               name + "\")",
           file, func, line);
       return;
       break;
-    case ALLOCATED:
+    case MemoryState::ALLOCATED:
       break;
-    case FREED:
+    case MemoryState::FREED:
       Logger::internal_Log(
           "You need to call MALLOC first! State: FREED (for Pointer \"" + name +
               "\")",
@@ -210,15 +210,15 @@ template <typename T> struct Pointer {
   Pointer &operator=(const Pointer &other) {
     if (this == other)
       return this;
-    if (other.state == UNALLOCATED) {
+    if (other.state == MemoryState::UNALLOCATED) {
       Logger::LOG("other is UNALLOCATED! Cant copy!");
       return this;
     }
-    if (other.state == FREED) {
+    if (other.state == MemoryState::FREED) {
       Logger::LOG("other is FREED! Cant copy!");
       this;
     }
-    if (state == ALLOCATED) {
+    if (state == MemoryState::ALLOCATED) {
       FREE();
     }
 

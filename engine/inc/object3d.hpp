@@ -1,12 +1,11 @@
 #ifndef VGE_OBJECT3D_HPP
 #define VGE_OBJECT3D_HPP
 
+#include "asset.hpp"
 #include "common.hpp"
 #include "list.hpp"
 #include "logger.hpp"
-#include "matrix.hpp"
 #include "memory.hpp"
-#include "vector3.hpp"
 #include "window.hpp"
 
 namespace vge {
@@ -16,22 +15,22 @@ struct Processable {
 };
 
 struct Transform3D : Processable {
-  Transform3D(const Vector3 &pos = Vector3(0.0f),
-              const Vector3 &rotEul = Vector3(0.0f),
-              const Vector3 &scl = Vector3(1.0f));
+  Transform3D(const Vector3f &pos = Vector3f(0.0f),
+              const Vector3f &rotEul = Vector3f(0.0f),
+              const Vector3f &scl = Vector3f(1.0f));
 
   bool Process() override;
   Matrix<4, 4> &GetTransformationMatrix();
-  Vector3 Right() const;
-  Vector3 Up() const;
-  Vector3 Forward() const;
+  Vector3f Right() const;
+  Vector3f Up() const;
+  Vector3f Forward() const;
 
-  Vector3 position;
+  Vector3f position;
   /**
    * @brief Euler rotation in degrees
    */
-  Vector3 rotation;
-  Vector3 scale;
+  Vector3f rotation;
+  Vector3f scale;
 
 protected:
   Matrix<4, 4> transformation;
@@ -64,6 +63,16 @@ struct Camera : Object3D {
   Matrix<4, 4> view;
   Matrix<4, 4> projection;
   bool current;
+};
+
+enum struct PrimitiveMesh { PLANE = 0, CUBE = 1, SPHERE = 2 };
+
+struct MeshRenderer : Object3D {
+  MeshRenderer(const PrimitiveMesh &primitive = PrimitiveMesh::PLANE);
+  MeshRenderer(const String &path);
+
+  Texture diffuse;
+  Mesh mesh;
 };
 
 } // namespace vge

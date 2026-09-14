@@ -86,15 +86,11 @@ GENERATED += $(OBJDIR)/imgui_tables.o
 GENERATED += $(OBJDIR)/imgui_widgets.o
 GENERATED += $(OBJDIR)/logger.o
 GENERATED += $(OBJDIR)/main.o
-GENERATED += $(OBJDIR)/mathf.o
 GENERATED += $(OBJDIR)/matrix.o
 GENERATED += $(OBJDIR)/memory.o
 GENERATED += $(OBJDIR)/object3d.o
 GENERATED += $(OBJDIR)/time.o
 GENERATED += $(OBJDIR)/ufbx.o
-GENERATED += $(OBJDIR)/vector2.o
-GENERATED += $(OBJDIR)/vector2i.o
-GENERATED += $(OBJDIR)/vector3.o
 GENERATED += $(OBJDIR)/window.o
 OBJECTS += $(OBJDIR)/asset.o
 OBJECTS += $(OBJDIR)/common.o
@@ -110,15 +106,11 @@ OBJECTS += $(OBJDIR)/imgui_tables.o
 OBJECTS += $(OBJDIR)/imgui_widgets.o
 OBJECTS += $(OBJDIR)/logger.o
 OBJECTS += $(OBJDIR)/main.o
-OBJECTS += $(OBJDIR)/mathf.o
 OBJECTS += $(OBJDIR)/matrix.o
 OBJECTS += $(OBJDIR)/memory.o
 OBJECTS += $(OBJDIR)/object3d.o
 OBJECTS += $(OBJDIR)/time.o
 OBJECTS += $(OBJDIR)/ufbx.o
-OBJECTS += $(OBJDIR)/vector2.o
-OBJECTS += $(OBJDIR)/vector2i.o
-OBJECTS += $(OBJDIR)/vector3.o
 OBJECTS += $(OBJDIR)/window.o
 
 # Rules
@@ -225,9 +217,6 @@ $(OBJDIR)/graphics.o: engine/src/graphics.cpp
 $(OBJDIR)/logger.o: engine/src/logger.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/mathf.o: engine/src/mathf.cpp
-	@echo "$(notdir $<)"
-	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/matrix.o: engine/src/matrix.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
@@ -238,15 +227,6 @@ $(OBJDIR)/object3d.o: engine/src/object3d.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/time.o: engine/src/time.cpp
-	@echo "$(notdir $<)"
-	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/vector2.o: engine/src/vector2.cpp
-	@echo "$(notdir $<)"
-	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/vector2i.o: engine/src/vector2i.cpp
-	@echo "$(notdir $<)"
-	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/vector3.o: engine/src/vector3.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/window.o: engine/src/window.cpp

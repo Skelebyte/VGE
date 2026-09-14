@@ -6,10 +6,7 @@
 #include "file.hpp"
 #include "graphics.hpp"
 #include "list.hpp"
-#include "mathf.hpp"
 #include "memory.hpp"
-#include "vector2.hpp"
-#include "vector3.hpp"
 
 namespace vge {
 struct Asset {
@@ -22,7 +19,7 @@ private:
   String path;
 };
 
-enum TextureFilter { LINEAR = 0, NEAREST = 1 };
+enum struct TextureFilter { LINEAR = 0, NEAREST = 1 };
 
 struct Texture : public Asset, public ID {
   Texture(uint width, uint height, const Color &a, const Color &b,
@@ -48,12 +45,12 @@ private:
 
 struct Vertex {
   Vertex();
-  Vertex(Vector3 pos, Vector2 uv, Vector3 norm);
+  Vertex(const Vector3f &pos, const Vector2f &uv, const Vector3f &norm);
   ~Vertex() = default;
 
-  Vector3 position;
-  Vector2 uv;
-  Vector3 normal;
+  Vector3f position;
+  Vector2f uv;
+  Vector3f normal;
 };
 
 struct Mesh : Asset {
@@ -61,17 +58,13 @@ struct Mesh : Asset {
   Mesh(const String &path, bool blenderFix = true);
   ~Mesh() = default;
 
-  static Mesh GeneratePlane(const Vector2 &dimensions = Vector2(1.0f),
+  static Mesh GeneratePlane(const Vector2f &dimensions = Vector2f(1.0f),
                             int divisions = 1);
 
   List<Vertex> vertices;
   List<uint> indices;
 
   List<float> data;
-
-  VAO vao;
-  VBO vbo;
-  EBO ebo;
 };
 
 } // namespace vge

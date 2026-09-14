@@ -4,10 +4,11 @@
 #include "common.hpp"
 #include "engine.hpp"
 #include "list.hpp"
+// #include "matrix.hpp"
 #include "memory.hpp"
-#include "object3d.hpp"
-#include "vector2.hpp"
-#include "vector3.hpp"
+// #include "object3d.hpp"
+// #include "vector2.hpp"
+// #include "vector3.hpp"
 #include "window.hpp"
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_video.h>
@@ -38,8 +39,10 @@ struct Uniform : public ID {
   const String &GetName() const;
 
   void SetValue(const Matrix<4, 4> &value);
-  void SetValue(const Vector3 &value);
-  void SetValue(const Vector2 &value);
+  void
+  SetValue(Vector3f &value); // TODO cant be const until i make a fix in vsm
+  void
+  SetValue(Vector2f &value); // TODO cant be const until i make a fix in vsm
   void SetValue(const Color &value);
   void SetValue(float value);
   void SetValue(int value);

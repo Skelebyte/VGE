@@ -86,7 +86,6 @@ GENERATED += $(OBJDIR)/imgui_tables.o
 GENERATED += $(OBJDIR)/imgui_widgets.o
 GENERATED += $(OBJDIR)/logger.o
 GENERATED += $(OBJDIR)/main.o
-GENERATED += $(OBJDIR)/matrix.o
 GENERATED += $(OBJDIR)/memory.o
 GENERATED += $(OBJDIR)/object3d.o
 GENERATED += $(OBJDIR)/time.o
@@ -106,7 +105,6 @@ OBJECTS += $(OBJDIR)/imgui_tables.o
 OBJECTS += $(OBJDIR)/imgui_widgets.o
 OBJECTS += $(OBJDIR)/logger.o
 OBJECTS += $(OBJDIR)/main.o
-OBJECTS += $(OBJDIR)/matrix.o
 OBJECTS += $(OBJDIR)/memory.o
 OBJECTS += $(OBJDIR)/object3d.o
 OBJECTS += $(OBJDIR)/time.o
@@ -215,9 +213,6 @@ $(OBJDIR)/graphics.o: engine/src/graphics.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/logger.o: engine/src/logger.cpp
-	@echo "$(notdir $<)"
-	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/matrix.o: engine/src/matrix.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/memory.o: engine/src/memory.cpp
